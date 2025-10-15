@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式瀑布流照片画廊及博客</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="site-title">
+            <a href="index.html" class="logo-link">
+                <img src="public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">Scienceoutdoors_fpv</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="index.html" class="nav-item active" data-target="gallery-section">首页</a></li>
+                <li><a href="posts/menu/about.html" class="nav-item">关于我和联系我</a></li>
+                <li><a href="posts/menu/outdoor.html" class="nav-item">户外</a></li>
+                <li><a href="posts/menu/portrait.html" class="nav-item">人像</a></li>
+                <li><a href="posts/menu/planet.html" class="nav-item">行星</a></li>
+                <li><a href="posts/menu/deepspace.html" class="nav-item">深空</a></li>
+                <li><a href="posts/menu/astronomy.html" class="nav-item">星野</a></li>
+                <li><a href="#blog" class="nav-item" data-target="blog-section">blog（文章）</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <div id="gallery-section">
+            <div class="photo-gallery">
+                <div id="masonry-gallery" class="masonry-grid mx-auto">
+                    </div>
+            </div>
+        </div>
+        
+        <div id="blog-section" class="hidden">
+            <div class="blog-categories">
+                <div class="blog-categories-list">
+                    <a href="#blog" class="active" data-category="All">所有文章</a>
+                    <a href="#blog/HDR" data-category="HDR">HDR</a>
+                    <a href="#blog/背包徒步" data-category="背包徒步">背包徒步</a>
+                    <a href="#blog/业余无线电" data-category="业余无线电">业余无线电</a>
+                    <a href="#blog/FPV" data-category="FPV">FPV</a>
+                    <a href="#blog/各种资料" data-category="各种资料">各种资料</a>
+                    <a href="#blog/日志" data-category="日志">日志</a>
+                </div>
+            </div>
+
+            <div class="p-4 md:p-8 max-w-7xl mx-auto">
+                <div class="blog-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    </div>
+            </div>
+        </div>
+        
+    </main>
+    
+    <footer>
+        <p>©2024-2025 李忠平版权所有。</p> <!-- 版权信息 -->
+    </footer>
+    
+    <div id="lightbox-modal" class="hidden-modal" aria-hidden="true">
+        <span id="close-btn" role="button" aria-label="关闭">&times;</span>
+        
+        <a id="view-original" href="" target="_blank" rel="noopener noreferrer">查看原图</a>
+
+        <button id="prev-button" aria-label="Previous image">&#8249;</button>
+        <button id="next-button" aria-label="Next image">&#8250;</button>
+
+        <div class="lightbox-content-wrapper">
+            <img id="lightbox-image" src="" alt="">
+            
+            <div class="lightbox-caption-area">
+                <div id="lightbox-title"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

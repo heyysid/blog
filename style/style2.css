@@ -1,0 +1,93 @@
+/* ---------------------------------------------------------------- */
+/* 整体架构和复古样式 (BODY, TABLE, 标题, 链接) */
+/* ---------------------------------------------------------------- */
+
+BODY {
+    /* 借鉴的背景样式 */
+    background: #808080 url('../public/texture.jpg') repeat;
+    
+    color: black;
+    
+    font-size: 12px;
+    font-family: Verdana, sans-serif; /* 增加备用字体 */
+    margin: 0; /* 确保 body 边距为零，让表格居中 */
+}
+
+TABLE
+{
+    font-size: 12px;
+    font-family: Verdana, sans-serif;
+}
+
+H6
+{
+    font-size: 12px;
+    font-family: Verdana, sans-serif;
+}
+
+H3
+{
+    font-size: 16px;
+    font-family: Verdana, sans-serif;
+}
+
+H2
+{
+    background: #e0e0ff;
+    font-size: 18px;
+    font-family: Verdana, sans-serif;
+    padding: 2px 5px; /* 添加内边距让背景色更好看 */
+    margin-top: 15px; /* 增加顶部空间 */
+}
+
+/* 链接状态样式 */
+A:link
+{
+    COLOR: #0000ff;
+    TEXT-DECORATION: underline
+}
+A:visited
+{
+    COLOR: #9000ff;
+    TEXT-DECORATION: underline
+}
+A:active
+{
+    COLOR: #65b5ff;
+    TEXT-DECORATION: underline
+}
+A:hover
+{
+    COLOR: #65b5ff;
+    TEXT-DECORATION: underline
+}
+
+/* ---------------------------------------------------------------- */
+/* 自定义类样式 (用于名称和邮件地址) */
+/* ---------------------------------------------------------------- */
+.myname
+{
+    font-size: 30px;
+    font-family: Futura, sans-serif;
+    color: #404040;
+}
+
+.myemail
+{
+    font-size: 14px;
+    font-family: Futura, sans-serif;
+    color: #606060;
+    margin-top: 5px;
+}
+
+
+/* ---------------------------------------------------------------- */
+/* 适应你的结构：移除 Flexbox 导航，采用 TABLE 结构 */
+/* ---------------------------------------------------------------- */
+
+/* 移除旧的导航样式，让 HTML 表格结构接管布局 */
+header, nav, nav a, .main-wrapper {
+    /* 使用 TABLE 布局时，我们不需要这些 CSS 样式 */
+    /* 你可以在这里添加一些 reset 规则，但为了兼容性，我们主要依赖 HTML 结构 */
+    /* 确保不再有冲突的样式 */
+}
