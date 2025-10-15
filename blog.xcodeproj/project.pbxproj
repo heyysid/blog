@@ -8,7 +8,6 @@
 
 /* Begin PBXFileReference section */
 		14BBD44B2E9D14AD00E17C17 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		14BC60812EA00648009EDB30 /* index1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index1.html; sourceTree = "<group>"; };
 		14DA32242E9E638100D8448D /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		14DA32252E9E638100D8448D /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -40,7 +39,6 @@
 				14BBD44E2E9D150D00E17C17 /* photos */,
 				14BBD4502E9D152500E17C17 /* posts */,
 				14DA32252E9E638100D8448D /* style.css */,
-				14BC60812EA00648009EDB30 /* index1.html */,
 				14DA32242E9E638100D8448D /* script.js */,
 			);
 			sourceTree = "<group>";

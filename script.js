@@ -109,10 +109,14 @@ const galleryData = [
     
 ];
 
-// 全局变量
+// ----------------------------------------------------------------
+// 全局变量和新增加的队列
+// ----------------------------------------------------------------
 let masonry;
 let currentImageIndex = -1;
-let lazyImageObserver; // <-- 新增：Intersection Observer 实例
+let lazyImageObserver;
+let loadQueue = []; // 新增：用于存储进入视口等待顺序加载的图片元素
+let isProcessingQueue = false; // 新增：队列处理状态锁
 
 // 模态框元素
 const modal = document.getElementById('lightbox-modal');
@@ -141,8 +145,7 @@ function switchView(targetId, activeElement) {
         blogSection.classList.add('hidden');
         // 确保 Masonry 在切换回画廊时进行重新布局
         if (masonry) {
-            // 切换回画廊后，重新开始观察懒加载元素
-            startLazyLoadingObservation();
+            startLazyLoadingObservation(); // 重新开始懒加载观察
             setTimeout(() => masonry.layout(), 100);
         }
     }
@@ -170,54 +173,90 @@ function switchView(targetId, activeElement) {
 // ----------------------------------------------------------------
 // 辅助函数
 // ----------------------------------------------------------------
-function loadImage(imgElement, src, placeholderColor, isModal = false) {
-    // 找到最靠近的 gallery-item（如果存在）
+/**
+ * 图片加载函数
+ * @param {HTMLElement} imgElement 图片元素
+ * @param {string} src 真实图片路径
+ * @param {string} placeholderColor 占位符颜色
+ * @param {boolean} isModal 是否为模态框图片
+ * @param {boolean} loadSequentially 是否是队列中的图片 (决定是否由 imagesLoaded 触发后续逻辑)
+ */
+function loadImage(imgElement, src, placeholderColor, isModal = false, loadSequentially = false) {
     const galleryItem = imgElement.closest('.gallery-item');
-
-    // 安全访问 spinner（防止 null 引发错误）
     const spinnerEl = typeof spinner !== 'undefined' ? spinner : null;
+    const fallbackSrc = 'https://placehold.co/400x300/ff6666/ffffff?text=加载失败';
 
     if (isModal) {
+        // Lightbox模式：移除loaded类，显示spinner
         imgElement.classList.remove('loaded');
         if (spinnerEl) spinnerEl.style.display = 'block';
     } else {
-        // 仅当该 img 属于 gallery-item 时才使用 loading 样式
+        // 画廊模式：添加loading类
         if (galleryItem) galleryItem.classList.add('loading');
-        imgElement.classList.remove('lazy');
+        imgElement.classList.remove('lazy'); // 移除懒加载类
     }
 
-    // 仅在非 modal 且确实找到 galleryItem 时才设置占位背景色
     if (placeholderColor && !isModal && galleryItem) {
         galleryItem.style.backgroundColor = placeholderColor;
     }
 
     const tempImg = new Image();
     tempImg.onload = () => {
+        // 加载成功：设置真实图片源
         imgElement.src = src;
+        
         if (isModal) {
+            // FIX: Lightbox模式必须重新添加 loaded 类才能显示图片
             if (spinnerEl) spinnerEl.style.display = 'none';
+            imgElement.classList.add('loaded'); // <--- 关键修正
         } else {
             if (galleryItem) galleryItem.classList.remove('loading');
         }
-        setTimeout(() => {
-            imgElement.classList.add('loaded');
-            if (!isModal && masonry) {
-                masonry.layout();
-            }
-        }, 50);
+        
+        // 如果不是顺序加载（即非懒加载，例如 Lightbox），则立即触发淡入和布局更新
+        // Lightbox (isModal=true) 走上面 if (isModal) 的逻辑。
+        if (!isModal && !loadSequentially) {
+             // 立即触发淡入动画，并更新 Masonry 布局
+             setTimeout(() => {
+                 imgElement.classList.add('loaded');
+                 if (masonry) {
+                     masonry.layout();
+                 }
+             }, 50);
+        }
+        // 顺序加载（loadSequentially = true）的后续逻辑完全交给 processQueue 中的 imagesLoaded 处理
     };
 
     tempImg.onerror = () => {
         console.error('图片加载失败:', src);
+        
+        imgElement.src = fallbackSrc;
+
         if (isModal) {
             if (spinnerEl) spinnerEl.style.display = 'none';
-            imgElement.src = 'https://placehold.co/400x300/ff6666/ffffff?text=加载失败';
-            imgElement.classList.add('loaded');
+            imgElement.classList.add('loaded'); // 失败也显示占位图
         } else {
             if (galleryItem) galleryItem.classList.remove('loading');
-            imgElement.src = 'https://placehold.co/400x300/ff6666/ffffff?text=加载失败';
             imgElement.classList.add('loaded');
-            if (masonry) masonry.layout();
+        }
+
+        // 如果是顺序加载的图片，即使失败也要触发 imagesLoaded 的回调，以确保队列继续
+        if (loadSequentially) {
+             const galleryItem = imgElement.closest('.gallery-item');
+             if (galleryItem) {
+                imagesLoaded(galleryItem, function() {
+                    if (masonry) masonry.layout();
+                    // 继续队列
+                    setTimeout(() => {
+                        isProcessingQueue = false;
+                        processQueue();
+                    }, 150);
+                });
+            }
+        }
+        // 如果不是顺序加载，立即更新布局以防占位图尺寸导致混乱
+        else if (!loadSequentially && masonry) {
+             masonry.layout();
         }
     };
 
@@ -227,7 +266,266 @@ function loadImage(imgElement, src, placeholderColor, isModal = false) {
 
 
 // ----------------------------------------------------------------
-// 博客文章渲染 (已修改为支持分类和动态头像)
+// 瀑布流队列处理函数（使用 imagesLoaded 解决卡顿问题，并实现顺序显示）
+// ----------------------------------------------------------------
+/**
+ * 按顺序处理 loadQueue 中的图片，控制每张图片的加载和显示速度。
+ */
+function processQueue() {
+    // 检查队列是否为空或是否正在处理
+    if (loadQueue.length === 0 || isProcessingQueue) {
+        isProcessingQueue = false;
+        return;
+    }
+    
+    isProcessingQueue = true; // 锁定状态
+
+    // 取出队列中第一个元素
+    const imgElement = loadQueue.shift();
+    if (!imgElement) {
+        isProcessingQueue = false;
+        return;
+    }
+
+    const itemIndex = imgElement.getAttribute('data-index');
+    const itemData = galleryData[itemIndex];
+
+    if (!itemData) {
+        isProcessingQueue = false;
+        return;
+    }
+
+    // 1. 触发当前图片的加载，并标记为顺序加载 (loadSequentially = true)
+    loadImage(imgElement, itemData.src, itemData.color, false, true);
+
+    // 2. 使用 imagesLoaded 确保图片尺寸已确定，解决布局卡顿
+    const galleryItem = imgElement.closest('.gallery-item');
+    if (galleryItem) {
+        // 使用 imagesLoaded 监控当前这一项中的图片
+        imagesLoaded(galleryItem, function() {
+            
+            // 确保 Masonry 布局更新基于最终尺寸
+            if (masonry) {
+                // 更新 Masonry 布局
+                masonry.layout();
+            }
+            
+            // 触发图片淡入动画
+            // 延迟触发动画，给予浏览器重排时间
+            setTimeout(() => {
+                imgElement.classList.add('loaded');
+            }, 50);
+
+
+            // 3. 控制下一个加载延迟 (保持顺序出现效果)
+            // 在布局更新完成后，才启动下一个图片的加载
+            setTimeout(() => {
+                isProcessingQueue = false;
+                processQueue(); // 递归调用，处理下一张
+            }, 150); // 150ms 的间隔，控制顺序出现速度
+        });
+    } else {
+        // 如果找不到 galleryItem，直接处理下一个，并设置延迟
+        // 释放锁，继续处理下一个
+        setTimeout(() => {
+            isProcessingQueue = false;
+            processQueue();
+        }, 50);
+    }
+}
+
+
+// ----------------------------------------------------------------
+// 瀑布流画廊懒加载回调函数
+// ----------------------------------------------------------------
+function onLazyLoad(entries, observer) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const imgElement = entry.target;
+            observer.unobserve(imgElement); // 停止观察已进入视口的图片
+            
+            // 关键：将图片元素添加到队列中
+            loadQueue.push(imgElement);
+            
+            // 如果队列处理器未运行，则启动它
+            if (!isProcessingQueue) {
+                processQueue();
+            }
+        }
+    });
+}
+
+// ----------------------------------------------------------------
+// 开启懒加载观察
+// ----------------------------------------------------------------
+function startLazyLoadingObservation() {
+    // 确保 Masonry 布局已经存在
+    if (!masonry) return;
+
+    if (lazyImageObserver) {
+        // 重新观察所有尚未加载的图片
+        document.querySelectorAll('img.lazy').forEach(img => {
+            lazyImageObserver.unobserve(img); // 先取消旧的观察，防止重复
+            lazyImageObserver.observe(img);
+        });
+        return;
+    }
+
+    // 观察器选项：图片进入视口上边界 300px 时即开始加载
+    const observerOptions = {
+        root: null, // 视口作为根
+        rootMargin: '300px 0px', // 提前 300px 加载
+        threshold: 0.01 // 元素最小可见度
+    };
+
+    lazyImageObserver = new IntersectionObserver(onLazyLoad, observerOptions);
+
+    document.querySelectorAll('img.lazy').forEach(img => {
+        lazyImageObserver.observe(img);
+    });
+}
+
+
+// ----------------------------------------------------------------
+// 渲染画廊
+// ----------------------------------------------------------------
+function renderGallery() {
+    const container = document.getElementById('masonry-gallery');
+    if (!container) {
+        console.error('找不到瀑布流容器');
+        return;
+    }
+    container.innerHTML = '';
+    const gridSizer = document.createElement('div');
+    gridSizer.className = 'grid-sizer';
+    container.appendChild(gridSizer);
+
+    galleryData.forEach((item, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        galleryItem.dataset.index = index;
+        galleryItem.setAttribute('data-title', item.title || '');
+        galleryItem.setAttribute('data-color', item.color || '#f0f0f0');
+
+        const img = document.createElement('img');
+        // 初始 src 设置为占位图，真实路径存入 data-src
+        img.setAttribute('src', `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${item.width}' height='${item.height}'%3E%3C/svg%3E`);
+        img.setAttribute('data-src', item.src); // 存储真实图片路径
+        img.setAttribute('alt', item.title || '图片');
+        img.setAttribute('data-index', index);
+        img.classList.add('lazy'); // 保留 lazy 类用于 Intersection Observer
+
+        const info = document.createElement('div');
+        info.className = 'photo-info';
+        info.textContent = item.title || '';
+
+        galleryItem.appendChild(img);
+        galleryItem.appendChild(info);
+        container.appendChild(galleryItem);
+        
+        galleryItem.style.backgroundColor = item.color || '#f0f0f0';
+
+        galleryItem.addEventListener('click', () => openLightbox(index));
+    });
+
+    setTimeout(() => {
+        masonry = new Masonry(container, {
+            itemSelector: '.gallery-item',
+            columnWidth: '.gallery-item',
+            gutter: 10,
+            percentPosition: false,
+            transitionDuration: '0.4s',
+            fitWidth: true,
+            horizontalOrder: true
+        });
+        
+        // 第一次布局，基于占位图尺寸
+        masonry.layout();
+        
+        // 初始化 Masonry 布局后，开始懒加载观察
+        startLazyLoadingObservation();
+
+    }, 100);
+    
+    window.addEventListener('resize', () => {
+        if (masonry) {
+            setTimeout(() => masonry.layout(), 100);
+        }
+    });
+}
+
+
+// ----------------------------------------------------------------
+// Lightbox 功能 (保持不变)
+// ----------------------------------------------------------------
+function openLightbox(index) {
+    currentImageIndex = index;
+    updateLightboxContent(index);
+    modal.classList.add('visible-modal');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    
+    document.addEventListener('keydown', handleKeyDown);
+}
+
+function closeLightbox() {
+    modal.classList.remove('visible-modal');
+    modal.setAttribute('aria-hidden', 'true');
+    modalImage.src = '';
+    document.body.style.overflow = '';
+    
+    document.removeEventListener('keydown', handleKeyDown);
+}
+
+function handleKeyDown(e) {
+    if (!modal.classList.contains('visible-modal')) return;
+    
+    switch(e.key) {
+        case 'Escape':
+            closeLightbox();
+            break;
+        case 'ArrowLeft':
+            showPrevImage();
+            break;
+        case 'ArrowRight':
+            showNextImage();
+            break;
+    }
+}
+
+function updateLightboxContent(index) {
+    if (index < 0 || index >= galleryData.length) {
+        return;
+    }
+    
+    currentImageIndex = index;
+    const item = galleryData[index];
+    
+    // 确保 loadImage 使用新数据
+    loadImage(modalImage, item.src, item.color, true); // <--- isModal=true
+    
+    modalImage.alt = item.title || '';
+    modalTitle.textContent = item.title || '';
+    viewOriginalLink.href = item.src;
+
+    prevButton.disabled = index === 0;
+    nextButton.disabled = index === galleryData.length - 1;
+}
+
+function showPrevImage() {
+    if (currentImageIndex > 0) {
+        updateLightboxContent(currentImageIndex - 1);
+    }
+}
+
+function showNextImage() {
+    if (currentImageIndex < galleryData.length - 1) {
+        updateLightboxContent(currentImageIndex + 1);
+    }
+}
+
+// ----------------------------------------------------------------
+// 博客文章渲染 (保持不变)
 // ----------------------------------------------------------------
 function renderBlogPosts(category = 'All') {
     const grid = document.querySelector('.blog-grid');
@@ -293,184 +591,6 @@ function renderBlogPosts(category = 'All') {
     });
 }
 
-/**
- * 瀑布流画廊懒加载回调函数
- * @param {IntersectionObserverEntry[]} entries
- * @param {IntersectionObserver} observer
- */
-function onLazyLoad(entries, observer) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const imgElement = entry.target;
-            const trueSrc = imgElement.getAttribute('data-src');
-            const placeholderColor = imgElement.parentElement.getAttribute('data-color');
-            
-            // 检查 imgElement 是否未加载过
-            if (trueSrc && !imgElement.classList.contains('loaded')) {
-                 loadImage(imgElement, trueSrc, placeholderColor);
-            }
-            
-            // 停止观察已加载的图片
-            observer.unobserve(imgElement);
-        }
-    });
-}
-
-function startLazyLoadingObservation() {
-    // 停止旧的观察者（如果有）
-    if (lazyImageObserver) {
-        lazyImageObserver.disconnect();
-    }
-    
-    // 重新创建 Intersection Observer
-    // rootMargin: '0px 0px 200px 0px' 意味着提前 200px 加载图片，优化用户体验
-    lazyImageObserver = new IntersectionObserver(onLazyLoad, {
-        rootMargin: '0px 0px 200px 0px',
-    });
-    
-    // 找到所有待加载的图片元素并开始观察
-    document.querySelectorAll('#masonry-gallery img.lazy').forEach(img => {
-        lazyImageObserver.observe(img);
-    });
-}
-
-
-function renderGallery() {
-    const container = document.getElementById('masonry-gallery');
-    if (!container) {
-        console.error('找不到瀑布流容器');
-        return;
-    }
-    container.innerHTML = '';
-    const gridSizer = document.createElement('div');
-    gridSizer.className = 'grid-sizer';
-    container.appendChild(gridSizer);
-
-    galleryData.forEach((item, index) => {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-        galleryItem.dataset.index = index;
-        galleryItem.setAttribute('data-title', item.title || '');
-        galleryItem.setAttribute('data-color', item.color || '#f0f0f0'); // <-- 存储颜色用于占位符
-
-        const img = document.createElement('img');
-        // ⚠️ 关键修改 1：初始 src 设置为空白占位图，真实路径存入 data-src
-        img.setAttribute('src', `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${item.width}' height='${item.height}'%3E%3C/svg%3E`);
-        img.setAttribute('data-src', item.src);
-        img.setAttribute('alt', item.title || '图片');
-        img.setAttribute('data-index', index);
-        img.classList.add('lazy'); // <-- 关键修改 2：添加 'lazy' 类，用于观察
-
-        const info = document.createElement('div');
-        info.className = 'photo-info';
-        info.textContent = item.title || '';
-
-        galleryItem.appendChild(img);
-        galleryItem.appendChild(info);
-        container.appendChild(galleryItem);
-        
-        // 初始设置占位符颜色
-        galleryItem.style.backgroundColor = item.color || '#f0f0f0';
-
-        // ⚠️ 关键修改 3：移除立即调用 loadImage(img, item.src, item.color);
-        // 加载将在 Intersection Observer 中触发
-
-        galleryItem.addEventListener('click', () => openLightbox(index));
-    });
-
-    setTimeout(() => {
-        masonry = new Masonry(container, {
-            itemSelector: '.gallery-item',
-            columnWidth: '.gallery-item',
-            gutter: 10,
-            percentPosition: false,
-            transitionDuration: '0.4s',
-            fitWidth: true,
-            horizontalOrder: true
-        });
-        
-        masonry.layout();
-        
-        // ⚠️ 关键修改 4：初始化 Masonry 布局后，开始观察懒加载元素
-        startLazyLoadingObservation();
-
-    }, 100);
-    
-    window.addEventListener('resize', () => {
-        if (masonry) {
-            setTimeout(() => masonry.layout(), 100);
-        }
-    });
-}
-
-// ----------------------------------------------------------------
-// Lightbox 功能 (保持不变)
-// ----------------------------------------------------------------
-function openLightbox(index) {
-    currentImageIndex = index;
-    updateLightboxContent(index);
-    modal.classList.add('visible-modal');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    
-    document.addEventListener('keydown', handleKeyDown);
-}
-
-function closeLightbox() {
-    modal.classList.remove('visible-modal');
-    modal.setAttribute('aria-hidden', 'true');
-    modalImage.src = '';
-    document.body.style.overflow = '';
-    
-    document.removeEventListener('keydown', handleKeyDown);
-}
-
-function handleKeyDown(e) {
-    if (!modal.classList.contains('visible-modal')) return;
-    
-    switch(e.key) {
-        case 'Escape':
-            closeLightbox();
-            break;
-        case 'ArrowLeft':
-            showPrevImage();
-            break;
-        case 'ArrowRight':
-            showNextImage();
-            break;
-    }
-}
-
-function updateLightboxContent(index) {
-    if (index < 0 || index >= galleryData.length) {
-        return;
-    }
-    
-    currentImageIndex = index;
-    const item = galleryData[index];
-    
-    // 修复：确保 loadImage 使用新数据
-    loadImage(modalImage, item.src, item.color, true);
-    
-    modalImage.alt = item.title || '';
-    modalTitle.textContent = item.title || '';
-    viewOriginalLink.href = item.src;
-
-    prevButton.disabled = index === 0;
-    nextButton.disabled = index === galleryData.length - 1;
-}
-
-function showPrevImage() {
-    if (currentImageIndex > 0) {
-        updateLightboxContent(currentImageIndex - 1);
-    }
-}
-
-function showNextImage() {
-    if (currentImageIndex < galleryData.length - 1) {
-        updateLightboxContent(currentImageIndex + 1);
-    }
-}
 
 // ----------------------------------------------------------------
 // 事件绑定和初始化 (保持不变)
