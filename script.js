@@ -4,7 +4,7 @@
 const blogPosts = [
     {
         id: 1,
-        title: 'hiking and camping in Xinjiang',
+        title: '户外资料备查清单',
         excerpt: '简介',
         author: '@李忠平',
         imageUrl: 'photos/7f934357d2f9a881d9ab3fe0ae86ae38.jpeg',
@@ -171,26 +171,31 @@ function switchView(targetId, activeElement) {
 // 辅助函数
 // ----------------------------------------------------------------
 function loadImage(imgElement, src, placeholderColor, isModal = false) {
-    const galleryItem = imgElement.parentElement;
-    
+    // 找到最靠近的 gallery-item（如果存在）
+    const galleryItem = imgElement.closest('.gallery-item');
+
+    // 安全访问 spinner（防止 null 引发错误）
+    const spinnerEl = typeof spinner !== 'undefined' ? spinner : null;
+
     if (isModal) {
         imgElement.classList.remove('loaded');
-        spinner.style.display = 'block';
+        if (spinnerEl) spinnerEl.style.display = 'block';
     } else {
-        // 确保懒加载元素被正确标记
+        // 仅当该 img 属于 gallery-item 时才使用 loading 样式
         if (galleryItem) galleryItem.classList.add('loading');
         imgElement.classList.remove('lazy');
     }
-    
-    if (placeholderColor && galleryItem) {
+
+    // 仅在非 modal 且确实找到 galleryItem 时才设置占位背景色
+    if (placeholderColor && !isModal && galleryItem) {
         galleryItem.style.backgroundColor = placeholderColor;
     }
-    
+
     const tempImg = new Image();
     tempImg.onload = () => {
         imgElement.src = src;
         if (isModal) {
-            spinner.style.display = 'none';
+            if (spinnerEl) spinnerEl.style.display = 'none';
         } else {
             if (galleryItem) galleryItem.classList.remove('loading');
         }
@@ -201,22 +206,25 @@ function loadImage(imgElement, src, placeholderColor, isModal = false) {
             }
         }, 50);
     };
-    
+
     tempImg.onerror = () => {
         console.error('图片加载失败:', src);
         if (isModal) {
-            spinner.style.display = 'none';
+            if (spinnerEl) spinnerEl.style.display = 'none';
             imgElement.src = 'https://placehold.co/400x300/ff6666/ffffff?text=加载失败';
             imgElement.classList.add('loaded');
         } else {
             if (galleryItem) galleryItem.classList.remove('loading');
             imgElement.src = 'https://placehold.co/400x300/ff6666/ffffff?text=加载失败';
             imgElement.classList.add('loaded');
+            if (masonry) masonry.layout();
         }
     };
-    
+
+    // 触发浏览器开始加载
     tempImg.src = src;
 }
+
 
 // ----------------------------------------------------------------
 // 博客文章渲染 (已修改为支持分类和动态头像)
