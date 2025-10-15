@@ -11,7 +11,6 @@
 		14BBD6A02E9D4AC200E17C17 /* text.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = text.html; sourceTree = "<group>"; };
 		14DA32242E9E638100D8448D /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		14DA32252E9E638100D8448D /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
-		14DA33982E9FB25F00D8448D /* vercel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = vercel.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -43,7 +42,6 @@
 				14BBD6A02E9D4AC200E17C17 /* text.html */,
 				14DA32252E9E638100D8448D /* style.css */,
 				14DA32242E9E638100D8448D /* script.js */,
-				14DA33982E9FB25F00D8448D /* vercel.json */,
 			);
 			sourceTree = "<group>";
 		};

@@ -7,10 +7,9 @@ const blogPosts = [
         title: 'hiking and camping in Xinjiang',
         excerpt: '简介',
         author: '@李忠平',
-        readTime: 5,
-        imageUrl: 'photos/001NDuThgy1i5imlhx0o7j62j035s1kx02.jpg',
-        publishDate: '2024-03-15',
-        category: '户外探险',
+        imageUrl: 'photos/7f934357d2f9a881d9ab3fe0ae86ae38.jpeg',
+        publishDate: '2021-05-25',
+        category: '背包徒步',
         url: 'posts/hikingandcampinginXinjiang.html',
         likes: 0,
         authorAvatarUrl: 'public/IMG_6959.jpeg'
@@ -20,7 +19,6 @@ const blogPosts = [
         title: 'ZEAL Optics Product Shoot',
         excerpt: 'Landscape photography is my passion. I live for getting outside and finding the beauty in nature. It drives me and...',
         author: 'josephroybal',
-        readTime: 3,
         imageUrl: 'https://placehold.co/400x300/adb5bd/212529?text=Post+2',
         category: 'HDR',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
@@ -30,7 +28,6 @@ const blogPosts = [
         title: 'Behind the Image: A Landscape Diary of How-To\'s; Lightning and the Grand...',
         excerpt: 'A behind the scenes explanation of this image and the efforts and thoughts that went into its creation.',
         author: 'josephroybal',
-        readTime: 5,
         imageUrl: 'https://placehold.co/400x300/6c757d/f8f9fa?text=Post+3',
         category: '背包徒步',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
@@ -40,7 +37,6 @@ const blogPosts = [
         title: 'Behind the Image: A Landscape Diary of How-To\'s; Lightning and the Grand...',
         excerpt: 'A behind the scenes explanation of this image and the efforts and thoughts that went into its creation.',
         author: 'josephroybal',
-        readTime: 5,
         imageUrl: 'https://placehold.co/400x300/6c757d/f8f9fa?text=Post+3',
         category: 'FPV',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
@@ -50,7 +46,6 @@ const blogPosts = [
         title: 'Behind the Image: A Landscape Diary of How-To\'s; Lightning and the Grand...',
         excerpt: 'A behind the scenes explanation of this image and the efforts and thoughts that went into its creation.',
         author: 'josephroybal',
-        readTime: 5,
         imageUrl: 'https://placehold.co/400x300/6c757d/f8f9fa?text=Post+3',
         category: '各种资料',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
@@ -60,7 +55,6 @@ const blogPosts = [
         title: 'Behind the Image: A Landscape Diary of How-To\'s; Lightning and the Grand...',
         excerpt: 'A behind the scenes explanation of this image and the efforts and thoughts that went into its creation.',
         author: 'josephroybal',
-        readTime: 5,
         imageUrl: 'https://placehold.co/400x300/6c757d/f8f9fa?text=Post+3',
         category: '日志',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
@@ -70,7 +64,6 @@ const blogPosts = [
         title: 'Behind the Image: A Landscape Diary of How-To\'s; Lightning and the Grand...',
         excerpt: 'A behind the scenes explanation of this image and the efforts and thoughts that went into its creation.',
         author: 'josephroybal',
-        readTime: 5,
         imageUrl: 'https://placehold.co/400x300/6c757d/f8f9fa?text=Post+3',
         category: '业余无线电',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
