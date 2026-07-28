@@ -1,0 +1,886 @@
+/* ---------------------------------------------------------------- */
+/* 全局设置 (styls.css) */
+/* ---------------------------------------------------------------- */
+/* 重置HTML和Body元素的默认边距和填充 */
+html, body {
+    margin: 0; /* 移除浏览器默认的外边距 */
+    padding: 0; /* 移除浏览器默认的内边距 */
+    height: 100%; /* 设置 html 和 body 的高度都为视口高度的 100% */
+    font-family: 'Inter', Verdana, sans-serif; /* 定义默认字体栈，优先使用 'Inter' */
+    -webkit-font-smoothing: antialiased; /* 针对 WebKit 浏览器，开启字体抗锯齿（平滑处理） */
+    -moz-osx-font-smoothing: grayscale; /* 针对 Firefox (macOS)，开启字体灰度渲染（用于字体平滑） */
+}
+
+/* Body元素样式 */
+body {
+    background: #808080 url('public/texture.jpg') repeat; /* 设置背景为灰色 (#808080)，并平铺 ('public/texture.jpg') 图片 */
+    color: black; /* 设置默认文本颜色为黑色 */
+    font-size: 12px; /* 设置默认字体大小为 12 像素 */
+    font-family: Verdana, sans-serif; /* 重新定义 body 内部的字体栈（与 html 略有不同） */
+    line-height: 1.4; /* 设置行高为字体大小的 1.4 倍 */
+    -webkit-text-size-adjust: 100%; /* 针对移动端 WebKit 浏览器，防止文字在横屏时自动调整大小 */
+    overflow-x: hidden; /* 隐藏水平方向的滚动条，防止布局溢出导致的用户体验问题 */
+}
+
+/* ---------------------------------------------------------------- */
+/* 顶部导航栏 & Logo (已恢复 Logo) */
+/* ---------------------------------------------------------------- */
+/* 头部导航栏样式 */
+.header {
+    width: 100%; /* 宽度占满父容器 */
+    padding: 45px 0 20px; /* 上内边距 45px，左右内边距 0 , 下边距20 */
+    background: transparent; /* 将背景色设置为透明 */
+    backdrop-filter: none; /* 移除背景模糊滤镜效果 */
+    text-align: center; /* 内部行内元素（如文本、图片、logo）水平居中对齐 */
+    position: relative; /* 定位方式：相对定位 (作为内部绝对定位元素的参照) */
+    top: 0; /* 距离顶部 0 */
+    z-index: 1000; /* 设置堆叠顺序，确保导航栏位于页面内容的上方 */
+}
+
+/* 网站标题区域样式 */
+.site-title {
+    margin-bottom: 35px; /* 底部外边距 30 像素 */
+}
+
+/* Logo链接样式 */
+.logo-link {
+    display: inline-flex; /* 使其内容居中且只占据内容所需的宽度 */
+    align-items: center; /* 交叉轴（垂直方向）上居中对齐子项 */
+    justify-content: center; /* 主轴（水平方向）上居中对齐子项 */
+    text-decoration: none; /* 移除文本下划线 */
+    color: #4A4A4A; /* 设置链接文本颜色 */
+    gap: 12px; /* 设置 Flex 容器中子项之间的间距为 12 像素（Logo和文字的间距） */
+}
+
+/* Logo图片样式 */
+.logo-image {
+    width: 40px; /* 设置图片宽度 40 像素 */
+    height: 40px; /* 设置图片高度 40 像素 */
+    border-radius: 50%; /* 将图片裁剪成圆形 */
+    object-fit: cover; /* 确保图片覆盖整个元素区域，可能会裁剪部分内容 */
+}
+
+/* Logo文字样式 */
+.logo-text {
+    font-size: 1.5rem; /* 字体大小为父元素字体大小的 1.5 倍 */
+    font-weight: 600; /* 字体粗细为 600 (半粗体) */
+    letter-spacing: 1px; /* 字符间距增加 1 像素 */
+}
+
+/* 主导航样式 */
+.main-nav {
+    width: 100%; /* 宽度占满父容器 */
+}
+
+/* 菜单列表样式 */
+.menu-list {
+    margin: 0; /* 移除默认外边距 */
+    padding: 0; /* 移除默认内边距 */
+    list-style: none; /* 移除列表项标记（如圆点） */
+    display: flex; /* 启用 Flexbox 布局 */
+    justify-content: center; /* 主轴（水平方向）上居中对齐子项 */
+    gap: 28px; /* 设置 Flex 容器中子项之间的间距为 28 像素 */
+    font-weight: 500; /* 字体粗细为 500 */
+    font-size: 0.9rem; /* 字体大小为父元素字体大小的 0.9 倍 */
+}
+
+/* 菜单链接样式 */
+.menu-list a {
+    line-height: 1; /* 行高等于字体大小，有助于垂直对齐 */
+    text-decoration: none; /* 移除文本下划线 */
+    color: #555; /* 设置链接文本颜色为中灰色 */
+    padding: 6px 4px; /* 上下内边距 6px，左右内边距 4px */
+    transition: color 0.2s ease, border-bottom 0.2s ease; /* 对颜色和下边框应用 0.2 秒的平滑过渡效果 */
+    border-bottom: 2px solid transparent; /* 默认下边框为 2px 宽，透明 */
+}
+
+/* 菜单链接悬停和激活状态样式 */
+.menu-list a:hover,
+.menu-list a.active {
+    color: #007bff; /* 鼠标悬停或激活状态下，文本颜色变为蓝色 */
+    border-bottom: 2px solid #007bff; /* 鼠标悬停或激活状态下，下边框显示为蓝色 */
+}
+
+/* ---------------------------------------------------------------- */
+/* 博客部分样式 */
+/* ---------------------------------------------------------------- */
+/* 博客区域顶部内边距 */
+#blog-section {
+    padding-top: 30px; /* 为博客区域增加顶部 30 像素的内边距 */
+}
+
+/* 博客分类导航样式 */
+.blog-categories {
+    width: 100%; /* 宽度占满父容器 */
+    max-width: 1400px; /* 最大宽度限制在 1400 像素 */
+    margin: 0 auto; /* 水平居中 */
+    padding: 1rem 0; /* 上下内边距 1rem，左右内边距 0 */
+    background-color: rgba(255, 255, 255, 0.9); /* 设置半透明白色背景 */
+    border-bottom: 1px solid #ddd; /* 底部边框为 1 像素的浅灰色实线 */
+    position: relative; /* 相对定位（作为可能内部元素的定位参照） */
+    z-index: 900; /* 堆叠层级 900 */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* 底部添加一个轻微的阴影 */
+    overflow-x: auto; /* 当内容超出容器宽度时，允许水平滚动 */
+    white-space: nowrap; /* 防止内容换行，确保所有分类标签显示在一行 */
+    -webkit-overflow-scrolling: touch; /* 针对 iOS 移动端，优化滚动体验（使用原生的平滑滚动） */
+}
+
+/* 博客分类列表样式 */
+.blog-categories-list {
+    display: flex; /* 启用 Flexbox 布局 */
+    justify-content: center; /* 主轴（水平方向）上居中对齐子项 */
+    padding: 0 20px; /* 左右内边距 20 像素 */
+    gap: 2rem; /* 设置 Flex 容器中子项之间的间距为 2rem */
+}
+
+/* 博客分类链接样式 */
+.blog-categories-list a {
+    display: inline-block; /* 设置为行内块级元素 */
+    padding: 0.5rem 0; /* 上下内边距 0.5rem，左右内边距 0 */
+    font-weight: 600; /* 字体粗细为 600 */
+    color: #555; /* 链接文本颜色为中灰色 */
+    text-decoration: none; /* 移除下划线 */
+    transition: color 0.2s; /* 对颜色应用 0.2 秒的平滑过渡 */
+}
+
+/* 博客分类链接悬停和激活状态样式 */
+.blog-categories-list a:hover,
+.blog-categories-list a.active {
+    color: #000; /* 鼠标悬停或激活状态下，文本颜色变为黑色 */
+}
+
+/* 博客文章卡片样式 */
+.post-card {
+    background-color: #fff; /* 背景色为白色 */
+    border-radius: 0px; /* 边框圆角为 0 像素（直角） */
+    overflow: hidden; /* 隐藏超出元素的子内容（主要针对图片圆角） */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 添加阴影效果 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 对位移和阴影应用 0.3 秒的平滑过渡 */
+    display: flex; /* 启用 Flexbox 布局 */
+    flex-direction: column; /* 设置 Flex 容器的主轴为垂直方向（从上到下） */
+    height: 100%; /* 高度占满父容器（用于网格布局中保持卡片高度一致） */
+}
+
+/* 博客文章卡片悬停效果 */
+.post-card:hover {
+    transform: translateY(-5px); /* 鼠标悬停时，沿 Y 轴向上移动 5 像素 */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12); /* 鼠标悬停时，加深阴影效果 */
+}
+
+/* 博客文章卡片图片样式 */
+.post-card img {
+    width: 100%; /* 图片宽度占满父容器 */
+    height: 200px; /* 图片固定高度 200 像素 */
+    object-fit: cover; /* 确保图片覆盖整个元素区域，可能会裁剪部分内容 */
+}
+
+/* 博客文章信息区域样式 */
+.post-info {
+    padding: 1rem; /* 内边距 1rem */
+    flex-grow: 1; /* 占据所有剩余的垂直空间 */
+    display: flex; /* 启用 Flexbox 布局 */
+    flex-direction: column; /* 主轴为垂直方向 */
+    justify-content: space-between; /* 子项在垂直方向上均匀分布，首尾项紧贴边缘 */
+}
+
+/* 博客文章元数据样式 */
+.post-meta {
+    display: flex; /* 启用 Flexbox 布局 */
+    align-items: center; /* 交叉轴（垂直方向）上居中对齐子项 */
+    justify-content: space-between; /* 主轴（水平方向）上均匀分布，首尾项紧贴边缘 */
+    font-size: 0.8rem; /* 字体大小为父元素字体大小的 0.8 倍 */
+    color: #777; /* 文本颜色为浅灰色 */
+    margin-bottom: 0.5rem; /* 底部外边距 0.5rem */
+}
+
+/* 作者信息样式 */
+.post-meta .author-info {
+    display: flex; /* 启用 Flexbox 布局 */
+    align-items: center; /* 交叉轴（垂直方向）上居中对齐子项 */
+    gap: 8px; /* 设置子项之间的间距为 8 像素 */
+}
+
+/* 作者头像样式 */
+.post-meta .author-avatar {
+    width: 24px; /* 设置头像宽度 24 像素 */
+    height: 24px; /* 设置头像高度 24 像素 */
+    border-radius: 50%; /* 将头像裁剪成圆形 */
+    object-fit: cover; /* 确保图片覆盖整个元素区域 */
+}
+
+/* 博客文章标题链接样式 */
+.post-title a {
+    font-size: 1.125rem; /* 字体大小 */
+    font-weight: 600; /* 字体粗细为 600 */
+    color: #333; /* 链接文本颜色为深灰色 */
+    text-decoration: none; /* 移除下划线 */
+    display: block; /* 设置为块级元素，使其占据整行 */
+    margin-bottom: 0.5rem; /* 底部外边距 0.5rem */
+}
+
+/* 博客文章摘要样式 */
+.post-excerpt {
+    font-size: 0.9rem; /* 字体大小 */
+    color: #666; /* 文本颜色为中等灰色 */
+    line-height: 1.4; /* 行高为字体大小的 1.4 倍 */
+}
+
+/* 阅读更多区域样式 */
+.read-more {
+    margin-top: 1rem; /* 顶部外边距 1rem */
+    display: flex; /* 启用 Flexbox 布局 */
+    justify-content: space-between; /* 主轴（水平方向）上均匀分布，首尾项紧贴边缘 */
+    align-items: center; /* 交叉轴（垂直方向）上居中对齐子项 */
+}
+
+/* ---------------------------------------------------------------- */
+/* 瀑布流画廊样式 */
+/* ---------------------------------------------------------------- */
+/* 主内容区域样式 */
+main {
+    padding: 0; /* 移除 main 元素的内边距 */
+}
+
+/* 照片画廊样式 */
+.photo-gallery {
+    width: 1222px; /* 固定为 7 列布局 */
+    max-width: 1222px;
+    margin: 0 auto; /* 水平居中 */
+    padding: 0 0 72px;
+    background: transparent; /* 背景透明 */
+}
+
+/* 瀑布流画廊容器样式 */
+#masonry-gallery {
+    position: relative; /* 相对定位（作为内部绝对定位元素的参照） */
+    width: 100%; /* 宽度占满父容器 */
+    margin: 0 auto; /* 让 Masonry 自身居中 */
+    padding: 20px 0 56px; /* 顶部和底部留白 */
+    box-sizing: border-box; /* 边框盒模型：确保 padding 和 border 不会计入元素的总宽度/高度 */
+    background: transparent; /* 背景透明 */
+}
+
+/* 画廊项目样式 */
+.gallery-item {
+    position: relative; /* 相对定位（用于内部 info 元素的绝对定位参照） */
+    box-sizing: border-box; /* 边框盒模型 */
+    width: 166px; /* 固定 7 列 */
+    margin-bottom: 10px; /* 与 Masonry gutter 保持一致 */
+    cursor: pointer; /* 鼠标悬停时显示手型指针 */
+    background: transparent;
+}
+
+.gallery-media {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    background: var(--placeholder-bottom, #8f8f8f);
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.18);
+    isolation: isolate;
+    transition: box-shadow 0.28s ease, transform 0.28s ease;
+}
+
+.gallery-placeholder {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.18), transparent 38%),
+        linear-gradient(180deg, var(--placeholder-top, #c9c9c9) 0%, var(--placeholder-bottom, #8f8f8f) 100%);
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-item.is-loaded .gallery-placeholder {
+    opacity: 0;
+    transform: scale(1.04);
+}
+
+/* 画廊区域样式 */
+#gallery-section {
+    background: transparent; /* 背景透明 */
+    min-height: 100vh; /* 最小高度设置为视口高度的 100% */
+}
+
+/* 照片信息样式 */
+.photo-info {
+    position: absolute; /* 绝对定位（相对于 .gallery-item） */
+    bottom: 0; /* 距离底部 0 */
+    left: 0; /* 距离左侧 0 */
+    right: 0; /* 距离右侧 0，使宽度占满父容器 */
+    background: linear-gradient(180deg, rgba(7, 9, 12, 0) 0%, rgba(7, 9, 12, 0.18) 26%, rgba(7, 9, 12, 0.76) 100%);
+    color: white; /* 文本颜色为白色 */
+    padding: 28px 18px 16px; /* 更像作品集的浮层 */
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: opacity 0.28s ease, transform 0.35s ease;
+    z-index: 2;
+    pointer-events: none; /* 禁用该元素上的所有鼠标事件（这样可以点击到它下方的图片） */
+}
+
+/* 画廊项目悬停时照片信息显示 */
+.gallery-item:hover .photo-info {
+    opacity: 1;
+    transform: translateY(0); /* 鼠标悬停时，沿 Y 轴移动 0（标题栏显现） */
+}
+
+/* 画廊项目悬停效果 */
+.gallery-item:hover .gallery-media {
+    box-shadow: 0 26px 56px rgba(0, 0, 0, 0.24);
+    transform: translateY(-2px);
+}
+
+/* Masonry网格样式 */
+.masonry-grid {
+    margin: 0 auto; /* 水平居中 */
+    background: transparent; /* 背景透明 */
+}
+
+/* ---------------------------------------------------------------- */
+/* Lightbox 模态框样式 (已简化) */
+/* ---------------------------------------------------------------- */
+/* 灯箱模态框样式 */
+#lightbox-modal {
+    position: fixed; /* 固定定位，相对于视口 */
+    inset: 0; /* 快捷方式，等同于 top: 0; right: 0; bottom: 0; left: 0; 使其覆盖整个视口 */
+    background: rgb(255, 255, 255); /* 背景色为白色 */
+    display: flex; /* 启用 Flexbox 布局 */
+    align-items: center; /* 交叉轴（垂直方向）上居中对齐子项 */
+    justify-content: center; /* 主轴（水平方向）上居中对齐子项 */
+    z-index: 2000; /* 堆叠层级 2000，确保在最上层 */
+    opacity: 0; /* 初始状态：完全透明 */
+    visibility: hidden; /* 初始状态：隐藏元素（不响应鼠标事件） */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* 对透明度和可见性应用 0.3 秒的平滑过渡 */
+    padding: 20px; /* 内边距 20 像素 */
+    box-sizing: border-box; /* 边框盒模型 */
+}
+
+/* 灯箱模态框可见状态 */
+#lightbox-modal.visible-modal {
+    opacity: 1; /* 添加 .visible-modal 类时，变为完全不透明 */
+    visibility: visible; /* 添加 .visible-modal 类时，变为可见 */
+}
+
+/* 灯箱内容包装器样式 */
+.lightbox-content-wrapper {
+    position: relative; /* 相对定位（作为内部绝对定位元素的参照） */
+    width: 100%; /* 宽度占满父容器 */
+    height: 100%; /* 高度占满父容器 */
+    display: flex; /* 启用 Flexbox 布局 */
+    flex-direction: column; /* 主轴为垂直方向 */
+    align-items: center; /* 交叉轴（水平方向）上居中对齐子项 */
+    justify-content: center; /* 主轴（垂直方向）上居中对齐子项 */
+}
+
+/* ---------------------------------------------------------------- */
+/* Lightbox 模态框样式 (图片淡入优化) */
+/* ---------------------------------------------------------------- */
+
+/* 1. Lightbox 图片基础样式和过渡效果 */
+#lightbox-image {
+    max-width: 100%; /* 最大宽度为100% */
+    max-height: calc(100% - 80px); /* 最大高度为视口高度减去80px */
+    object-fit: contain; /* 保持图片比例，完整显示在容器内 */
+    display: block; /* 块级显示 */
+    box-shadow: none; /* 无阴影 */
+    
+    /* 关键优化：初始状态和过渡 */
+    opacity: 0; /* 初始透明度为0 */
+    transform: scale(1.02); /* 初始缩放为1.02 */
+    transition: opacity 0.8s ease-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); /* 透明度和缩放过渡效果 */
+}
+
+/* 2. 图片加载完成状态 */
+#lightbox-image.loaded {
+    opacity: 1; /* 加载完成后透明度为1 */
+    transform: scale(1); /* 加载完成后缩放为1 */
+}
+
+/* -- 标题区域 -- */
+.lightbox-caption-area {
+    position: absolute; /* 绝对定位 */
+    bottom: 1px; /* 距离底部1像素 */
+    left: 50%; /* 距离左侧50% */
+    transform: translateX(-50%); /* 水平居中 */
+    width: auto; /* 宽度自适应 */
+    max-width: 80%; /* 最大宽度为80% */
+    padding: 5px; /* 内边距5像素 */
+    text-align: center; /* 文本居中 */
+}
+
+/* -- 标题区域文字部分-- */
+#lightbox-title {
+    color: #333; /* 文本颜色为深灰色 */
+    font-size: 15px; /* 字体大小15像素 */
+}
+
+/* -- "查看原图" 按钮 (已简化) -- */
+#view-original {
+    position: fixed; /* 固定定位 */
+    top: 22px; /* 距离顶部22像素 */
+    left: 30px; /* 距离左侧30像素 */
+    z-index: 2002; /* 堆叠层级2002 */
+    color: #333; /* 文本颜色为深灰色 */
+    font-size: 16px; /* 字体大小16像素 */
+    cursor: pointer; /* 鼠标指针为手型 */
+    transition: transform 0.2s ease; /* 变换过渡效果 */
+}
+
+/* -- 关闭按钮 -- */
+#close-btn {
+    position: fixed; /* 固定定位 */
+    top: 20px; /* 距离顶部20像素 */
+    right: 30px; /* 距离右侧30像素 */
+    color: #333; /* 文本颜色为深灰色 */
+    font-size: 32px; /* 字体大小32像素 */
+    font-weight: 300; /* 字体粗细300 */
+    cursor: pointer; /* 鼠标指针为手型 */
+    line-height: 1; /* 行高为1 */
+    transition: transform 0.2s ease; /* 变换过渡效果 */
+    z-index: 2002; /* 堆叠层级2002 */
+}
+/* 关闭按钮悬停效果 */
+#close-btn:hover {
+    transform: scale(1.2); /* 悬停时放大1.2倍 */
+}
+
+/* -- 左右导航按钮 -- */
+#prev-button, #next-button {
+    position: fixed; /* 固定定位 */
+    top: 50%; /* 距离顶部50% */
+    transform: translateY(-50%); /* 垂直居中 */
+    color: rgba(0, 0, 0, 0.4); /* 半透明黑色 */
+    font-size: 48px; /* 字体大小48像素 */
+    font-weight: 100; /* 字体粗细100 (极细体) */
+    cursor: pointer; /* 鼠标指针为手型 */
+    background: transparent; /* 背景透明 */
+    border: none; /* 无边框 */
+    padding: 10px; /* 内边距10像素 */
+    line-height: 1; /* 行高为1 */
+    z-index: 2001; /* 堆叠层级2001 */
+    transition: color 0.2s ease, transform 0.2s ease; /* 颜色和变换过渡效果 */
+    user-select: none; /* 防止用户选择文本 */
+}
+
+/* 上一张按钮位置 */
+#prev-button { left: 20px; } /* 距离左侧20像素 */
+/* 下一张按钮位置 */
+#next-button { right: 20px; } /* 距离右侧20像素 */
+
+/* 导航按钮悬停效果 */
+#prev-button:hover, #next-button:hover {
+    color: rgba(0, 0, 0, 0.8); /* 悬停时颜色加深 */
+    transform: translateY(-50%) scale(1.1); /* 悬停时放大并保持垂直居中 */
+}
+
+/* 导航按钮禁用状态 */
+#prev-button:disabled, #next-button:disabled {
+    opacity: 0.1; /* 禁用状态下透明度降低 */
+    cursor: default; /* 鼠标指针为默认 */
+    pointer-events: none; /* 禁用所有鼠标事件 */
+}
+
+/* ---------------------------------------------------------------- */
+/* 瀑布流画廊优化样式 */
+/* ---------------------------------------------------------------- */
+/* 隐藏滚动条 */
+#masonry-gallery::-webkit-scrollbar { display: none; } /* 隐藏 WebKit 浏览器滚动条 */
+#masonry-gallery { -ms-overflow-style: none; scrollbar-width: none; } /* 隐藏 IE/Edge 和 Firefox 浏览器滚动条 */
+.gallery-item { float: left; } /* 使画廊项浮动，瀑布流布局需要 */
+/* 图片加载中状态 */
+.gallery-item.loading .gallery-placeholder { opacity: 1; } /* 加载中保持占位层可见 */
+/* 图片过渡效果 */
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(1.015);
+    transition: opacity 0.38s ease, transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+} /* 只让图片自己渐入上浮，避免 Masonry item 抖动 */
+/* 图片加载完成动画 */
+.gallery-item img.loaded {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+} /* 图片加载完成后，从下往上淡入 */
+.gallery-item.is-loaded:hover img.loaded {
+    transform: translate3d(0, 0, 0) scale(1.018);
+}
+
+/* 加载指示器样式 */
+.spinner {
+    position: fixed; /* 固定定位 */
+    top: 50%; /* 距离顶部50% */
+    left: 50%; /* 距离左侧50% */
+    width: 40px; /* 宽度40像素 */
+    height: 40px; /* 高度40像素 */
+    margin: -20px 0 0 -20px; /* 通过负边距实现居中 */
+    border: 4px solid rgba(0, 0, 0, 0.2); /* 边框为4px宽的浅黑色实线 */
+    border-top-color: rgba(0, 0, 0, 0.8); /* 顶部边框颜色为深黑色，用于创建旋转效果 */
+    border-radius: 50%; /* 圆形 */
+    animation: spin 1s linear infinite; /* 旋转动画 */
+    z-index: 3000; /* 堆叠层级3000 */
+    display: none; /* 默认隐藏 */
+}
+/* 旋转动画定义 */
+@keyframes spin {
+    to { transform: rotate(360deg); } /* 从0度旋转到360度 */
+}
+
+/* =========================================
+   文章详情页样式 (Article Detail)
+   ========================================= */
+
+/* 文章容器：缩小与视窗的左右边距 */
+.article-content {
+    max-width: 95%;
+    margin: 2rem auto; /* 上下2rem，左右自动 */
+    padding: 2rem 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 0px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.article-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.article-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.article-meta {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.article-cover {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0px;
+    margin-bottom: 2rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .article-title { font-size: 2rem; }
+    .article-content {
+        padding: 1.5rem 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        max-width: 98%;
+    }
+    .article-cover { height: 250px; }
+}
+
+@media (min-width: 1200px) {
+    .article-content { max-width: 92%; }
+}
+
+/* =========================================
+   文章正文排版 (Typography)
+   ========================================= */
+
+.article-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.article-body h2 {
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    color: #333;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
+
+.article-body p {
+    margin-bottom: 1.5rem;
+}
+
+.article-body strong {
+    font-weight: bold;
+    font-size: 1.15em;
+    color: #444;
+}
+
+/* 列表样式 */
+.article-body ul,
+.article-body ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.article-body li {
+    margin-bottom: 0.5rem;
+}
+
+/* 代码块 */
+.article-body pre {
+    background-color: #f5f5f5;
+    border-radius: 0px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+}
+
+.article-body code {
+    background-color: #f5f5f5;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0px;
+    font-family: 'Courier New', monospace;
+}
+
+/* 引用 */
+.article-body blockquote {
+    border-left: 4px solid #007bff;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #555;
+}
+
+/* 内容图片 */
+.content-image,
+.content-image-flex {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 1rem auto 2rem;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.multiline-text {
+    white-space: pre-line;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+/* =========================================
+   目录 (TOC) 样式
+   ========================================= */
+.toc-container {
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.toc-container h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
+
+.toc-container ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-container li {
+    margin-bottom: 0.5rem;
+}
+
+.toc-container li a {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.toc-container li a:hover {
+    text-decoration: underline;
+}
+
+.toc-level-1 {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.toc-level-2 {
+    margin-left: 1.5rem;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.config-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.config-table th,
+.config-table td {
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    vertical-align: top;
+}
+
+.config-table th {
+    background-color: #f5f5f5;
+    text-align: left;
+    font-weight: 600;
+}
+
+.config-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.config-table tfoot td {
+    background-color: #f9f9f9;
+}
+
+.site-footer {
+    display: flex;
+    align-items: flex-end;   /* 两段都贴底 */
+    position: relative;
+    padding: 12px 20px;
+}
+
+.footer-left {
+    margin: 0;
+}
+
+.footer-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+}
+
+.article-video {
+    max-width: 500px;     /* 限制最大宽度 */
+    margin: 24px auto;    /* 水平居中 */
+}
+
+.article-video video {
+    width: 100%;
+    height: auto;         /* 保持纵横比 */
+}
+
+.image-gallery {
+    display: flex; /* 启用 Flex 布局 */
+    gap: 10px;     /* 图片之间的间隔，你可以根据需要调整 */
+    justify-content: space-between; /* 或者 center, space-around 等，这里让它们均匀分布 */
+    max-width: 100%; /* 限制整个容器的最大宽度，以便在较大的屏幕上有更好的效果 */
+    margin: 0rem auto; /* 控制外边距 */
+}
+
+.photo-posts {
+    max-height: 700px;
+}
+
+.image-posts{
+    height: 500px;
+    width: auto;
+    /* 居中样式 */
+    display: block;
+    margin: 0 auto;
+    
+    /* 点击展开原图样式 */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.image-posts-between {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.image-posts-between img {
+    height: 220px;
+    width: auto;
+    object-fit: cover;
+}
+
+.a {
+  color: blue;
+  cursor: pointer;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+  
+  &::before {
+      content: "";
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      margin-right: 0.35em;
+      background: url("public/GUI/forward.gif") no-repeat center;
+      background-size: contain;
+      vertical-align: -0.1em;
+  }
+}
+
+.image-galleryy {
+    display: flex; /* 启用 Flex 布局 */
+    gap: 10px;     /* 图片之间的间隔，你可以根据需要调整 */
+    justify-content: space-around; /* 或者 center, space-around 等，这里让它们均匀分布 */
+    max-width: 100%; /* 限制整个容器的最大宽度，以便在较大的屏幕上有更好的效果 */
+    margin: auto; /* 控制外边距 */
+}
+
+.a-back{
+    color: blue;
+    cursor: pointer;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+    
+    &::before {
+        content: "";
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        margin-right: 0.35em;
+        background: url("public/GUI/back.gif") no-repeat center;
+        background-size: contain;
+        vertical-align: -0.1em;
+    }
+}
+
+.a-dir{
+    color: blue;
+    cursor: pointer;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+    
+    &::before {
+        content: "";
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        margin-right: 0.35em;
+        background: url("public/GUI/dir.gif") no-repeat center;
+        background-size: contain;
+        vertical-align: -0.1em;
+    }
+}

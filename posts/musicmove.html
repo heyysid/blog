@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">歌单迁移｜网易云 to Spotify/Apple Music｜fate.Tampermonkey、Tune My Music</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/sun.jpg" alt="a" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    <strong>Q:支持Spotify吗？</strong>A：yes
+
+                    <strong>所使用的三种工具：</strong><a href="http://link.zhihu.com/?target=https%3A//www.tunemymusic.com/zh-cn/" style="margin-left: 0px; text-decoration: underline; color: blue;">1、[Tune My Music]</a>（需要科学上网）
+                    2、Chrome
+                    3、猴油脚本。
+
+                    <strong>整体思路：</strong>
+                    下文介绍的一款猴油脚本会自动抓取网易云歌单里的歌曲名称、歌手、专辑等信息，并以.txt格式储存。在Tune My Music上传这个文件，他可以在指定的音乐平台创建copy的歌单**
+
+                    由于是自动抓取音乐的名称和歌手等信息，一些独家或各个平台内歌名不统一的音乐会提示导入失败。返回导入失败的列表，可以手动添加或修改名称。导入失败的概率大约在40/500首。
+                    <div class="image-gallery">
+                                                                   <img src="../photos/tunemymusic.png" class="content-image-flex">
+                                                               </div>
+                    <strong>>>>开始</strong>
+
+                    第一步：安装运行自动抓取脚本的平台——猴油脚本，进入它的官网<a href="https://www.tampermonkey.net/scripts.php" style="margin-left: 0px; text-decoration: underline; color: blue;">[https://www.tampermonkey.net/scripts.php]</a>下载安装
+                    
+                    第二步：在猴油脚本内搜索「导出网易云音乐歌单」，然后点击会跳转到GitHub仓库，我们直接找到并打开作者的<a href="github.com/c4rO-0/TampermonkeyScript/tree/master/Mexporter" style="margin-left: 0px; text-decoration: underline; color: blue;">[Mexporter]</a>文件夹，点击“导出网易云音乐歌单”然后点击raw按钮运行/安装脚本。也可以尝试通过URL安装，或者复制全部代码自己添加。
+                    <div class="image-gallery">
+                                                                   <img src="../photos/tunemusic.jpeg" class="content-image-flex">
+                                                               </div>
+                    <div class="image-gallery">
+                                                                   <img src="../photos/tunemusic1.jpeg" class="content-image-flex">
+                                                               </div>
+                    
+                    第三部：确认安装完成后，登录网页版网易云，进入需要导出的歌单，点击导出歌单
+
+
+                    第四步：成功导出歌单后进入迁移工具<a href="http://link.zhihu.com/?target=https%3A//www.tunemymusic.com/zh-cn/" style="margin-left: 0px; text-decoration: underline; color: blue;">[https://www.tunemymusic.com/zh-cn/]</a>
+
+
+                    选择并上传文件
+
+
+                    选择目的地，Apple music
+
+
+                    然后等待完成就好了
+                </div>
+            </div>
+            
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+

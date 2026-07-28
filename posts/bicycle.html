@@ -1,0 +1,322 @@
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+        <title>ScienceOutdoors_FPV</title>
+        <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'Verdana', 'sans-serif'],
+                        },
+                        colors: {
+                            'primary-blue': '#007bff',
+                            'dark-gray': '#333333',
+                            'light-bg': '#f5f5f5',
+                        }
+                    }
+                }
+            }
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <body>
+        <header class="header">
+            <div class="site-title">
+                <a href="../index.html" class="logo-link">
+                    <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                    <span class="logo-text">ScienceOutdoors_FPV</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul class="menu-list">
+                    <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                    <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                    <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                    <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                    <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                    <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                    <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                    <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <article class="article-content">
+                <header class="article-header">
+                    <h1 class="article-title">自组单车计划</h1>
+                    <div class="article-meta">
+                        <span>作者：@ScienceOutdoors_FPV</span> ·
+                        <span>发布日期：2024-02-20</span> ·
+                        <span>分类：日志</span>
+                    </div>
+                    <img src="../photos/fengmian/单车.jpeg" alt="null" class="article-cover">
+                </header>
+                
+                <div id="toc-container" class="toc-container">
+                  <h2>📑 目录</h2>
+                  <ul id="toc-list"></ul>
+                </div>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const tocList = document.getElementById("toc-list");
+                        
+                        const headers = document.querySelectorAll(
+                            ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                        );
+                        
+                        headers.forEach((header, index) => {
+                            if (header.tagName === 'STRONG' && header.closest('h2')) {
+                                return;
+                            }
+                            
+                            const anchorId = "section-" + index;
+                            header.setAttribute("id", anchorId);
+                            
+                            header.classList.add("toc-item");
+
+                            const li = document.createElement("li");
+                            
+                            if (header.tagName === 'H2') {
+                                li.classList.add("toc-level-1");
+                            } else {
+                                li.classList.add("toc-level-2");
+                            }
+                            
+                            const a = document.createElement("a");
+                            a.href = "#" + anchorId;
+                            a.textContent = header.textContent;
+                            a.style.color = "#007bff";
+                            a.style.textDecoration = "none";
+                            a.onmouseover = () => (a.style.textDecoration = "underline");
+                            a.onmouseout = () => (a.style.textDecoration = "none");
+
+                            li.appendChild(a);
+                            tocList.appendChild(li);
+                        });
+                    });
+                </script>
+                
+                <div class="article-body">
+                    <div class="multiline-text">
+                        半年前我的单车被偷了:( 而且再也找不回来
+
+                        同时我一直想尝试自己动手自组一辆单车，于是在被偷走单车的这半年时间里，一有空闲时间我就看各种评测，研究怎样花最少的钱选到最高的配置。结果越是研究越纠结焦虑，举棋不定。
+
+                        直到前几天，我从网上看到了一句让我瞬间透彻的话：性能是自行车运动中最不重要的参数，骑行不应当变成一种功利的社交，不需要买一辆不符合自己需求的豪车做入场券。
+
+                        是的，自行车运动最要紧的是运动，而自组的最大乐趣是折腾，根据自己需求在心仪的价格范围内选购配件并组装...
+                        
+                        上面是一些无关紧要的，我单纯想说出来的话，接下来进入正文
+                        
+                        <strong>我的信息</strong>
+
+                        身高：182cm
+
+                        身体下肢柔韧性：差
+
+                        身体蛋高/身体堆高：83cm
+
+                        身体跨高：90cm
+
+                        用途：大于4小时的长途旅行、城市通勤、买菜载货
+
+                        <div style="display: flex; gap: 40px; align-items: flex-start;">
+                            <div style="flex: 1;">
+                                <strong>车架选择：</strong><br>
+                                车架选择：TQIQT-54码-旅行车-钢架<br>
+                                车架尺寸：54码<br>
+                                车架堆高（H/STACK值）：<br>
+                                车架跨高（J/STAND OVER值/站立）：<br>
+                                车架前伸量（G/REACH）：<br>
+                                车架水平上管长度（B）：<br>
+                                车架上管风格（倾斜/水平/压缩/微压缩）：<br>
+                                车架风格（耐力/竞技）：耐力
+                            </div>
+
+                            <div style="flex: 0.5 0 auto;">
+                                <strong>车架资料：</strong><br>
+                                <img src="../public/bicycle.jpg" style="height: 500px; width: auto;">
+                            </div>
+                        </div>
+                        
+                        <strong>配置单：</strong>
+
+                        <table class="config-table">
+                            <thead>
+                                <tr>
+                                    <th>类目</th>
+                                    <th>配置</th>
+                                    <th>备选</th>
+                                    <th>价格（元）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>车架 + 前叉</td>
+                                    <td>TQIQT-54码-旅行车-钢架；前叉 700C*45C 碳纤维 快拆 开档100mm</td>
+                                    <td></td>
+                                    <td>1600</td>
+                                </tr>
+                                <tr>
+                                    <td>变速</td>
+                                    <td>顺泰 SRX Pro 1×12速 油碟小套套件</td>
+                                    <td>蓝图 GR9 油碟 碳纤维套件</td>
+                                    <td>1400</td>
+                                </tr>
+                                <tr>
+                                    <td>轮组</td>
+                                    <td>MEROCA 700C 铝合金（前20 / 后24 幅条）（前2 / 后4 培林）</td>
+                                    <td>KOOZER CX1800 桶轴碟刹砾石轮组（28 / 28）（2 / 4）</td>
+                                    <td>710</td>
+                                </tr>
+                                <tr>
+                                    <td>内外胎</td>
+                                    <td>世文马拉松 700C 7级防刺 + 世文内胎</td>
+                                    <td></td>
+                                    <td>400</td>
+                                </tr>
+                                <tr>
+                                    <td>车把</td>
+                                    <td>UNO FL12</td>
+                                    <td></td>
+                                    <td>60</td>
+                                </tr>
+                                <tr>
+                                    <td>牙盘 + 中轴 + 曲柄</td>
+                                    <td>SENICX 驭勇 FM2 套件 34T 170mm</td>
+                                    <td>SENICX 驭勇 GR3 套件 34T 170mm</td>
+                                    <td>158</td>
+                                </tr>
+                                <tr>
+                                    <td>链条</td>
+                                    <td>禧玛诺 CUES U6000 116节</td>
+                                    <td></td>
+                                    <td>50</td>
+                                </tr>
+                                <tr>
+                                    <td>脚踏</td>
+                                    <td>景晔 铝合金 培林轴承脚踏 K203</td>
+                                    <td>宏光 VP-566</td>
+                                    <td>80</td>
+                                </tr>
+                                <tr>
+                                    <td>碟片</td>
+                                    <td>禧玛诺</td>
+                                    <td></td>
+                                    <td>50</td>
+                                </tr>
+                                <tr>
+                                    <td>坐垫</td>
+                                    <td>女士中间镂空坐垫</td>
+                                    <td></td>
+                                    <td>210</td>
+                                </tr>
+                                <tr>
+                                    <td>飞轮</td>
+                                    <td>日晖 11速 42T</td>
+                                    <td></td>
+                                    <td>100</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;"><a>合计</a></td>
+                                    <td><a>4900</a></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        
+                        <strong>选择思路</strong>
+
+                        身体跨高与蛋高的区别：前者是胯骨到脚底的长度，后者是蛋蛋到脚底的长度
+
+                        车架的堆高（H/STACK值）越高代表车架越偏向于压缩，骑姿放松，适合耐力和柔韧性差的；STACH越低代表车架偏向于水平，骑姿趴下，适合竞技和柔韧性较好的
+
+                        水平车架的跨高选择建议：身高跨高-车架跨高应当>2.5CM
+
+                        压缩车架的跨高选择建议：身高跨高-车架跨高应当>4CM
+
+                        车架的前伸量（G/REACH）决定了骑行时的身体姿态。前伸量越长，则屁股与车把的距离越远，在骑行时身体向前压得更低，或手臂伸得更长，此时骑姿为竞技，车架定义为竞技车架，适合柔韧性好的选手。前伸量短则与之相反，为压缩车架，适合耐久和柔韧性不好的选手。
+
+                        水平上管长度（B）代表坐垫到车把的距离，其同样能反映车架的类型
+
+                        柔韧性的评估方法：平躺在地面，身体保持静止不动（主要是腰部），一条腿能够抬起至与地面90度为优秀，45度角为一般，低于45度为柔韧性差
+                        <div class="image-gallery">
+                            <img src="../public/bicycle1.png" style="height: 500px;">
+                        </div>
+                        *如果自身柔韧性不好却选择了趴得更低更竞技形的车架，会非常容易骑行时腰痛（亲身经历），特别是应对超过2小时的长时间骑行时。也会影响操控。
+
+                        *如果身体尺寸正好在两个尺码之间，可以根据柔韧性和需求进行选择，柔韧性好的可以选择两者之间的小车架，柔韧性差的建议选择大车架。虽然可以通过后期给车把加垫圈提高堆高值，但垫圈能加多少？会不会影响稳定性？
+
+                        *前伸量的选择除了柔韧性和用途，也与臂长有关
+
+                        *大小腿长度比例也会影响车架和坐管的选择
+
+                        *车架的跨高J值，不建议低于身体的stack值
+
+                         >>> 参考资料：[https://www.bilibili.com/video/BV1mK4y147Au](https://www.bilibili.com/video/BV1mK4y147Au?t=443.9)
+
+                        👇这是适用于身高很高、柔韧性非常不错，并且追求速度的选手的一种特制化的车架
+                        <div class="image-gallery">
+                                                <img src="../public/bicycle3.png" style="height: 500px;">
+                                            </div>
+                        <aside>
+                        🚴🏼 STR值：STR值=车架前伸量➗车架堆高，STR值数越高，越偏向于耐力，适合柔韧性差
+
+                        0.885✖️身体蛋高=五通到坐垫的长度（受到大小腿长度比例影响）#例如我的蛋高82cm✖️0.885=72.4cm
+
+                        0.69✖️身体蛋高=适合的车架堆高stack值
+
+                        C值（-2、0、3，单位为cm），其中-2为竞技，0为普通，3为舒适
+
+                        根据用途，选择合适的C值，使用合适的堆高➕对应C值，等于最终适合的堆高stack值。#例如我的蛋高82cm✖️0.69=56.58，56.58±3≃大致上适合我的车架堆高为54.58～59.58cm
+
+                        资料来源[https://www.bilibili.com/video/BV1st4y1873K](https://www.bilibili.com/video/BV1st4y1873K?t=707.2)
+                        </aside>
+                        
+                        <strong>自行车相关阅读推荐：</strong>
+
+                        Shimano山地自行车变速系统介绍-20240129 - 我们都是好孩子的文章 - 知乎
+                        https://zhuanlan.zhihu.com/p/680371181
+
+                        公路车变速系统Shimano各级别产品介绍-20240126 - 我们都是好孩子的文章 - 知乎
+                        https://zhuanlan.zhihu.com/p/679985677
+
+                        初识自行车各个部件的结构-20240124 - 我们都是好孩子的文章 - 知乎
+                        https://zhuanlan.zhihu.com/p/679322102
+
+                        《单车圣经》
+
+                        国外知名自行车厂商-2024-01-22 - 我们都是好孩子的文章 - 知乎
+                        https://zhuanlan.zhihu.com/p/679102390
+
+                        图文详解自行车的5大组成部分-20240120 - 我们都是好孩子的文章 - 知乎
+                        https://zhuanlan.zhihu.com/p/678716279
+
+                        一文说清山地车的发展历程-20240118 - 我们都是好孩子的文章 - 知乎
+                        https://zhuanlan.zhihu.com/p/678371183
+                    </div>
+                </div>
+                
+                <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                    返回博客列表
+                </a>
+            </article>
+        </main>
+        <footer class="site-footer">
+            <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+            <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+        </footer>
+        
+    </body>
+    </html>
+

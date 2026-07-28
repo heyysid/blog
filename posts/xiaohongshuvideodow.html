@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">通过jq命令行工具解析小红书无水印视频</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/sun.jpg" alt="a" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    <h2>通过jq命令行工具解析小红书无水印视频</h2>
+                    <pre><code>
+                        import requests
+                        import re
+                        import json
+
+                        link = 'http://xhslink.com/FvI7oE'
+                        #将链接替换为需要下载的小红书视频URL
+
+                        def work(url: str) -> dict:
+                            r = requests.get(url)
+                            if r.status_code == 200:
+
+                                url_with_watermark = re.findall(r'&lt;meta name="og:video" content="(.*?)"&gt;', r.text)
+                                if url_with_watermark:
+                                    url_with_watermark = url_with_watermark[0]
+                                else:
+                                    url_with_watermark = None
+
+                                key = re.findall(r'{\"originVideoKey\":\".*?\"}', r.text)
+                                if key:
+                                    url_without_watermark = "http://sns-video-bd.xhscdn.com/" + json.loads(key[0])["originVideoKey"]
+                                    #"http://sns-video-bd.xhscdn.com/"后为抓取的无水印链接
+                                else:
+                                    url_without_watermark = None
+                                return {
+                                    "url_with_watermark": url_with_watermark,
+                                    "url_without_watermark": url_without_watermark
+                                }
+                            else:
+                                print(f"status code: {r.status_code}")
+                                return {
+                                    "url_with_watermark": None,
+                                    "url_without_watermark": None
+                                }
+
+                        print(work(link))
+
+                        //脚本来自:iecho.cc
+                    </code></pre>
+                    20240329更新：这个脚本似乎被墙了，可能是因为小红书代码迭代的变动，现在仍可以手动操作，步骤是：
+
+                    //进入视频详情页，查看网页源代码，全局查找`originVideoKey`，复制`"originVideoKey":"spectrum\u002F1040g35830vr3bg1860005o6qr60o57fr83a7isg"`字段
+
+                    //其中的`\u002F`代表他是Unicode编码的`/`，可以用`jq`命令来解码
+
+                    //回到终端，启用jq命令，将上一步复制的字段拼接在下方代码对应的部分
+                    <pre><code>
+                        echo '{"originVideoKey":"spectrum\u002F1040g0jg3103tbmv45u005n287aa4fok1bgg0ktg"}' | jq
+                        </code></pre>
+                    得到
+                    <pre><code>
+                        {
+                          "originVideoKey": "spectrum/1040g0jg3103tbmv45u005n287aa4fok1bgg0ktg"
+                        }
+                        </code></pre>
+                    将其中的`"spectrum/1040g0jg3103tbmv45u005n287aa4fok1bgg0ktg"` 拼接在 `https://sns-video-bd.xhscdn.com/`尾部。得到无水印视频URL。
+
+                    例如
+
+                    `https://sns-video-bd.xhscdn.com/spectrum/1040g0jg3103tbmv45u005n287aa4fok1bgg0ktg`
+
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+

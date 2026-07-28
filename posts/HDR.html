@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">HDR（高动态范围）图片制作的资料和工具快查表</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：HDR</span>
+                </div>
+                <img src="../photos/fengmian/HDR.jpeg" alt="null" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container" style="margin-bottom:0;">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    <h2>前言</h2>
+                    <blockquotee style="font-style: italic; color: #555;">我不是开发者，只是一个对HDR内容制作感兴趣的业余爱好者，部分概念和标准只是了解皮毛，一知半解，利用空闲时间收集了很多HDR相关信息和工具，并整理为本篇文章（或许应该叫大杂烩）。
+
+                    本页面介绍的HDR(高动态范围)不是HDR摄影,前者是显示技术,后者是一种摄影、后期技术(HDR合成和包围曝光)当然HDR(高动态范围)可以应用于摄影,但它更多是与显示技术相关。</blockquotee>
+                    <h2>HDR发展进程(完全不完整的时效简讯)</h2>
+                    @2025年4月25日 看到一名群友用鸿蒙版微信发的视频原图，居然有HDR效果，HLG曲线，Windows看是过爆的，Macos看还不错，这是视频:<a href='https://drive.google.com/file/d/1umx6sEZBtLH8SCg-MTAFa2MP3A9h3Q6V/view?usp=drive_link' class='a'>[Google云盘下载URL]</a>
+                    <div class="article-video">
+                        <video controls preload="metadata" style="width:100%; max-width:900px;">
+                            <source src="../video/HDR示例视频.mp4" style="max height:500px;"type="video/mp4">
+                            你的浏览器不支持视频播放
+                        </video>
+                    </div>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    2024年5月13日 逛wiki的时候关注到了一场有关HDR的行业会议，参会者有linux、AMD等公司的技术高层，虽然没有公布他们要讨论什么具体的内容,不过大概率是底层技术,显示器硬件适配相关,
+                    查看原帖作者：<a href='https://github.com/melissawen/2024linuxdisplayhackfest/wiki' class='a'>https://github.com/melissawen/2024linuxdisplayhackfest/wiki</a>
+                    查看原帖新闻：<a href='https://events.pages.igalia.com/linuxdisplaynexthackfest/' class='a'>https://events.pages.igalia.com/linuxdisplaynexthackfest/</a>
+                    查看参会者名单：<a href='https://github.com/melissawen/2024linuxdisplayhackfest/wiki/list-of-participants' class='a'>https://github.com/melissawen/2024linuxdisplayhackfest/wiki/list-of-participants</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    2024年5月10日 人肉发现小红书支持HDR视频，通过<a href='https://lizhongping.asia/article/xiaohongshuvideodow' class='a'>[解析小红书视频]</a>工具扒下原视频后再通过EXIFTOOL查看其规格，发现是HLG、4:2:0、60FPS、HEVC、10bit，色彩溢出很严重 <a href='https://www.xiaohongshu.com/explore/663b7857000000001e0339fc' class='a'>查看视频原帖[「HDR」]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （20240401）微信视频号可以支持PQ+H265（hevc）+444（HDR10）编码的HDR视频了。但目前444的H265视频只有pixelmator能够制作
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （20240320）👇由小米和华为等公司牵头的**国内团体技术标准方案**和文档（总结：国内图片HDR的技术标准要统一了，不跟果子统一）
+                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/268393ad-5b7a-4530-a73d-432df5f96ad1/%E9%AB%98%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4(HDR)%E9%9D%99%E6%80%81%E5%9B%BE%E5%83%8F_%E7%AC%AC_1_%E9%83%A8%E5%88%86-%E5%8F%8C%E5%B1%82%E6%A0%BC%E5%BC%8F.pdf' class='a-dir'>[高动态范围(HDR)静态图像 第 1 部分-双层格式.pdf]</a>
+                    <a href='https://mp.weixin.qq.com/s/eVrxQy4IGISzskl4S1kMYQ' class='a'>[关于《高动态范围（HDR）静态图像 第 2 部分：单层格式》等 4 项团体标准立项及征集起草单位的公告]</a>
+                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/16626af5-e217-42eb-a654-c0f162cb5668/%E3%80%8A%E9%AB%98%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4%EF%BC%88HDR%EF%BC%89%E9%9D%99%E6%80%81%E5%9B%BE%E5%83%8F_%E7%AC%AC2%E9%83%A8%E5%88%86%EF%BC%9A%E5%8D%95%E5%B1%82%E6%A0%BC%E5%BC%8F%E3%80%8B.pdf' class='a-dir'>[《高动态范围（HDR）静态图像 第2部分：单层格式》.pdf]</a>
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/7920cac8-6917-4d47-9e76-401e5acb800d/%E3%80%8A%E4%B8%89%E7%BB%B4%E5%A3%B0%E9%9F%B3%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83_%E7%AC%AC2-2%E9%83%A8%E5%88%86%EF%BC%9A%E5%BA%94%E7%94%A8%E6%8C%87%E5%8D%97_%E5%AA%92%E4%BD%93%E6%A0%BC%E5%BC%8F%E3%80%8B.pdf ' class='a-dir'>[《三维声音技术规范 第2-2部分：应用指南 媒体格式》.pdf]</a>
+                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/5c9d9f64-726a-4538-a830-0f697e99ae75/%E3%80%8A%E8%B6%85%E9%AB%98%E6%B8%85%E6%98%BE%E7%A4%BA%E5%99%A8%E5%B1%8F%E5%B9%95%E5%8F%91%E5%A3%B0%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83%E3%80%8B.pdf' class='a-dir'>[《超高清显示器屏幕发声技术规范》.pdf]</a>
+                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/fe927b94-799b-4973-af4d-37e816222351/%E3%80%8A%E9%9D%A2%E5%90%91%E4%BC%9A%E8%AE%AE%E5%9C%BA%E6%99%AF%E6%97%A0%E7%BA%BF%E4%BC%A0%E5%B1%8F%E6%8A%80%E6%9C%AF%E8%A6%81%E6%B1%82%E5%92%8C%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E3%80%8B.pdf' class='a-dir'>[《面向会议场景无线传屏技术要求和测试方法》.pdf] </a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/03/13）👉ins的web和APP端开始支持HDR图片上传（avif、png）来源HDR-NGA
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/03/05）👉一个叫yabivision的小工具可以将LR导出的图片（avif)转成ins支持的jpeg格式且带有黑白gain map的HDR图片。👉资源链接<a href=' https://testflight.apple.com/join/AtFppKIy' class='a'>[yabivision]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/03/05）👉目前只有adobe流程输出的是彩色gain map，它相较于黑白gain map的缺点是目前支持的社媒平台更少。且彩色gain map的体积会比单色gain map大。但如果从映射到sdr的表现来说彩色会更好。此外两者如果单论显示hdr的效果，是一样的。。。(最后一句话的信息来源：HDR-NGA）
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/03/05）👉三星s24 pixel 7/8、一加12海外版、小米14u，目前都可以拍jpg+gain map（黑白）；果子是heic+（黑白）gain map。果子的heic gain map可以通过转换工具转换为jpeg的gain map。资源链接<a href=' https://testflight.apple.com/join/AtFppKIy' class='a'> https://testflight.apple.com/join/AtFppKIy</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/03/05）👉pixelmator导出的具有黑白gainmap层的HDR图片已经收ins支持（需要用chrome网页版ins上载，且只能在chrome上看）
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/03/05）👉B站HDR视频转SDR策略（省流：高光压缩，暗部不动）<a href=' https://mp.weixin.qq.com/s/4xouKDT2s_OVAVQpRtz4eg' class='a'>[B站自研色彩空间转换引擎]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/01/26）👉~~B站网页端开始支持HDR图片上传和查看，不过上传和正确查看HDR都必须使用最新版Chrome~~（2024/03/11，这条信息辟谣了）
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/01/26）👉这应该是iso gainmap方案标准，目前在WD阶段<a href=' https://www.iso.org/standard/86775.html' class='a'> [ISO/WD 21496-1]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/01/26）👉让RTX Video HDR 支持本地播放器的MPC Video Renderer版本<a href=' https://github.com/emoose/VideoRenderer/releases' class='a'> https://github.com/emoose/VideoRenderer/releases</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （2024/01/26）👇人工智能驱动的 NVIDIA RTX（RTX Video Super Resolution） 可以将SDR视频转变为令人惊叹的HDR高动态范围，目前仅支持chroma（虽然官方说它支持edge，但似乎效果并不好）<a href='https://blogs.nvidia.com/blog/rtx-video-hdr-remix-studio-driver/ ' class='a'>https://blogs.nvidia.com/blog/rtx-video-hdr-remix-studio-driver/ </a>
+                    <div class="image-gallery">
+                        <img src='../public/HDR.jpg' style='max-height:220px;'>
+                            <img src='../public/HDR1.jpg' style='max-height:220px;'>
+                                <img src='../public/HDR2.jpg' style='max-height:220px;'>
+                                    </div>
+                    <hr style="border: none; border-top: 1px solid #ccc;margin:0;">
+                    （2024/01/26）Meta在其旗下两大社交平台Facebook和Instagram上对于引入并支持HDR技术的实践与思索<a href=' https://engineering.fb.com/2023/07/17/video-engineering/hdr-video-reels-meta/' class='a'> [Bringing HDR video to Reels]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （20231215）Pixelmator Pro（版本号3.5）可以直接导出视频的单帧的HDR图片（主流格式都支持AVIF HEIC JPEG PNG）破解版资源：<a href='https://www.digit77.com/apps/photomator.html#download-explan ' class='a'>[pixelmator pro破解版] </a>这是官方blog：<a href='https://www.pixelmator.com/blog/2023/12/13/pixelmator-pro-3-5/ ' class='a'> [Pixelmator Pro 3.5 brings full HDR support - Pixelmator Blog]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （20231128）Google pixei 8系列手机的短信app支持基于gain map的Ultar HDR图片，官方宣称10bit(Android底层是支持HDR的）
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （20231123）photomator今日提供了最新版本，支持HDR照片输出，并且可以通过添加Gain Map的方式将SDR照片映射为HDR<a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/c656967b-a8dc-4fee-aa2d-d05dcc53040c/JOSA.23.000394.pdf' class='a'> [白皮书JOSA.23.000394.pdf]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （20231004）Android14开始支持HDR图片，包括AVIF格式。目前的资料来看，是基于Gain map的
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    （20231011）手机端的Lr、ps也开始支持HDR编辑和导出。ACR开始内测导出时嵌入Gain maps信息
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <h2>想了解HDR图片与普通图片的区别？请查看下方链接中的顶级HDR图片</h2>
+                    <a href=' https://people.csail.mit.edu/ericchan/hdr/hdr.php' class='a'>https://people.csail.mit.edu/ericchan/hdr/hdr.php </a>
+                    在开始制作和查看HDR图片之前，需要确认当前软件和硬件环境是否支持观看HDR。下面这些在线工具可以很方便地查看当前观看环境是否支持HDR，请使用chroma最新版本打开他们，否者可能影响正常发挥作用。
+                    
+                    <div class="image-galleryy">
+                        <div style="display: flex; flex-direction: column; align-items: center; width: max-content;">
+                            <img src='../public/PQ_100_to_10000nits.avif' style="height: 400px; width: auto;">
+                            <p style="margin: 10px 40px 0px; font-style: italic; color: #666; text-align: center; ">PQ_100_to_10000nits</p>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; align-items: center; width: max-content;">
+                            <img src='../public/PQ_10_to_1000nits.avif' style="height: 400px; width: auto;">
+                            <p style="margin: 10px 40px 0px; font-style: italic; color: #666; text-align: center; margin-bottom: 20px;">PQ_10_to_1000nits</p>
+                        </div>
+                    </div>
+                    <div class="image-galleryy">
+                        <div style="display: flex; flex-direction: column; align-items: center; width: max-content;">
+                            <img src='../public/gregbenzphotography_457144024_969687944928987_1316056628868840349_n.jpg' style="height: 400px; width: auto;">
+                            <p style="margin: 10px 40px 0px; font-style: italic; color: #666; text-align: center; ">来自gregbenzphotography</p>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; align-items: center; width: max-content;">
+                            <img src='../public/gregbenzphotography_457269413_1009807927288850_7771202937294912032_n.jpg' style="height: 400px; width: auto;">
+                            <p style="margin: 10px 40px 0px; font-style: italic; color: #666; text-align: center; margin-bottom: 20px;">来自gregbenzphotography</p>
+                        </div>
+                    </div>
+                    <p style="margin: 0px; font-weight: bold; font-size: 20px;">重要注意事项：</p>
+
+                    *在ACR上进行HDR照片监看和后期时需要注意不能禁用GPU图形处理器。
+
+                    *在Chrome则需要在开发者实验室栏目里确认对应的功能是否被禁用
+
+                    Chrome中的操作步骤为：在地址栏上打开下面这个地址，搜索JPEG-XL、AVIF、HDR等关键词，找到下图的选项确保其不是关闭状态，最好设置为常开（2024年9月21日 。
+
+                    <pre><code>
+                        chrome://flags/#enable-jxl
+                        
+                        chrome://flags/#avif-gainmap-hdr-images
+                    </code></pre>
+                    <img src='../public/hdr9.jpeg' style='max-height:420px;'>
+                    <h2>工具与资源清单：</h2>
+                    <strong>帮助你检查当前观看环境是否支持HDR，此外还包含当前显示器色域覆盖范围</strong>
+
+                    <a href=' https://www.wide-gamut.com/' class='a'>[Wide Gamut - Home Page] </a>
+
+                    <strong>帮助查看当前环境HDR测试页：</strong>
+
+                    <a href='https://alexfry.github.io/ACES_ODT_Candidates_Examples/diagnostic.html ' class='a'> [Avif HDR diagnostic page]</a>
+
+                    <strong>HTMLtext，查看当前浏览器和系统信息</strong>
+
+                    <a href=' https://html5test.opensuse.org/' class='a'> [HTML5test - How well does your browser support HTML5]</a>
+
+                    <strong>Gain Map Demo App，制作adobe系列的HDR图片制作的必备工具，需要在adobe官网自行下载</strong>
+                    <div style="display: flex; gap: 20px; justify-content: center-between; max-width: 100%; margin: 0rem auto;">
+                        <img src='../public/hdr5.jpeg' style='max-height:420px; '>
+                            <img src='../public/hdr6.jpeg' style='max-height:420px; '>
+                                </div>
+                    <strong>其他:</strong>
+
+                    <a href=' https://www.bilibili.com/read/cv27070962/' class='a'> [MPV ReShade HDR - 简单实用的HDR视频亮度分析工具]</a>
+
+                    <strong>exiftool官网，开源图片元数据写入工具</strong>
+
+                    <a href=' https://exiftool.org/' class='a'> [ExifTool by Phil Harvey]</a>
+
+                    <strong>这个网站能够把exr、hdr格式转成jpg格式的gainmap，还可以分离sdr层和gain map，类似Exif tool，但exiftool是开源工具</strong>
+
+                    <a href=' https://gainmap-creator.mono-grid.com/' class='a'> https://gainmap-creator.mono-grid.com/</a>
+
+                    <strong>通过显示器型号查找显示器配置信息</strong>
+
+                    <a href=' https://www.displayspecifications.com/' class='a'> [DisplaySpecifications - Specifications and features of desktop monitors and TVs]</a>
+
+                    <strong>一款免费的开源工具<a href='https://github.com/MONOGRID/gainmap-js' class='a'>@github.com/MONOGRID</a>，可以将 HDR 和 EXR 文件转换为 Adobe Gain 贴图（又名 Ultra HDR）格式，拖放一个`.hdr`文件、一个`.exr`文件或一个`.jpg`有嵌入增益图的文件即可启动。</strong>
+
+                    <a href='https://gainmap-creator.mono-grid.com/' class='a'> https://gainmap-creator.mono-grid.com/</a>
+
+                    <strong>Proxel EXIF，图片元数据写入读取工具，ps插件，由exif tool开源工具进一步开发得来。</strong>
+
+                    <a href=' https://www.proxel.se/exif.html' class='a'> [Proxel EXIF Tool]</a>
+
+                    <strong> 国际电信联盟（ITU-R）的官网，他们负责制定显示技术的行业标准</strong>
+
+                    <a href=' https://www.itu.int/ITU-T/recommendations/rec.aspx?id=13914' class='a'> [ITU-T Recommendation database]</a>
+
+                    <strong>ITU-R在职人员的个人博客</strong>
+
+                    <a href=' https://hardloaf.livejournal.com/' class='a'> 1、[hardloaf]</a>
+                    <a href=' https://www.raw-photo-processor.com/RPP/Examples_and_Links.html' class='a'>2、 [Examples and Links]</a>
+
+                    <strong>EXIF 在线元数据编辑和读取平台</strong>
+
+                    <a href=' https://www.thexifer.net/' class='a'> [theXifer.net - Just a Web Based EXIF Editor for Local, Cloud, Flickr, Google Drive]</a>
+
+                    <strong>IPTC PMD  *#能够将元数据嵌入照片的在线工具。几乎没有机会用到，能想到的场景就是从互联网上下载的图片需要重新写入数据，或者植入ICC文件。</strong>
+
+                    <a href=' https://getiptcpmd.nitsvc.net/getiptcpmd.html' class='a'> [Get IPTC PMD]</a>
+
+                    <strong>win系统HDR亮度**分析工具**，是通过**ReShade在无图形界面**播放器**.**mpv上重新映射HDR视频**亮度</strong>
+                    <a href=' https://www.bilibili.com/read/cv27070962/' class='a'> https://www.bilibili.com/read/cv27070962/</a>
+                    <img src='../public/hdr7.jpeg' style="height: 500px;">
+                    
+                    <h2>目前HDR内容在web端的支持情况</h2>
+                    <blockquotee style="font-style: italic; color: #555;">此部份内容最后更新时间是@2024年03月29</blockquotee>
+                    <strong>HDR图片：</strong>
+                    目前支持HDR图片的web平台包含：Chrome最新版、Notion、Adobe ACR、LR、达芬奇、ios17相册、macOS14相册、android14相册、ins、Google云
+
+                    个人最推荐的HDR图片分享方法：Google云盘
+
+                    目前HDR图片的最佳工作色彩空间是p3，因为目前还没有设备能完全覆盖BT.2020（Rec.2020）的色域，所以即使你选用BT.2020，你的实际工作空间上也是在p3。而rec.709（sRGB色域）又太窄，不太适合HDR高动态范围。
+                    <div style="display: flex; flex-direction: column; align-items: center; width: max-content;">
+                        <img src="../public/hdr8.png" style="height: 500px; width: auto;">
+                        <p style="margin: 10px 40px 0px; font-style: italic; color: #666; text-align: center; margin-bottom: 20px;">色域覆盖范围统计</p>
+                    </div>
+                    <strong>HDR视频：</strong>
+
+                    目前支持HDR视频的web平台包含但不限于：Chrome最新版、Notion、达芬奇、ios17相册、macOS14相册、android14相册、ins、Google云、微信、Bilibili、youtube、微博、小红书，等
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <p style="margin: 0px; font-weight: bold; font-size: 20px;">B站：</p>
+                    
+                    B站HDR视频转SDR技术标准：<a href='https://mp.weixin.qq.com/s/4xouKDT2s_OVAVQpRtz4eg'>B站自研色彩空间转换引擎</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <p style="margin: 0px; font-weight: bold; font-size: 20px;">微博：</p>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <p style="margin: 0px; font-weight: bold; font-size: 20px;">小红书：</p>
+                    
+                    2024年5月10日**人肉测试支持HDR视频，规格还未确定。查看<a href='https://www.xiaohongshu.com/explore/663b7857000000001e0339fc'>[「HDR」]</a>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <p style="margin: 0px; font-weight: bold; font-size: 20px;">ins:</p>
+                    
+                    人肉测试过ins目前支持HLG和PQ的HEVC+10bit+4:2:0+MP4的HDR视频，还有AVIF格式+p3色域的HDR图片
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <p style="margin: 0px; font-weight: bold; font-size: 20px;">youtube:</p>
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <p style="margin: 0px; font-weight: bold; font-size: 20px;">微信：</p>
+                    
+                    人肉测试过视频号支持HEVC+10bit+4:4:4+PQ的HDR视频，但目前视频规格下的4:4:4+HEVC（H265）好像只有pixelmoator能输出
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+
+                    <strong>Q&A：</strong>
+
+                    <a style="color: rgb(81, 148, 110);">Q：什么是单色Gain map和彩色gain map</a>
+
+                    A：https://zhuanlan.zhihu.com/p/685259485
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：PQ/ST2084 (Perceptual Quantizer)和HLG/ST2086(Hybrid Log-Gamma)区别</a>
+
+                    A：HLG旨在实现向后兼容性，这意味着即使在不支持HDR的设备上也能勉强观看HDR内容；PQ提供了更好的视觉效果，但向SDR兼容不佳。PQ和HLG两种标准制作的HDR图片在HDR环境下观看并无明显差异。
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：DV（Dolby Vision）HDR和HDR10的区别和解释</a>
+
+                    A：DV和PQ、HLG、HDR10同类型，决定的是映射（待补充）
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：P5和P8（dolby Profile8.1和dolby Profile5）是什么，有什么区别</a>
+
+                    A：
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：HEVC10，H265的解释和区别</a>
+
+                    A：HEVC10就是H265
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：4:4:4和H265、H264的关系</a>
+
+                    A：色度抽样率4:4:4和H264、H265没有直接关系，H265（HEVC）、H264（AVC）是一种视频压缩（编码）标准
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：MP4和H265、H264的关系</a>
+
+                    A：MP4是封装格式（标准），和编码标准不冲突。可以使用H265编码然后放入MP4格式中
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：杜比视界（**Dolby Vision）、HLG、PQ、**HDR10、HDR10+的解释和区别。</a>
+
+                    A：杜比支持动态元数据，HDR10只能静态元数据。动态元数据更好，动态元数据能够根据不同画面需求设置合理的最高亮度，而HDR10从始至终最高亮度是固定的，可能会出现过曝。HDR10采用了PQ,PQ是静态元数据。Dolby Vision是动态元数据。HDR10+是动态元数据。
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：HDR Vivid是什么？</a>
+
+                    A：HDR Vivid是UWA也就是国内的世界超高清视频产业联盟发布的一种HDR标准，具体可以查看公众号世界超高清视频产业联盟
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：为什么AVIF的HDR图片在Mac os 13.4上预览会变成灰色？</a>
+
+                    A：macOS14才开始部分支持AVIF，之前的版本都不能正确预览HDR。
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q：为什么用ios17微信发送AVIF格式的HDR照片会得到一张8bit，JPG格式的HDR照片？</a>
+
+                    A：
+                    1、JPG、HEIC的HDR方案是：8bitSDR （基础层）+ Gain Map（增益层）=HDR
+                    2、AVIF、JPG-XL、HEIF的HDR方案是：10bitHDR（基础层）+Gain Map（增益层）=SDR
+                    3、JPE、HEIC只支持8bit色深
+                    4、Gain Map，一种能够类似ACES的能够使HDR图片在SDR环境（或者SDE图片在HDR显示环境）上正确映射色彩关系的一种向后兼容的技术方案
+
+                    在把AVIF、JPG-XL、HEIF格式的HDR图片强行封装成JPG、HEIC格式时，由于JPE、HEIC只支持8bit色深，就会让原本的10bitHDR数据变成8bitHDR，并且丢失Gain Map，那么就得到了一张8bit并且有HDR的JPG图片，但由于没有Gain Map层，所以他在SDR监看环境下会出现严重断层和失真。
+
+                    用一个不太恰当但直观的公式解释关于8bit JPG HDR照片的生成过程：
+                    <pre style='margin-bottom:0;'><code style='font-weight: bold; font-size: 20px;'>
+                                    AVIF·(10bitHDR+GainMap)-(2bit+Gainmap)=JPG
+                    </code></pre>
+                    总结：微信支持HDR是错觉
+
+                    进一步解释为什么微信里发送10bit的AVIF格式HDR照片会得到8bit的JPG格式HDR照片
+                    1、ios17支持AVIF格式HDR照片
+                    2、微信不支持AVIF和HDR
+                    3、微信发送超过10bit的HDR图片时候强行暴力把图片重新封装成了8bit JPG
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <a style="color: rgb(81, 148, 110);">Q:那么制作通过这种方法制作jpg的HDR有应用环境吗？或者jpg8bit的HDR是否有意义？</a>
+
+                    A:首先明确HDR技术的目的，带来更好的显示效果（广色域+高动态范围）,然后jpg的8bit并不支持广色域，也不适合高动态范围。并且HDR技术更多是用在风光摄影，照片里经常出现天空等“渐变”的画面，8bit的色深实在太浅了，通过奇怪的方法把AVIF重新封装为JPG，10bit会被强行裁切为8bit，这个裁切没有任何算法过渡，可能更容易出现色阶断层。总结下来就是弊大于利。
+                    <hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+                    <h2>名词解释：</h2>
+
+                    颜色描述文件Rec. ITU-R BT.2100 PQ`翻译为白话是：建议通过ITU-R（国际电信联盟）制定的BT.2100（PQ）技术标准进行映射。
+
+                    Rec. ITU-R BT.2020-1中的各个组成部分表示特定的含义：
+                    Rec:是"Recommendation"（推荐）的缩写，表示这是一个国际标准或指导方针，而不是强制性的法规。
+                    ITU-R: 是"International Telecommunication Union - Radiocommunication Sector"（国际电信联盟-无线通信部门）的缩写。ITU是联合国的一个专门机构，负责国际电信标准化和协调。R部门专门负责所有无线通信，包括广播、卫星、无线互联网等。
+
+                    BT.2020-1这部分的含义如下：
+                    BT表示这一推荐是针对广播电视的。在ITU的分类体系中，BT常用于与广播电视相关的推荐。
+                    2020是该推荐的编号，用于唯一标识。
+                    -1这一部分表示推荐的版本或修订号。当推荐有更新或修改时，此编号会增加。
+
+                    SMPTE ST 2084传输函数（也称为PQ，Perceptual Quantizer）。SMPTE ST 2084是一种专为HDR设计的电气光传输函数。它允许对亮度范围进行更精确的控制，从而实现HDR的广泛亮度和对比度范围；
+                    Linear是指色彩空间中的传输函数。在线性色彩空间中，输入信号与输出光强之间的关系是线性的。与一些对数或伽玛修正的传输函数相比，线性传输函数不会更改或压缩图像的动态范围。
+
+                    Lightroom不支持来自ACR中“HDR 输出”功能导出的HDR照片。例如——将一张以前在ACR中制作的HDR照片导入Lightroom中，将无法显示HDR信息，也不能对HDR进行编辑。及：Lightroom无法导入或导出AVIF和JPEGXL照片。
+
+                    macOS 系统上的其他应用程序，如 Finder、Preview和Safari，目前（20230919）也不支持显示HDR内容。Windows、Android和iOS等其他平台上的应用程序也同样。
+                    
+                    支持HDR信息的图片格式：AVIF、TIFF、DNG、JPEG-XL(JXL)、PNG、（HEIC存疑）
+
+                    HDR与色彩空间标准/色域/图像色彩描述文件没有什么关系。HDR是一种高动态范围的显示技术，与色彩空间标准不同。建议的HDR色域：Rec.2020、P3
+                    可以支持HDR信息的色彩描述文件：Rec. ITU-R BT.2020-1、Rec. ITU-R BT.2100 PQ
+                    支持HDR信息的传输函数：浮点和线性，SMPTE ST 2084（也称为PQ）、Linear（线性）
+                    支持正确显示HDR信息的屏幕：QLED、mini—LED、Micro-LED
+                    不能实现HDR的屏幕：O-LED、W-OLED、QD-LED
+
+                    Adobe的HDR策略是给图片加上一个Gain Map层，Gain map类似于ACES，能够使得HDR图片在SDR显示器上正确映射。Gain Map也就类似于增益层的意思。
+
+                    色彩空间、色域、颜色描述文件、传输函数、色彩描述文件的区别和关系：
+                    色彩空间：定义了颜色如何在数值上表示的整体框架；
+                    色域：色彩空间中特定设备能够显示或捕获的颜色范围。如sRGB、P3、Bt.2020(Rec.2020)
+                    颜色描述文件：包括色域和传输函数，描述了如何在特定设备上准确呈现色彩。
+                    传输函数：输入信号与输出光强之间的关系。PQ（包含SMPTE ST 2084、Linear）；
+                    色彩描述文件：这是一种文件，包括色彩空间、色域、传输函数等信息，用于确保在不同设备之间的色彩一致性。
+
+                    iCC：**色彩描述文件，一种通常包含在数码图片各种封装格式中的文件。用于描述色彩在不同设备或不同色彩空间之间是如何被转换或映射的。这样做的目的是为了实现色彩的一致性和准确性，让图像在不同的输出设备（例如打印机、显示器、扫描仪等）上呈现出相同或者接近的色彩。**
+                    Lab颜色空间：全称为CIELAB，由三个分量组成：L、A、B，分别代表（L表示亮度，从黑到白0：100；A表示绿色到红色；B表示蓝色到黄色）由于其对亮度和颜色的处理方式与HDR不完全匹配，因此一般不使用Lab颜色读数。
+                    RGB颜色读数：（255,0,0）
+                    HDR读数：+0.5（光圈值/EV）
+
+                    AVIF，全称AV1 Image File Format，是由开源的视频编码格式AV1派生而来。它原生支持高动态范围（HDR）和宽色域（WCG）
+
+                    PNG：Portable Network Graphics，通常用于显示SRD（标准动态范围）图像
+
+                    JPEG XL：目前互联网上支持最多的图片格式，但采用的是有损压缩算法，只支持8bit，
+
+                    JPG（JPEG）：
+
+                    EIF/HEIC：是一种更现代的有损/无损图像格式，支持高动态范围和更宽的色彩空间。
+
+                    Tonemapping（色调映射):用于将高动态范围（HDR）图像转换为低动态范围（SDR）图像，同时尽量保留图像中的视觉信息和细节；分为全局（单一的映射函数到整个图像，容易实现但可能导致细节丢失）和局部（不同的映射函数到图像的不同区域，更复杂但能更好地保留细节，但GPU处理时间和负载更长更高）
+                    
+                    <strong>推荐阅读：</strong>
+
+                    <a href=' https://mp.weixin.qq.com/s/4xouKDT2s_OVAVQpRtz4eg' class='a'> [B站自研色彩空间转换引擎]</a>
+
+                    <a href=' https://www.bilibili.com/video/BV1aK4y1S7g3?t=26.4' class='a'> [ASC洞见 EP01——作为交付格式的HDR_哔哩哔哩_bilibili]</a>
+
+                    Adobe的这两个工具 //来源@HDR-NGA
+                    <a href="https://helpx.adobe.com/cn/camera-raw/using/hdr-output.html" class='a'>https://helpx.adobe.com/cn/camera-raw/using/hdr-output.html</a>
+                    <a href='https://helpx.adobe.com/camera-raw/using/gain-map.html' class='a'>https://helpx.adobe.com/camera-raw/using/gain-map.html</a>
+
+                    【硬核科普】HDR图片的未来与标准化_EI 2023 Plenary - 用于高动态范围自适应显示的嵌入式增益图//来源@HDR-NGA <a href="https://www.bilibili.com/video/BV1CW4y1X7S4/?spm_id_from=333.337.search-card.all.clickvd_source=9f026d79a83e93c8af25715e3365aba2" class='a'>https://www.bilibili.com/video/BV1CW4y1X7S4/?spm_id_from=333.337.search-card.all.clickvd_source=9f026d79a83e93c8af25715e3365aba2</a>
+
+                    如何使用Mac版本达芬奇在检视窗中监看HDR //来源@HDR-NGA
+                    <a href="https://professionalsupport.dolby.com/s/article/Display-HDR-on-viewers-using-Mac-based-Davinci-Resolve-systems?language=zh_CN" class='a'>https://professionalsupport.dolby.com/s/article/Display-HDR-on-viewers-using-Mac-based-Davinci-Resolve-systems?language=zh_CN</a>
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+
+

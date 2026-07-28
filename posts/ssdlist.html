@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>硬件资料查备清单-ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <!-- 与首页完全一致的头部导航 -->
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">硬件资料查备清单</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/sun.jpg" alt="a" class="article-cover">
+            </header>
+            
+            <!-- 目录容器 -->
+            <div id="toc-container" class="toc-container">
+              <!-- 目录标题 -->
+              <h2>📑 目录</h2>
+              <!-- 目录列表容器，将由JavaScript动态填充 -->
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                // 当DOM内容加载完成后执行
+                document.addEventListener("DOMContentLoaded", function() {
+                    // 获取目录列表的DOM元素
+                    const tocList = document.getElementById("toc-list");
+                    
+                    // 选择所有需要添加到目录的元素
+                    // 包括：h2标题、h2内的strong元素、独立的strong元素
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    // 遍历每个选中的元素
+                    headers.forEach((header, index) => {
+                        // 检查元素是否已经在h2内，如果是则跳过，避免重复
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        // 为每个标题创建唯一的锚点ID
+                        const anchorId = "section-" + index;
+                        // 将锚点ID设置为元素的id属性
+                        header.setAttribute("id", anchorId);
+                        
+                        // 添加类名用于样式
+                        header.classList.add("toc-item");
+
+                        // 创建列表项li元素
+                        const li = document.createElement("li");
+                        
+                        // 根据元素类型设置不同的目录级别
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        // 创建链接a元素
+                        const a = document.createElement("a");
+                        // 设置链接的href属性，指向对应的元素锚点
+                        a.href = "#" + anchorId;
+                        // 设置链接文本为元素的文本内容
+                        a.textContent = header.textContent;
+                        // 设置链接颜色
+                        a.style.color = "#007bff";
+                        // 移除链接默认的下划线
+                        a.style.textDecoration = "none";
+                        // 鼠标悬停时添加下划线效果
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        // 鼠标离开时移除下划线
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        // 将链接添加到列表项中
+                        li.appendChild(a);
+                        // 将列表项添加到目录列表中
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    <h2>硬盘盒、SSD、传输接口</h2>
+
+                    雷电4不向下兼容20gbps的接口，所以在雷电4上用20gbps的接口只能达到10gpbs的效果。想买雷电4协议接口的硬盘盒，传输速率要选40Gbps以上的
+
+                    Gbps除以8等于实际传输速度   10Gbps=1.25G/s  40Gbps=5G/s  8bits=1byte   1mbps=0.125mb/s
+
+                    超过20Gbps会因为功率提升导致硬盘发热量直线上升，发热直接影响传输速度。因此散热非常重要，如果40gbps散热不好，实际传输速度会在达到峰值后骤降。
+
+                    不管是选择20Gbps还是20gbps以上的硬盘盒，都应当选购散热好的
+
+                    40Gbps的硬盘盒建议苹果电脑用户选择，windows用户用起来性价比不高，因为截止2022年市面上大部分中低端主板上支持40Gbps的较少，再过几年用户手里的主板都迭代为新后会不一样。
+
+                    同时20Gbps的硬盘盒不太建议买，因为目前在硬件设备（PC、主板，苹果除外）上很少有支持20gbps的usb接口，本身对散热要求也相对较高，不如直接买40gbps的硬盘盒
+
+                    机械硬盘买便宜的有type-C接口的最实惠，因为机械硬盘本身传输速度存在瓶颈，而且体积大基本不会作为便携硬盘
+
+                    SATA协议和接口的固态硬盘就买6Gbps带宽的硬盘盒；M.2_NVME协议和接口的硬盘建议买10Gbps的硬盘盒，主控中JMS583最好，RTL9210、RTL9210b也凑合，尽量避开抽拉式的硬盘盒，散热不太好，#资料来源B站UP主硬件茶谈y
+
+                    全功能type-c接口硬盘盒，一般的用户10Gbps速率就够用了
+
+                    M.2接口的不买走SATA协议的
+
+                    SSD（Solid State Drives，意思是固态硬盘）协议有NVMe、M.2、SATA；接口有SATA、SATA3、SATA-2、MSATA接口、M.2、M.2（SAS接口、PCI-E接口、NGFF接口、CFast接口、SFF-8639接口；总线有PCI-E（全称为express Gen 3×4）、SATA总线、
+
+                    M.2接口是Intel推出的一种替代mSATA的新的接口规范，也就是我们以前经常提到的NGFF，即Next Generation Form Factor。
+
+                    M.2 SSD与mSATA类似,也是不带金属外壳的，常见的尺寸有三种，2242、2260、2280，宽度都为22mm，长度则各不相同
+
+                    PCIe是一种接口但也可以以通道、总线的方式存在，M.2接口其实就是换了形状的PCIe接口（简单理解），M.2接口可以是依赖于PCIe通道进行传输的，雷电3其实也是用PCIe来传输数据；PCIe总线的带宽是按照长度计算的；PCIe是高频串行（电气学概念）高频率的串行电路
+
+                    M.2接口的固态硬盘是走的PCIe3.0x4通道进行传输的，再因为大部分M.2接口硬盘都是直接接触在南桥上的，而南桥跟CPU的总线速率上限是PCIe3.0x4，所以速率不可能超过4gbps/s，因为所有接驳到南桥的设备都不可能超过PCIe3.0x4的速率，也就是4gbps/s，因此买PCle4.0的硬盘没有得到真正的提升，可以看看自己的主板南桥
+
+                    机械硬盘有“通过技术手段恢复丢失数据”的特性
+
+                    机械银盘的瓦楞式堆叠硬盘，缓存为256M的机械硬盘别买，尽量选购7200转容量为64m的机械硬盘
+
+                    <p style="color: rgb(81, 148, 110); margin-bottom: 0px;">信息来源：SATA、mSATA、M.2、M.2（NVMe）、PCIE固态硬盘接口详解 - 独角兽的文章 - 知乎https://zhuanlan.zhihu.com/p/490076119</p>
+                    
+
+                    cFe卡分为sFe-A、sFe-b两种协议。所谓品牌真正的sFe卡其实就是固态转接方案，跟民间自己DIY其实没有本质区别，可能只是品控的问题。固态转接方案就是ssd固态加卡套，比如NVME固态加卡套。而Nikon z7采用的是sFe-B，sFe-B推荐选择sn530作为固态，sFe-A协议推荐使用BG4作为固态。
+
+                    Nikon Z7 如果要用假电池，要买PD协议的充电宝，并且30W功率以上，因为拍照按下快门那一下相机的功率需求会飙升，如果充电宝的输出功率不够，相机会出现故障。
+
+                    pc平台，CPU-Z这个软件可以看到主板bios和内存条的SPD信息，相同的还有ThaiPhoon（台风）
+
+                    进bios打开XMP，可以让内存条运行在高频率模式下
+
+                    带宽损耗的那20%是用于数据校验的
+
+                    内存条插2、4两个，如果插1、3卡槽可能会有电气干扰
+
+                    英特尔H和B系列的主板不支持超频，Z和X系列的主板可以超频，AMD所有系列的板子都可以给内存超频，A系列不能超CPU
+
+                    <h2>屏幕/图像</h2>
+
+                    漏光是指屏幕周围出现瑕疵
+
+                    LCD是白色背光板发光然后分离出红绿蓝灯颜色，缺点是暗部不够暗，对比度偏低；VA、IPS、TN技术都是服务于LCD屏幕；1ms屏幕响应时间是厂家的营销噱头；ips屏幕虽然有最快的响应时间，但是；TN技术的色彩差异比较大
+
+                    LED是发光二极管技术，通过控制红绿蓝三种原色的亮度比例来混合出不同的颜色，通过电压控制每个像素和原色的亮度
+
+                    QLED底层其实是基于LCD的，Q-LED色域更广，但黑色不够黑和漏光的问题依然存在
+
+                    mini—LED也是LCD，但更容易实现HDR的效果；mini-LED色域更广，解决了黑色不够暗和漏光的问题，受制于材料成本，厂家会采用分区背光，所以当显示一个图像时会在周围的像素点上漏光，出现光晕现象；背光拖尾
+
+                    O-LED是用有机材料作为基石的技术，材料有寿命，很容易损耗，而且每个颜色的材料损耗不一，还容易烧屏，所以白色的峰值亮度很低；O-LED利用有机材料发光，有可能会烧屏，材料会老化，出于保护屏幕使用寿命的原因，HDR亮度普遍不高
+
+                    W-OLED是采用纯白色发光有机材料再通过薄膜提炼出红绿蓝三色光，然后由于中间层会损失掉一部分光，所以多加了一个白色的薄膜，但是白色光会干扰红绿蓝色的光；W-OLED=在三原色的基础上增加一个白色，提升屏幕亮度，缓解部分材料老化的问题，但是白色光会串扰其他三色光，冲淡色彩，不够鲜艳
+
+                    QD-LED则是用蓝色有机材料作为发光源，然后透过中间层的另外三种薄膜（橙、绿、蓝）提炼出红绿蓝，这样省去了白色的薄膜，会比W-OLED好不少；QD-LED=对环境光要求很高，适合暗光场景
+
+                    W-OLED和QD- OLED都很怕外界光源的干扰和污染
+
+                    Micro-LED是使用无机材料作为发光源的技术，材料贵；Micro-LED=继承所有优点，但是成本很高，特别昂贵
+
+                    10bit，就是有多少个阶梯，2bit就是01，4bit就是0101，6bit就是010101，以此类推，越高的bit，他的中间断层会越小；显示器上的色彩过度、平滑度越好
+
+                    <h2>装机</h2>
+
+                    N卡的CPU买散片最好
+
+                    AMD的CPU买盒装最好，因为AMD的设计问题，散片CPU容易弯针
+
+                </div>
+            </div>
+            
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    
+</body>
+</html>

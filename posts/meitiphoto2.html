@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">主流社媒平台的内容技术标准与社媒运营资料</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/weblist.jpeg" alt="null" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    我留意到大部分内容制作团队并没有针对不同的平台进行内容适配，只是粗暴地将主营平台的内容移植。
+                    
+                    <div class='image-gallery'>
+                        <img src='../public/weblist.png' style='max-height:500px;'>
+                           <img src='../public/weblist.jpeg' style='max-height:500px;'>
+                    </div>
+                    这样的重数量、轻运营，确实可以提升团队的商单报价，带来一些纸面上的商业价值，但会加重数据表现不如专心研究一两个主流平台团队的问题。
+
+                    所以我去查了主流平台的内容技术要求，结合过往工作积累的经验，希望能总结些有用的方法和资料。
+                    
+                    <h2>主流社媒平台多媒体内容技术标准查备清单</h2>
+                    <strong>尺寸</strong>
+                    1、小红书
+
+                    头像:400x400px
+                    个人背景图:1000X800px
+                    图文封面(竖版):1242X1660px(3:4)
+                    图文封面(方版):1080X1080px(1:1)
+                    图文封面(横版):2560X1440px(16:9)
+                    视频封面(竖版):1080X1440px(3:4)
+                    视频封面(横版):1440X1080px(3:4)；1920X1080px(16:9)
+
+                    二、微信
+
+                    公众号头像:240x240px
+                    公众号封面:900x383px
+                    公众号小图:200x200px(1:1)
+                    公众号二维码名片:600x600px(1:1)
+                    公众号内容引导图:1080x300px
+                    视频号封面(竖版):1080x1260px(6:7)
+                    视频号封面(横版):1080x608px(16:9)
+                    小程序封面:520x416px
+                    朋友圈封面:1280x1184px
+
+                    三、微博
+
+                    微博主页封面:980x300px
+                    微博头条封面:980x560px
+                    微博焦点图片:540x260px
+                    微博长图:800x2000px
+
+                    四、抖音
+
+                    抖音头像:400x400px
+                    抖音个人背景图:1125x633px
+                    抖音封面(竖版):1242x1660px(3:4)
+                    1080x1920px(9:16)
+                    抖音封面(横版):1080x608px(16:9)
+
+                    查看抖音百科:<a fref='https://www.baike.com/' class='a'>https://www.baike.com/</a>
+                    
+                    五、B站
+
+                    B站视频封面:1146*717px
+                    2023年11月底开始B站投稿封面要求改为4:3（1200x900像素）
+                    2024年开始B站要求同时上传16:9和4:3两种尺寸的封面
+                    
+                    七、500px
+
+                    null
+                    
+                    八、其他**
+
+                    条漫:1000*2500px
+
+                    TB BANNER:1920*700px
+
+                    电商海报(横版):1200*1920px
+
+                    电商海报(竖版):1920*1200px
+
+                    手机海报:1080*1920px
+
+                    图海报:800*2000px
+
+                    九、海外媒体
+
+                    （2024年3月资料）YouTube官方公布YouTube 2160p30的推荐上传码率为 35–45 Mbps，而YouTube又会将视频用 H.264(avc1) 和vp9再压制一次用于分发。（以LG的<a href='https://www.youtube.com/watch?v=njX2bu-_Vw4' class='a'>[OLED 展示片]</a>为例，用<a href='https://github.com/yt-dlp/yt-dlp' class='a'>[yt-dlp]</a>看所有播放格式的码率，同时也用ffmpeg做检验，最高清的2160p60HDR的vp9视频流码率仅为27.5Mbps）
+                    <div class='image-gallery'>
+                        <img src='../public/weblist4.jpg' style='max-height:300px;'>
+                            <img src='../public/weblist4.jpg' style='max-height:300px;'>
+                              <img src='../public/weblist4.jpg' style='max-height:300px;'>
+                                </div>
+                    <strong>HDR：</strong>
+                    <a href='https://lizhongping.asia/article/HDR' class='a'>https://lizhongping.asia/article/HDR</a>
+                    <strong>为什么需要技术标准？</strong>
+                    1、平台会对我们上载的内容进行二次处理。比如对大尺寸大体积的文件强行裁切、重新封装、对元数据进行删除和修改，对视频进行转码等。这会一定程度影响视频和图文质量，降低视觉观感，导致内容权重降低进而可能导致数据表现下降
+                    
+                    <strong>能做什么？</strong>
+                    了解审核策略和技术标准，可以在内容生产阶段进行适配。比如根据尺寸有针对性优化内容构图，设计优化，在不影响内容的情况下提升评分
+                    
+                    <strong>algorithm（算法标准）：</strong>
+                        目前所有的主流社媒平台都引入了AI审核。大部分是AI初审，提取关键信息后进行人工二审。
+                        
+                        包括我曾经兼任过的ZEALER APP👇
+                        <img src='../public/weblist3.jpeg'>
+                        部分平台会对内容进行打分，判断主持人的情绪、声音、文本、技术质量等元素进行评分。我猜想算法后续可能还会分析音轨、画面变化评审打分。
+
+                        500PX：打分严格。500px作为摄影师社区，主要的侧重点在技术质量上。会读取图片直方图，对图片进行评价，赋予标签。
+
+                        bilibili：严格。AI审核，然后一定会转人工进行二审。和抖音一样，B站审核人员看到的是AI标注的关键片段，而不是整个视频
+
+                        weibo：严格。关键字、短语、文字情绪的检测，图文AI筛查👇。二次修改的内容会降低权重，并且人工审核。
+                        <img src='../public/weblist7.png'>
+                            YouTube：审核政策宽松。仅检测是否有政治、血腥、小孩、色情等元素
+
+                            微信：不懂
+
+                            小红书：关键字检测，分类权重，保量推荐，
+
+                            抖音：星图的内容一定会经过AI审核打分，然后标注出可能存在问题的片段，转人工二审
+
+                            ins：宽松。
+                            
+                    <strong>内容冷处理/冷启动：</strong>
+                    #抖音主要参考点赞、评论、转发和完播率
+
+                    #weibo主要检测关键词和短词
+
+                    #小红书采取保量
+
+                    #bilibili根据标签
+                    
+                    <strong>地域差异化推送：</strong>
+                    #根据不同的地区推荐不同的内容，这点在娱乐直播中最为常见（运营团队会通过爬虫工具爬取热门地区目前的上播率。如果该地区的大主播目前没开播，那么运营会通过gps修改工具把自己主播的设备修改为该地区，利用推送规则，获取热门地区的流量）。上海人能刷到的关于上海话的内容会更多。所以相对的，制作具有地域属性的内容也会自动关联该地区。
+                    
+                    <strong>其他运营技巧：</strong>
+                    1、时间与区域分流：
+
+                    2、服务商运营维护
+
+                    3、辅助运营，如整合营销，IP联动
+
+                    4、SEO优化，排名粉，矩阵传播等辅助方式
+                    
+                    <strong>常见分辨率总结表：</strong>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>分辨率名称</th>
+                                <th>分辨率（横向 x 纵向）</th>
+                                <th>常见应用</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2K</td>
+                                <td>2048 x 1080</td>
+                                <td>电影行业标准</td>
+                            </tr>
+                            <tr>
+                                <td>Full HD</td>
+                                <td>1920 x 1080</td>
+                                <td>消费级显示器、电视</td>
+                            </tr>
+                            <tr>
+                                <td>4K</td>
+                                <td>4096 x 2160</td>
+                                <td>电影行业标准</td>
+                            </tr>
+                            <tr>
+                                <td>4K UHD</td>
+                                <td>3840 x 2160</td>
+                                <td>消费级显示器、电视</td>
+                            </tr>
+                            <tr>
+                                <td>8K</td>
+                                <td>7680 x 4320</td>
+                                <td>超高分辨率电视、显示器</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <strong>材料备份：</strong>
+                    <a href='https://www.baike.com/' class='a'>https://www.baike.com/</a>
+                    B站HDR视频转SDR技术标准：
+                    <a href='https://mp.weixin.qq.com/s/4xouKDT2s_OVAVQpRtz4eg' class='a'>https://mp.weixin.qq.com/s/4xouKDT2s_OVAVQpRtz4eg</a>
+                    bilibili全站使用说明:
+                    <a href='https://www.bilibili.com/blackboard/help.html?spm_id_from=888.20498.b_4d7144577a6c622d7355.5#/?qid=1cee92c0c6e34fb798cc7167f86614ce&pid=ab41e1b88c454d3f9914c5af12fc77b2' class='a'>https://www.bilibili.com/blackboard/help.html</a>
+                    B站评论审核政策:
+                    <a href='https://mp.weixin.qq.com/s?__biz=Mzg3Njc0NTgwMg==&mid=2247498359&idx=1&sn=ffb3e2c4b76266fe2553f1b2cc2d6ae8&chksm=ce00e866a36e61817195e4adbef1d45ad694490afbd589a692261899e3691f10d66acf51613d&scene=126&sessionid=1709796183#rd' class='a'>https://mp.weixin.qq.com/</a>
+                    
+                    <strong>文件：</strong>
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/197a4189-79c1-4d03-9cca-6086229f68af/11%E6%9C%88%E5%AE%98%E6%96%B9%E8%BE%BE%E4%BA%BA%E5%90%8D%E5%8D%95%E5%8F%8A%E5%88%8A%E4%BE%8B%E4%BB%B7_20231107(2).xlsx' class='a-dir'>[11月小红书官方达人名单及刊例价 20231107(2).xlsx]</a>
+
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/2a471595-f73f-40d1-bbd2-689c239eec15/1000%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%88%86%E6%AC%BE%E6%A0%87%E9%A2%98%E6%B1%87%E6%80%BB(%E5%AD%A6%E4%B9%A0%E3%80%81%E7%BE%8E%E5%A6%86%E3%80%81%E6%8E%A2%E5%BA%97%E3%80%81%E6%AF%8D%E5%A9%B4%E3%80%81%E7%A9%BF%E6%90%AD%E3%80%81%E5%AE%A0%E7%89%A9%E3%80%81%E6%97%85%E8%A1%8C%E3%80%81%E5%B1%85%E5%AE%B6%E7%AD%89%E7%B1%BB%E7%9B%AE).xlsx' class='a-dir'>[1000+小红书爆款标题汇总(学习、美妆、探店、母婴、穿搭、宠物、旅行、居家等类目).xlsx]</a>
+
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/0f7065f5-d94b-4a21-8987-d51df4524607/%E8%92%B2%E5%85%AC%E8%8B%B1%E5%B9%B3%E5%8F%B0-%E4%BB%8E0%E5%88%B01%E7%8E%A9%E8%BD%AC%E5%B0%8F%E7%BA%A2%E4%B9%A6%E5%86%85%E5%AE%B9%E5%90%88%E4%BD%9C.pdf' class='a-dir'>[蒲公英平台-从0到1玩转小红书内容合作.pdf]</a>
+
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/21e5dc9e-7186-4c8c-8654-502ba928b682/%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%A4%BE%E5%8C%BA%E5%85%AC%E7%BA%A6%E4%B8%8E%E5%AE%A1%E6%A0%B8%E8%A7%84%E5%88%99(1).pdf'  class='a-dir'>[小红书社区公约与审核规则(1).pdf]</a>
+
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/5a05c8c7-e3b8-4e65-ab50-2cf748b56ddb/%E7%83%AD%E9%97%A8%E7%AC%94%E8%AE%B0%E6%89%93%E9%80%A0%E6%8A%80%E5%B7%A7-%E4%B8%80%E5%BC%AF.pdf'  class='a-dir'>[热门笔记打造技巧-一弯.pdf]</a>
+
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/6a83bcb3-d3c0-40fb-982c-412157a52907/%E4%BB%8E%E6%B3%A8%E5%86%8C%E5%88%B0%E8%BF%90%E8%90%A5%E5%85%A8%E6%B5%81%E7%A8%8B%EF%BC%9A%E5%B0%8F%E7%BA%A2%E4%B9%A6%E8%BF%90%E8%90%A5%E7%AD%96%E5%88%92%E5%85%A8%E6%A1%88%EF%BC%8825%E9%A1%B5PPT%EF%BC%89.pdf'  class='a-dir'>[从注册到运营全流程：小红书运营策划全案（25页PPT）.pdf]</a>
+
+                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/32ce6ce4-36c5-450d-8db6-55709d866789/%E5%B0%8F%E7%BA%A2%E4%B9%A6-%E4%B8%8D%E5%86%8D%E6%94%B6%E5%88%B0%E8%BF%9D%E8%A7%84%E4%BF%A1%EF%BC%8C%E5%B0%8F%E7%BA%A2%E4%B9%A6%E5%90%88%E8%A7%84%E8%BF%90%E8%90%A5.pdf'  class='a-dir'>[小红书-不再收到“违规信’，小红书合规运营.pdf]</a>
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+

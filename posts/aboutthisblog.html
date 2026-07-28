@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 设置文档字符编码为UTF-8，支持中文 -->
+    <meta charset="UTF-8">
+    <!-- 设置视口，确保在移动设备上正确显示 -->
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 全局设置 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', Verdana, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: #808080 url('../public/texture.jpg') repeat;
+            color: black;
+            font-size: 12px;
+            line-height: 1.4;
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* 内容图片样式 */
+        .content-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 1rem auto 2rem;
+            display: inline-block;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* 顶部导航栏 & Logo */
+        .header {
+            width: 100%; /* 宽度占满父容器 */
+            padding: 45px 0 20px; /* 上内边距 45px，左右内边距 0 , 下边距20 */
+            background: transparent; /* 将背景色设置为透明 */
+            backdrop-filter: none; /* 移除背景模糊滤镜效果 */
+            text-align: center; /* 内部行内元素（如文本、图片、logo）水平居中对齐 */
+            position: relative; /* 定位方式：相对定位 (作为内部绝对定位元素的参照) */
+            top: 0; /* 距离顶部 0 */
+            z-index: 1000; /* 设置堆叠顺序，确保导航栏位于页面内容的上方 */
+        }
+
+        .site-title {
+            margin-bottom: 30px;
+        }
+
+        .logo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #4A4A4A;
+            gap: 12px;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .main-nav {
+            width: 100%;
+        }
+
+        .menu-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .menu-list a {
+            line-height: 1;
+            text-decoration: none;
+            color: #555;
+            padding: 6px 4px;
+            transition: color 0.2s ease, border-bottom 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .menu-list a:hover,
+        .menu-list a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        /* 主要区域样式 */
+        main {
+            padding: 20px 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* 文章内容区域样式 - 关键修改：缩小与视窗的左右边距 */
+        .article-content {
+            max-width: 95%; /* 增加内容区域宽度，减少左右边距 */
+            margin: 0 auto;
+            background: transparent; /* 将背景色设置为透明 */
+            border-radius: 0px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .article-cover {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0px;
+            margin-bottom: 2rem;
+        }
+        
+        .article-body {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .article-body h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #333;
+        }
+        
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .back-to-blog:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            .article-content {
+                padding: 1.5rem 1rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                max-width: 98%; /* 移动端进一步减少边距 */
+            }
+            .article-cover {
+                height: 250px;
+            }
+            .menu-list {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .article-content {
+                max-width: 92%; /* 大屏幕上进一步减少边距 */
+            }
+        }
+        
+        /* 代码块样式 */
+        pre {
+            background-color: #f5f5f5;
+            border-radius: 0px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* 引用样式 */
+        blockquote {
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* 正文段落开头 */
+        strong {
+            font-weight: bold;  /* “加粗" */
+            font-size: 1.15em;  /* "加大" (比周围文字大15%) */
+          }
+            
+            }
+        
+        /* 列表样式 */
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem ;
+        }
+        
+        .multiline-text {
+          white-space: pre-line;  /* 识别换行符为 <br> */
+          line-height: 1.8;
+          font-size: 1.05rem;
+          padding-left: 10%;
+          padding-right: 10%;
+          padding-top: 0;
+          padding-bottom:0;
+          margin-bottom: 0.5rem;
+        }
+
+        .article-body strong {
+            font-size: 1.3rem;
+            color: #444;
+            display: block;
+            margin: 1.5rem 0 0.5rem;
+        }
+        
+        .image-gallery {
+            display: flex; /* 启用 Flex 布局 */
+            gap: 10px;     /* 图片之间的间隔，你可以根据需要调整 */
+            justify-content: space-between; /* 或者 center, space-around 等，这里让它们均匀分布 */
+            max-width: 100%; /* 限制整个容器的最大宽度，以便在较大的屏幕上有更好的效果 */
+            margin: 0rem auto; /* 控制外边距 */
+        }
+
+        /* 2. 调整图片的样式 */
+        .content-image-flex {
+            /* 移除你原有的 block 和 100% 宽度，重新计算宽度 */
+            width: calc(33.33% - 7px); /* 计算宽度，3张图各占1/3，并减去间隔（例如，这里是2个10px的间隔 / 3 ≈ 6.66px） */
+            max-width: none;           /* 允许图片超出原有的 600px */
+            height: auto;
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        /* --- 新增：About 页面板块样式 --- */
+
+        /* 通用 Flex 容器，用于媒体覆盖和履历的两列布局 */
+        .about-two-col {
+            display: flex;
+            flex-direction: row; /* 默认横向排列 */
+            gap: 5%; /* 两列间的间距 */
+            margin-top: 2.5rem;
+            margin-bottom: 3rem;
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+        /* 媒体覆盖/履历中的图片列 */
+        .col-photo {
+            flex: 0.9; /* 占据 1 份宽度 */
+        }
+
+        /* 媒体覆盖/履历中的内容列 */
+        .col-content {
+            flex: 2; /* 占据 2 份宽度，内容区域更大 */
+        }
+
+        /* 确保板块内的图片应用了基础样式 */
+        .section-image-about {
+            width: 100%;
+            height: auto;
+            padding-right:0px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- 媒体覆盖样式 --- */
+        .coverage-list li {
+            border-bottom: 1px dashed #ddd;
+        }
+        .coverage-list a {
+            color: #444;
+            text-decoration: none;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+        .coverage-list a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        /* --- 履历样式 --- */
+        
+        .cv-photo{
+            flex:0.75;
+        }
+        
+        .cv-item {
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid #007bff; /* 左侧蓝色时间轴线 */
+        }
+        .cv-item h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 5    px;
+            color: #333;
+        }
+        .cv-item p {
+            font-size: x-small;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .cv-item small {
+            font-size: xx-small;
+            display: block;
+            font-style: italic;
+            color: #999;
+        }
+
+        /* --- 联系我样式 --- */
+
+        
+        /* --- 响应式调整 (手机屏幕) --- */
+        @media (max-width: 768px) {
+            .about-two-col {
+                flex-direction: column; /* 垂直堆叠 */
+                padding-left: 10%;
+                padding-right: 10%;
+            }
+            /* 媒体覆盖板块，将照片放在内容下方 */
+            #media-coverage .col-photo {
+                order: 2; /* 更改照片的显示顺序 */
+                margin-top: 1.5rem;
+                padding-left: 10%;
+                padding-right: 10%;
+            }
+            .col-content {
+                order: 1;
+            }
+        }
+
+        </style>
+</head>
+    
+<body>
+
+    <!-- 页面顶部导航栏 -->
+    <header class="header">
+        <!-- 网站标题和Logo区域 -->
+        <div class="site-title">
+            <a href="index.html" class="logo-link">
+                <!-- 网站Logo图片 -->
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <!-- 网站标题文本 -->
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <!-- 主导航菜单 -->
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="#" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="article-body">
+            <div class="multiline-text">
+                <strong>### 关于本站</strong>
+                主要更新业余无线电、户外（背包徒步）、摄影、HDR（高动态范围）图片制作、骑行相关资料和资源，作者是一位正在努力摆脱低技术力的普通人（目前仍是低技术力），但是(对不懂的人)侃侃而谈完全没问题的级别。他试图记录自己的成长并分享他所知道的经验与学识。
+
+                因为想要成为多语言者、FPV爱好者、计算机技术爱好者，所以也会尝试更新这几个方向的内容。
+
+                <strong>各项技能和兴趣爱好掌握进度：</strong>
+                能够和不懂者侃侃而谈的：维吾尔语（60%）、HDR内容制作（80%）、风光&星空摄影（60%）、自组单车（80%）、背包徒步（80%）、露营（90%）、
+
+                仅之乎者不应阔谈大论的：粤语（40%）、英语（40%）、写代码（5%）、NAS&PT&BT（20%）、AI&prompt（20%）、
+
+                如果我所能提供的信息对您来说是常识，请不要浪费您的时间，现在可以退出阅读。
+                
+                <strong>关于作者；</strong>
+                正如前面所说，作者是一个低技术力的普通人。注意，我从不妄自菲薄也不妄自尊大，我有自己的一套理念与价值观，我说所的尽是实情，我有则有，入门非谦虚，精通非狂傲，特此声明
+
+                此外，作者的情商和学历也不高，所以我的表达有时候有可能显得偏激和锐化，请您理解我拙劣文字之间所表达的含义，而非陷入名词陷阱，严苛我的文字。
+
+                
+                <strong>自我评价和来自他人的评价:(#此处陆续收集更新 2024年6月14日):</strong>
+                自我评价:好为人师、理性
+
+                来自他人（#此处待更新评价者是谁 2024年9月5日 ）:
+
+                褒义:理工男、理性、唯物、乐观、诚实、勇敢、自由、热情、话少、聪明
+
+                贬义:抠门、不注意场合、忧郁、记性不好、做事用力过度、急性子、不自信、魔怔人、小鬼、幼稚、没情商
+
+                其他:痴情、听话、隐忍、可爱、小笨蛋、潇洒
+                
+                >>>>
+                //更多关于作者：[https://lizhongping.eu.org/lizhongping](https://lizhongping.asia/lizhongping)
+                //前往导航栏：[https://lizhongping.eu.org/archive](https://lizhongping.asia/archive)
+                //本页面参考了scio.icu站长写的wiki
+                //本站媒体质量的声明：本站媒体内容是储存在notion和GitHub中,notion和GitHub都支持HDR媒体,且项目后端并没有添加对图片的压缩(预览时除外),都是原图.所以如果您的硬件和软件环境支持HDR的话,可以在本站正常浏览HDR内容.查看HDR内容:(#此处待添加)
+                //请不要在您不能控制的场合提及本站
+            </div>
+        </div>
+    </main>
+    
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+        <script src="../script.js"></script>
+    
+</body>
+</html>

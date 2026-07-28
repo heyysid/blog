@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>业余无线电｜工具和资料备查清单｜BD7PCI-ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 全局设置 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', Verdana, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: #808080 url('../public/texture.jpg') repeat;
+            color: black;
+            font-size: 12px;
+            line-height: 1.4;
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* 内容图片样式 */
+        .content-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 1rem auto 2rem;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* 顶部导航栏 & Logo */
+        .header {
+            width: 100%; /* 宽度占满父容器 */
+            padding: 45px 0 20px; /* 上内边距 45px，左右内边距 0 , 下边距20 */
+            background: transparent; /* 将背景色设置为透明 */
+            backdrop-filter: none; /* 移除背景模糊滤镜效果 */
+            text-align: center; /* 内部行内元素（如文本、图片、logo）水平居中对齐 */
+            position: relative; /* 定位方式：相对定位 (作为内部绝对定位元素的参照) */
+            top: 0; /* 距离顶部 0 */
+            z-index: 1000; /* 设置堆叠顺序，确保导航栏位于页面内容的上方 */
+        }
+
+        .site-title {
+            margin-bottom: 30px;
+        }
+
+        .logo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #4A4A4A;
+            gap: 12px;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .main-nav {
+            width: 100%;
+        }
+
+        .menu-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .menu-list a {
+            line-height: 1;
+            text-decoration: none;
+            color: #555;
+            padding: 6px 4px;
+            transition: color 0.2s ease, border-bottom 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .menu-list a:hover,
+        .menu-list a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        /* 主要区域样式 */
+        main {
+            padding: 20px 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* 文章内容区域样式 - 关键修改：缩小与视窗的左右边距 */
+        .article-content {
+            max-width: 95%; /* 增加内容区域宽度，减少左右边距 */
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 0px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .article-cover {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0px;
+            margin-bottom: 2rem;
+        }
+        
+        .article-body {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .article-body h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #333;
+        }
+        
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .back-to-blog:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            .article-content {
+                padding: 1.5rem 1rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                max-width: 98%; /* 移动端进一步减少边距 */
+            }
+            .article-cover {
+                height: 250px;
+            }
+            .menu-list {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .article-content {
+                max-width: 92%; /* 大屏幕上进一步减少边距 */
+            }
+        }
+        
+        /* 代码块样式 */
+        pre {
+            background-color: #f5f5f5;
+            border-radius: 0px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* 引用样式 */
+        blockquote {
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* 正文段落开头 */
+        strong {
+            font-weight: bold;  /* “加粗" */
+            font-size: 1.15em;  /* "加大" (比周围文字大15%) */
+          }
+            
+            }
+        
+        /* 列表样式 */
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem ;
+        }
+        
+        .toc-container {
+          /* 半透明白色背景 */
+          background: rgba(255, 255, 255, 0.97);
+          /* 边框样式 */
+          border: 1px solid #ddd;
+          /* 圆角边框 */
+          border-radius: 0px;
+          /* 内边距 */
+          padding: 1.5rem;
+          /* 外边距，上下2rem，左右自动居中 */
+          margin: 2rem auto;
+          /* 最大宽度限制 */
+          max-width: 100%;
+          /* 阴影效果 */
+          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* 目录标题样式 */
+        .toc-container h2 {
+          /* 底部外边距 */
+          margin-bottom: 1rem;
+          /* 字体大小 */
+          font-size: 2rem;
+          /* 左侧蓝色边框 */
+          border-left: 4px solid #007bff;
+          /* 左侧内边距，为边框留出空间 */
+          padding-left: 10px;
+        }
+
+        /* 目录列表样式 */
+        .toc-container ul {
+          /* 移除默认列表样式 */
+          list-style: none;
+          /* 移除默认左内边距 */
+          padding-left: 0;
+          /* 移除默认外边距 */
+          margin: 0;
+        }
+
+        /* 目录列表项样式 */
+        .toc-container li {
+          /* 底部外边距，创建列表项间距 */
+          margin-bottom: 0.5rem;
+        }
+        .toc-container li a {
+          font-size: 1rem; /* 字体大小 */
+        }
+        
+        .multiline-text {
+          white-space: pre-line;  /* 识别换行符为 <br> */
+          line-height: 1.8;
+          font-size: 1.05rem;
+        }
+
+        /* 为目录中的标题添加样式 */
+        .toc-item {
+            cursor: pointer;
+        }
+
+        /* 新增：目录层级样式 */
+        .toc-level-1 {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .toc-level-2 {
+            margin-left: 1.5rem;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* 新增：为不同级别的标题添加不同的样式 */
+        .article-body h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #333;
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
+        }
+
+        .article-body strong {
+            font-size: 1.3rem;
+            color: #444;
+            display: block;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 与首页完全一致的头部导航 -->
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">业余无线电｜工具和资料备查清单｜BD7PCI</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：业余无线电</span>
+                </div>
+                <img src="../photos/业余无线电.jpeg" alt="a" class="article-cover">
+            </header>
+            
+            <!-- 目录容器 -->
+            <div id="toc-container" class="toc-container">
+              <!-- 目录标题 -->
+              <h2>📑 目录</h2>
+              <!-- 目录列表容器，将由JavaScript动态填充 -->
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                // 当DOM内容加载完成后执行
+                document.addEventListener("DOMContentLoaded", function() {
+                    // 获取目录列表的DOM元素
+                    const tocList = document.getElementById("toc-list");
+                    
+                    // 选择所有需要添加到目录的元素
+                    // 包括：h2标题、h2内的strong元素、独立的strong元素
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    // 遍历每个选中的元素
+                    headers.forEach((header, index) => {
+                        // 检查元素是否已经在h2内，如果是则跳过，避免重复
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        // 为每个标题创建唯一的锚点ID
+                        const anchorId = "section-" + index;
+                        // 将锚点ID设置为元素的id属性
+                        header.setAttribute("id", anchorId);
+                        
+                        // 添加类名用于样式
+                        header.classList.add("toc-item");
+
+                        // 创建列表项li元素
+                        const li = document.createElement("li");
+                        
+                        // 根据元素类型设置不同的目录级别
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        // 创建链接a元素
+                        const a = document.createElement("a");
+                        // 设置链接的href属性，指向对应的元素锚点
+                        a.href = "#" + anchorId;
+                        // 设置链接文本为元素的文本内容
+                        a.textContent = header.textContent;
+                        // 设置链接颜色
+                        a.style.color = "#007bff";
+                        // 移除链接默认的下划线
+                        a.style.textDecoration = "none";
+                        // 鼠标悬停时添加下划线效果
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        // 鼠标离开时移除下划线
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        // 将链接添加到列表项中
+                        li.appendChild(a);
+                        // 将列表项添加到目录列表中
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+
+            <div class="article-body">
+                <div class="multiline-text">
+                   <h2>作者信息：</h2>
+                   <pre style="margin:auto 10% 1em 10%; white-space: pre-wrap; word-wrap: break-word;"><code>
+                       呼号：BD7PCI
+                       梅登海德方格坐标：OL72an
+                       国际电联专区：44
+                       分区：24
+                       电子邮件：heyysid@icloud.com
+                       QSL邮寄？ 否
+                       eQSL吗？ 是
+                       使用LOTW？ 否
+                   </code></pre>
+                   <h2>FT8</h2>
+                   FT8是一种通信模式。从分类上去理解，FT8与CW（摩尔斯电码）、电传、SSB（单边带调制）同属于某种通信模式。FT8一般使用由 DG2YCB开发的软件<a href="https://jtdx-improved.sourceforge.io/" style="margin-left: 5px; text-decoration: underline; color: blue;">[WSJT-X]</a>控制无线电设备，自动执行信号生成，并发送、接收和解码。类似于一种“助手”的存在，操作员只需设置好初始参数。
+                   
+                   FT8的全称是“Franke-Taylor design, 8-Frequency Shift Keying”，其中Franke和Taylor是其主要开发者的名字，而“8”代表该模式使用8种不同的频移键控（FSK）调制方式；
+                   
+                   FT8主要集中在短波段（HF）上
+
+                   FT8主要用于传输简短的呼号、信号报告和位置信息；
+
+                   FT8 FT8对时间同步要求很高，依赖精确的时间同步，可以使用GPS同步装置，或通过NTP（网络时间协议）服务来确保计算机的时间精确
+
+                   FT8频率范围：14.074 MHz（20米波段）或7.074 MHz（40米波段）
+
+                   物料清单：
+
+                   电台，必须是自带USB接口，能够直接连接计算机的电台，无线电台连接计算机以便传输和接收音频信号
+
+                   计算机，用于运行FT8软件的主要设备，操作系统尽量是Windows或Linux
+
+                   专为FT8设计的软件，然后在软件中正确配置音频输入/输出设置
+
+                   天线，常见的天线类型包括双极天线（dipole）、垂直天线（vertical）、Yagi天线等
+
+                   支持FT8主要的设备有：ICOM IC-7300、Yaesu FT-991A、Elecraft KX3、Kenwood TS-590等
+
+                   为FT8开发的主要的软件有：<a href="https://github.com/N0BOY/FT8CN" style="margin-left: 1px; text-decoration: underline; color: blue;">[FT8CN]</a>、WSJT-X、JTDX（TDX是基于WSJT-X开发的）、JTAlert（一个辅助工具，通常与WSJT-X一起使用。它可以在FT8操作中提供多种提示和告警，如呼叫、重复呼号等）、FLDIGI（FLDIGI是一个功能齐全的数字模式软件，虽然不是专门为FT8设计的，但它支持多种数字模式，包括PSK31、RTTY等，也可以用来解码FT8信号）、HRD（Ham Radio Deluxe）一个功能齐全的业余无线电软件套件，包括数字模式操作、日志记录、电子邮件、卫星跟踪等，虽然主要功能不是FT8，但可以通过插件支持。
+                   <h2>电台备案流程</h2>
+                   备案申请平台：<a href="https://ythzxfw.miit.gov.cn/businessHandle" style="margin-left: 1px; text-decoration: underline; color: blue;">[工业和信息化部政务服务平台]</a>
+                   
+                   移动端申请平台：《工业和信息化部政务服务平台》微信小程序
+
+                   手台：
+
+                   车台：
+
+                   其他：
+
+                   中华人民共和国工业和信息化部服务电话：12381
+
+                   <h2>天线制作</h2>
+                   待补充。。。
+                   <h2>工具资源清单</h2>
+                   WSJT-X（FT8）
+                   <a href="https://jtdx-improved.sourceforge.io/" style="margin-left: 1px; text-decoration: underline; color: blue;">[jtdx_improved homepage]</a>
+
+                   工业和信息化部政务服务平台
+                   <a href="https://ythzxfw.miit.gov.cn/businessHandle" style="margin-left: 1px; text-decoration: underline; color: blue;">[工业和信息化部政务服务平台]</a>
+
+                   Clublog，全球范围内几乎所有的远征台都有在Clublog注册登记并上传自己的通联日志，所以这算是DX与远征台领域里的Facebook。
+                   <a href="https://clublog.org/" style="margin-left: 1px; text-decoration: underline; color: blue;">Clublog</a>
+                   
+                   CW，全球CW通信工具资源共享站
+                   <a href="https://cwops.org/cw-resources/" style="margin-left: 1px; text-decoration: underline; color: blue;">[CW Resources]</a>
+
+                   QRZ，全球登记人数最多的HAM社区。可查询呼号主人主动登记过的资料，甚至有可能可以查询到主人的生活照片（对方有主动登记并选择公开）
+                   <a href="https://www.qrz.com/page/addcall.html"  style="margin-left: 1px; text-decoration: underline; color: blue;">addcall by QRZ Ham Radio</a>
+
+                   当下全部卫星过境信息
+                   <a href="https://www.heavens-above.com/AmateurSats.aspx?lat=22.5444&lng=113.9409&loc=深圳&alt=0&tz=ChST"  style="margin-left: 1px; text-decoration: underline; color: blue;">[Amateur Radio Satellites - All Passes]</a>
+
+                   （未确认）全球范围内常青藤高校的WebSDR热门频率清单，在线通讯录
+                   <a href="http://websdr.org/"  style="margin-left: 1px; text-decoration: underline; color: blue;">[websdr.org]</a>
+
+                   上海交通大学教授一位HAM的博客，非常有趣
+                   <a href="https://www.qsl.net/bg4alc/ham/ham.htm"  style="margin-left: 1px; text-decoration: underline; color: blue;">[业余无线电</a>
+
+                   全球电信联盟ITU-T的官网
+                   <a href="https://www.itu.int/ITU-T/recommendations/rec.aspx?id=13914" style="margin-left: 1px; text-decoration: underline; color: blue;">[ITU-T Recommendation database]</a>
+
+                   Morse Runner，全球范围内最热门的CW练习工具和平台（基于win）
+                   <a href="https://www.dxatlas.com/VShaper/" style="margin-left: 1px; text-decoration: underline; color: blue;"> [DX Atlas: Amateur Radio software]</a>
+
+                   QRQ，唯一的支持在MacOS上练习CW通信的工具，作者已开源（无界面应用程序，命令行程序）
+                   <a href="https://fkurz.net/ham/qrq.html" style="margin-left: 1px; text-decoration: underline; color: blue;">QRQ</a>
+
+                   QRQ开发者的博客
+                   <a href="https://fkurz.net/" style="margin-left: 1px; text-decoration: underline; color: blue;">https://fkurz.net/</a>
+
+                   哈罗CQ火腿社区，国内最知名的HAM社区
+                   <a href="https://www.hellocq.net/forum/index.php?m=bbs" style="margin-left: 1px; text-decoration: underline; color: blue;">[https://www.hellocq.net]</a>
+                   
+                   中国工业化和信息部
+                   <a href="https://www.miit.gov.cn/" style="margin-left: 1px; text-decoration: underline; color: blue;">[中华人民共和国工业和信息化部]</a>
+
+                   NASA、俄罗斯（Rosaviakosmos）、加拿大航天局(CSA)、日本航天院（JAXA）、欧洲航天局（ESA）共同组成的国际联盟组织，这个网站主要用于公布宇航员过境信息，并组织和公示能够与宇航员直接交谈的通联活动（主要以学生为主）。
+                   <a href="https://www.ariss.org/" style="margin-left: 1px; text-decoration: underline; color: blue;">[ARISS]</a>
+
+                   国际业余无线电联盟（IARU）
+                   <a href="https://www.iaru.org/" style="margin-left: 1px; text-decoration: underline; color: blue;">[International Amateur Radio Union (IARU) | Global]</a>
+                   
+                   <h2>概念/名词/缩写解释</h2>
+                   <div class="image-gallery">
+                       <img src="../photos/中国业余无线电频段一览图.jpg" alt="个人照片" class="content-image-flex">
+                   </div>
+                   ·波长10-160米波段是HF、6米-23厘米波段是VHF/UHF（还有0.13米）
+
+                   ·**波长**=300除以电磁波频率的兆赫（Mhz），比如300/460Mhz≃0.6m，
+
+                   ·业余业务、卫星业余业务、业余无线电做出具体定义的法规文件是**中国人民共和国无线电频率划分**规定
+                   
+                   ·假设功率不变，那么无电线的频率越低，则传播距离越远，但穿透力也越弱。频率越高穿透力越强，传播距离越短。
+
+                   ·全频偏和半频偏分别表示信道间隔为15kHz或者12.5kHz，12.5kHz等于0.0125MHz。
+
+                   ·A类证书允许发放的最大频段不超过25瓦；发射频率为30-3000MHz范围内的各业余业务和卫星业余业务频段。其中作为主要业务不可占用的是6米（50Mhz）和2米（144Mhz）波段
+
+                   ·用通常的调频方式进行语音通话，必要带宽约为6.25kHz
+
+                   ·我国分配给业余业务和卫星业余业务专用的频段有7Mhz、14Mhz、21Mhz、28Mhz、47Ghz（4个7的倍数
+
+                   ·业余无线电标准频差，144mhz、600khz；430mhz、5mhz；
+
+                   ·音频所指的频率范围大致是16hz-20khz
+
+                   ·天线上只有驻波，馈线上只有行波
+
+                   ·幅度调制AM、频率调制FM、相位调制PM
+
+                   ·所传输信号的最高频率越高、幅度越大、射频输出占用宽带越宽
+
+                   ·零仰角附近具有主辐射瓣的垂直接地天线，其振子的长度应为1/4波长的奇数倍
+
+                   ·垂直偶极天线、垂直接地天线称为全向天线，他们在水平方向没有指向性，但在立体空间有方向性
+
+                   ·振子电气长度为1/4波长的垂直接地天线的最大辐射方向为：**在水平方向没有指向性，在垂直方向指向水平面**
+
+                   ·**划分**是指特定频率列入**划分**表
+
+                   ·以1/4波长垂直接地天线作为比较基准得到的天线增益称为dBd为单位
+
+                   ·以dbd为单位的天线增益是指：最大辐射方向辐射功率密度与半波长振子最大辐射方向辐射功率密度之比的dB指
+
+                   ·无线电常用度量单位的词头KMGTmunp 依次代表10的3、6、9、12、-3、-6、-9、-12次方。所以只需要记住“昆明钢铁没有牛皮”（首宇母即那8个字母）。
+
+                   ·无线电波在真空中的速度大致为x^m,（3x10^8）m/s（光速）
+
+                   **·430mhz业余频段中留给业余卫星通信使用，其他通信方式不应占用的频率段是435Mhz-438Mhz、431.9-432.230；144Mhz中是145.8Mhz-146Mhz**
+
+                   ·微波炉（家用）是在UHF频段工作，2.54GHz
+
+                   ·如果频率增加，则波长变短
+
+                   ·如何把一个电压表正确地连接至电路：**并联**
+
+                   ·对自己的呼号不满，**不可以更换呼号**
+
+                   ·**天线分析仪**可以用来测定天线当前的谐振频率
+
+                   ·FM信号的频偏取决于：**被调制信号的幅度**
+
+                   ·通俗解释载波、调制、频偏这三个基本概念：载波是原始无线电信号，没有携带任何信息的无线电信号；调制是将没有携带任何信息的载波无线电信号调整为携带信息的无线电信号；**频偏是调制后的无线电信号与原始无线电信号频率的振幅差异**
+
+                   ·无线电发射机的效率是指：**输出到天线系统的信号功率与发射机所消耗的电源功率之比，**
+
+                   ·**直立天线**发射的电磁波电场垂直于地面
+
+                   ·**衰减**是指信号通过信道或电路后功率减少，**衰落**是指信号通过信道或电路后发生幅度随时间而起伏
+
+                   ·**梅登海德网格定位系统是根据经纬度坐标对地球表面进行网格划分和命名用以标示地理位置的系统，梅登海德网格定位系统两者网格大小**不同，四字符网格为经度2和纬度1，6字符网格为经度5和纬度2.5
+
+                   ·0.4kW可以表示为56dBu，计算公式为：
+
+                   dBu=10×log10(0.4 kW/1mW)
+                   其中0.4kw/1mw=400000mW/1mW=400×10^3
+
+                   ·注意“峰、峰峰、有效、平均”的区别，其中峰峰100有效值是35.4，峰100的有效值是70.7，峰峰和峰100平均值都是0
+
+                   ·**频率容限**（亦称[频率容差、频率公差、容许频偏）指发射所占频带的[中心频率]偏离[指配频率]的最大容许偏差，以百万分之几或以[Hz]表示
+
+                   ·电动势为用旧以后测得数值，单位为伏，旧电池用后测得电动势为1.5伏
+
+                   ·只包含一个频率分量的信号是“简单正弦波”
+
+                   ·SSB常用于长距离弱信号的VHF或UHF联络；SSB是一种语音调制
+
+                   ·**无线电发射机调制部件**的作用是：以原始信号控制射频信号的幅度、频率、相位参数
+
+                   ·天线增益是相对于参考天线，在某一方向上信号强度的增加
+
+                   ·我国分配给**业余业务**和**卫星业余业务**与**其他业务**共用、并且**业余业务**和**卫星业余业务**作为**次要**业务的1200MHz以下频段有135.7kHz、10.1MHz、430MHz
+
+                   ·144MHz业余频段中留给业余卫星通信，语音及其他通信方式不应占用的频段为145.8MHz、146MHz
+
+                   ·430MHz不得占用的是435-438MHz
+
+                   ·无线电发射机在无调制的情况下，射频供给无线馈线的平均功率是载波功率
+
+                   ·dBi=2.15-dBd；如果dBi要换算成dbd，需要使用dbi减去2.15
+
+                   ·30-300MHz是VHF；300-3000MHz是UHF；HF是3-30MHz；VHF和UHF简称为UV段
+
+                   ### 缩写
+
+                   DX（DX是Distant eXchange简写。业余无线电DX活动的原本是更好地研究和利用电离层传播条件而进行的与远方业余电台的双向交流活动。后发展为一种具体表现为猎奇和追求PILEUP的活动，大家试图联络分布尽可能泛，数量尽可能多的业余电台，从而，DX活动成为业余无线电一个重要分支。1935年，美国人设计了一种旨在推动业余无线电活动的“游戏”，叫“DXCentury Club"。按照规则，全世界被分成许多"DXCC分区(DXCOcountry)”，一个真正的政治概念的国家是一个“DXCC分区”。该国家拥有主权的并与之相隔225海里以上岛屿也可算一个“DXCC分区”
+
+                   SQL（静噪控制，检测到接收信号低于一定电平时关断音频输出
+
+                   RIG（电台设备的常用缩语
+
+                   ARDF（业余无线电测向
+
+                   《电磁环境控制限值》为30Mhz-3Ghz
+
+                   VER（代表垂直天线
+
+                   中国的IUT分区（33、42、43、44、50
+                   <div class="image-gallery">
+                       <img src="../photos/ITU分区.jpg" alt="ITU分区.jpg" class="content-image-flex">
+                   </div>
+                   中国的UTC分区（23、24、27
+
+                   简单正弦波（只包含一个频率分量
+
+                   频率容限（假设设定的标准频率为100Mhz，设定频率容限为±5MHz，那么他的实际工作频率为95-105Mhz
+
+                   杂散域发射功率（
+
+                   QRZ？（是谁在呼叫我
+
+                   QRM（我遇到他台干扰
+
+                   QRN（我遇到天电干扰
+
+                   ANT（天线
+
+                   CQ（呼叫
+
+                   QSL（既是卡片，也是已收妥时的回复话术
+
+                   **dBi（**“相对于无方向性点源天线的增益”即**最大辐射方向上的辐射功率密度与理想点源天线的辐射功率密度之比**
+
+                   **dBd（**
+
+                   **GND（地线、地面**
+
+                   **VOX（是发信机声控**
+
+                   **GP（垂直接地天线**
+
+                   **DP（偶极天线**
+
+                   BEAM（指定向天线
+
+                   DTMF：双音多频编码，由8个音调频率中的两个频率组合成的控制信号，代表16种状态之一，用于遥控和传输数字等简单字符
+
+                   CTCSS：亚音调静噪，即从67-250.3Hz的38个亚音调频率中选取一个作为选通信号，代表38种状态之一，接收机没有收到特定的选通信号时自动关闭音频输出
+
+                   XCVR：收发信机的业余无线电通信常用缩语
+                   
+                   <h2>字母解释法</h2>
+                   BD7PCI=Bravo、Delta、seven、papa、Charlie、India
+
+                   A~Alfa/American
+                   B~Bravo/Boston
+                   C~Charlie/Canada
+                   D~Delta/Denmark
+                   E~Echo/England
+                   F~Foxtrot/florida
+                   G~Golf/Germany
+                   H~Hotel/Honolulu
+                   I~India/Italy
+                   J~Juliet/Japan
+                   K~Kilo/Kilowatt
+                   L~Lima/London
+                   M~Mike/Mexico
+                   N~November/Norway
+                   O~Oscar/Ontario
+                   P~Papa/Peter
+                   Q~Quebec/Queen
+                   R~Romeo/Radio
+                   S~Sierra/Sugar
+                   T~Tango/Tokyo
+                   U~Uniform/United
+                   V~Victor/Virginia
+                   W~Whiskey/Washington
+                   X~X-ray
+                   Y~Yankee/Yokohama
+                   Z~Zulu/Zanzibar
+                   
+                   <h2>摩斯电码（CW通信）</h2>
+                       <div class="image-gallery">
+                                              <img src="../photos/CW.jpg" alt="CW" class="content-image-flex">
+                                          </div>
+                    <h2>A证考试技巧和易错题熟记</h2>
+                    技巧：
+                        有三万元选三万元
+                        2米6米波段选主要，0.7米选次要
+                        VHF是30-300MHz；UHF是300-3000MHz；430Mhz是次要业务
+                        VHF和UHF是非电离辐射
+                        电压表是并联而非串联
+                        欧姆定律：流过电阻的电流I，与两端电压U成正比
+
+                        易错题：
+                        业余业务和卫星业余业务作为次要业务时，可要求保护不受来自同一业务或其他次要业务电台的有害干扰
+                        最重要的两项电气参数：特性阻抗和工作频率下单位长度的传输功率损耗
+                        dBd天线增益是指：与半波长振子的dB值
+                        可能是中继台附近的两个其他发射机的强信号在中继台上行频率造成了互调干扰
+                        GND是地线，地面
+                        通风不良，有爆炸风险气体聚集
+                        TX、XMTR是发信机
+                        俗称6米业余波段的频率范围以及业余业务和卫星业余业务的使用状态分别为50-54MHz，主要业务
+
+                    <h2>B证考试技巧和易错题熟记</h2>
+                    没考呢
+                    
+                </div>
+            </div>
+            
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+

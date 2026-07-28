@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 设置文档字符编码为UTF-8，支持中文 -->
+    <meta charset="UTF-8">
+    <!-- 设置视口，确保在移动设备上正确显示 -->
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* 全局设置 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', Verdana, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: #808080 url('../public/texture.jpg') repeat;
+            color: black;
+            font-size: 12px;
+            line-height: 1.4;
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* 内容图片样式 */
+        .content-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 1rem auto 2rem;
+            display: inline-block;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* 顶部导航栏 & Logo */
+        .header {
+            width: 100%; /* 宽度占满父容器 */
+            padding: 45px 0 20px; /* 上内边距 45px，左右内边距 0 , 下边距20 */
+            background: transparent; /* 将背景色设置为透明 */
+            backdrop-filter: none; /* 移除背景模糊滤镜效果 */
+            text-align: center; /* 内部行内元素（如文本、图片、logo）水平居中对齐 */
+            position: relative; /* 定位方式：相对定位 (作为内部绝对定位元素的参照) */
+            top: 0; /* 距离顶部 0 */
+            z-index: 1000; /* 设置堆叠顺序，确保导航栏位于页面内容的上方 */
+        }
+
+        .site-title {
+            margin-bottom: 30px;
+        }
+
+        .logo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #4A4A4A;
+            gap: 12px;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .main-nav {
+            width: 100%;
+        }
+
+        .menu-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .menu-list a {
+            line-height: 1;
+            text-decoration: none;
+            color: #555;
+            padding: 6px 4px;
+            transition: color 0.2s ease, border-bottom 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .menu-list a:hover,
+        .menu-list a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        /* 主要区域样式 */
+        main {
+            padding: 20px 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* 文章内容区域样式 - 关键修改：缩小与视窗的左右边距 */
+        .article-content {
+            max-width: 95%; /* 增加内容区域宽度，减少左右边距 */
+            margin: 0 auto;
+            background: transparent; /* 将背景色设置为透明 */
+            border-radius: 0px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .article-cover {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0px;
+            margin-bottom: 2rem;
+        }
+        
+        .article-body {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .article-body h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #333;
+        }
+        
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .back-to-blog:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            .article-content {
+                padding: 1.5rem 1rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                max-width: 98%; /* 移动端进一步减少边距 */
+            }
+            .article-cover {
+                height: 250px;
+            }
+            .menu-list {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .article-content {
+                max-width: 92%; /* 大屏幕上进一步减少边距 */
+            }
+        }
+        
+        /* 代码块样式 */
+        pre {
+            background-color: #f5f5f5;
+            border-radius: 0px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* 引用样式 */
+        blockquote {
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* 正文段落开头 */
+        strong {
+            font-weight: bold;  /* “加粗" */
+            font-size: 1.15em;  /* "加大" (比周围文字大15%) */
+          }
+        
+        /* 列表样式 */
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem ;
+        }
+        
+        .multiline-text {
+          white-space: pre-line;  /* 识别换行符为 <br> */
+          line-height: 1.8;
+          font-size: 1.05rem;
+          padding-left: 10%;
+          padding-right: 10%;
+          padding-top: 0;
+          padding-bottom:0;
+          margin-bottom: 0.5rem;
+        }
+
+        .article-body strong {
+            font-size: 1.3rem;
+            color: #444;
+            display: block;
+            margin: 1.5rem 0 0.5rem;
+        }
+        
+        .image-gallery {
+            display: flex; /* 启用 Flex 布局 */
+            gap: 10px;     /* 图片之间的间隔，你可以根据需要调整 */
+            justify-content: space-between; /* 或者 center, space-around 等，这里让它们均匀分布 */
+            max-width: 100%; /* 限制整个容器的最大宽度，以便在较大的屏幕上有更好的效果 */
+            margin: 0rem auto; /* 控制外边距 */
+        }
+
+        /* 2. 调整图片的样式 */
+        .content-image-flex {
+            /* 移除你原有的 block 和 100% 宽度，重新计算宽度 */
+            width: calc(33.33% - 7px); /* 计算宽度，3张图各占1/3，并减去间隔（例如，这里是2个10px的间隔 / 3 ≈ 6.66px） */
+            max-width: none;           /* 允许图片超出原有的 600px */
+            height: auto;
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        /* --- 新增：About 页面板块样式 --- */
+
+        /* 通用 Flex 容器，用于媒体覆盖和履历的两列布局 */
+        .about-two-col {
+            display: flex;
+            flex-direction: row; /* 默认横向排列 */
+            gap: 5%; /* 两列间的间距 */
+            margin-top: 2.5rem;
+            margin-bottom: 3rem;
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+        /* 媒体覆盖/履历中的图片列 */
+        .col-photo {
+            flex: 0.9; /* 占据 1 份宽度 */
+        }
+
+        /* 媒体覆盖/履历中的内容列 */
+        .col-content {
+            flex: 2; /* 占据 2 份宽度，内容区域更大 */
+        }
+
+        /* 确保板块内的图片应用了基础样式 */
+        .section-image-about {
+            width: 100%;
+            height: auto;
+            padding-right:0px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- 媒体覆盖样式 --- */
+        .coverage-list li {
+            border-bottom: 1px dashed #ddd;
+        }
+        .coverage-list a {
+            color: #444;
+            text-decoration: none;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+        .coverage-list a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        /* --- 履历样式 --- */
+        
+        .cv-photo{
+            flex:0.75;
+        }
+        
+        .cv-item {
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid #007bff; /* 左侧蓝色时间轴线 */
+        }
+        .cv-item h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 5    px;
+            color: #333;
+        }
+        .cv-item p {
+            font-size: x-small;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .cv-item small {
+            font-size: xx-small;
+            display: block;
+            font-style: italic;
+            color: #999;
+        }
+
+        /* --- 联系我样式 --- */
+
+        
+        /* --- 响应式调整 (手机屏幕) --- */
+        @media (max-width: 768px) {
+            .about-two-col {
+                flex-direction: column; /* 垂直堆叠 */
+                padding-left: 10%;
+                padding-right: 10%;
+            }
+            /* 媒体覆盖板块，将照片放在内容下方 */
+            #media-coverage .col-photo {
+                order: 2; /* 更改照片的显示顺序 */
+                margin-top: 1.5rem;
+                padding-left: 10%;
+                padding-right: 10%;
+            }
+            .col-content {
+                order: 1;
+            }
+        }
+
+        </style>
+</head>
+    
+<body>
+
+    <!-- 页面顶部导航栏 -->
+    <header class="header">
+        <!-- 网站标题和Logo区域 -->
+        <div class="site-title">
+            <a href="index.html" class="logo-link">
+                <!-- 网站Logo图片 -->
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <!-- 网站标题文本 -->
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <!-- 主导航菜单 -->
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="#" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="article-body">
+            <div class="multiline-text">
+                #最后更新时间:@2024年04月05日
+                            
+                Hi！我叫李忠平，欢迎您光临我的博客！这个博客项目源自我的各项兴趣爱好，包含业余无线电、户外背包徒步露营、摄影、骑行、博客内更新的内容将涵盖有关它们的一切。因为想要成为多语言者、FPV飞手、计算机专家，所以也会尝试更新这几个方向的内容。
+                
+                请不要在您不能控制的场合提及本站。
+                
+                在生活中我是一名普通的上班族，梦想着能够成为像<a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px; text-decoration: underline; color: blue;">@SEANBAGSHAW</a><a href='https://space.bilibili.com/256430083' target="_blank" style="margin-left: 1px; text-decoration: underline; color: blue;">@超级流浪师</a>这样有钱又闲的自然/户外摄影师，不过我2022年才开始接触摄影，未来还有很多事物需要探索学习。在这之前，我在科技自媒体@ZEALER 担任MCN运营，然后就职户外品牌@Garmin佳明，任职社媒运营。我很幸运能在科技领域媒体和户外领域的企业工作，它们给我带来了技能、资金和资源积累。
+            
+                <div class="image-gallery">
+                    <img src="../photos/about.jpeg" alt="个人照片" class="content-image-flex">
+                    <img src="../photos/about1.jpeg" alt="户外照片1" class="content-image-flex">
+                    <img src="../photos/about2.jpeg" alt="户外照片2" class="content-image-flex">
+                </div>
+            我热衷于记录，并参加了《365Days*1sPlan》这个计划，它最初由一位YouTuber创立，要求参与者坚持每天打开相机至少录制一秒，或者完成一张自拍，一年后将这些片段拼接成一个365秒的视频。你应该看过那些每天以相同角度坚持自拍一张照片然后制作成一年以来变化的视频。我也想成为这其中之一。欢迎您查看我2021-2023年参加的《365Days*1s Plan》计划:<a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px;  color: blue;">《2021》</a><a href='https://www.bilibili.com/video/BV1n24y1b7QE/' target="_blank" style="margin-left: 1px; color: blue;">《2022》</a><a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px;color: blue;">《2023》</a>...请注意，视频制作得非常稚嫩:(
+            
+            我于1998年4月12日出生在四川南充，14岁离开四川，在深圳生活了10几年时间，目前长居在浙江省杭州市。我认为我一直是一个热衷寻求冒险和新奇体验的人，我非常喜欢户外，特别是背包徒步户外露营，我曾在2022年独自背包徒步秦岭高山草甸-秦岭光头山-鹿角梁，2023年独自徒步赛里木湖-托乎拉苏。这些户外活动给我提供了此前生活中从未有过的的体验，让我走出生活中原本琐碎的事物。欢迎查看我的户外计划<a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px;  color: blue;">《🗒️零｜单车旅行，深圳至汕头》</a><a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px;  color: blue;">《ARD️一｜秦岭鹿角梁3日徒步》</a><a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px;  color: blue;">《ARD️二｜三次登顶罗浮山》</a><a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px;  color: blue;">《ARD️三｜赛里木湖至托乎拉苏徒步》</a><a href='https://www.outdoorexposurephoto.com/' target="_blank" style="margin-left: 1px;  color: blue;">《ARD️四｜河源大峡谷露营溯溪》</a>···
+            
+            很遗憾..我还没能制作出令人满意或价值很高的作品，直到现在，我还没能把我投入进这项爱好的资金回本，但梦想和热爱驱动着我，乐此不疲。欢迎前往首页查看我拍摄的作品。那些“作品欢迎来自任何人的评论、批评和建设性交流，并且我会由衷地感谢愿意为此付出精力的朋友，我认为那是难得和幸运的。
+            
+            <!--跟很多同龄人一样，我有一个非常糟糕的家庭。我那父亲从初二开始在监狱里蹲了8年，母亲找了外遇，其他亲戚自从爷爷奶奶离世就疏于联系，我的生活情况也随着爷爷奶奶在同一年离世开始第一次接触到父亲母亲而急转直下。他们是不折不扣的人渣。毫不夸张地讲活到现在全靠我自己独自打拼，我从15岁时开始便参加工作，我做过各种数不胜数的工作，有些不够体面。细数的话。我一开始做网吧夜班网管做了2个月（15岁）、炸鸡店前台/收银员做了很久（16岁）、去浙江无锡做台球厅服务员做了6个月（16岁）、在深圳卓越步行街的牛肉饼店做后厨做了0.5个月、韩式石锅拌饭店后厨做了1个月、送披萨趁机在业主门锁上塞传单的做了1.5个月（17岁）、在华强北做给iPhone刷机的员工做了2个月（17岁）、在福田口岸附近的面包店做服务员和后厨做了很久（16岁）。接下来时间线有些混乱。我还做过香港代购兼职3次（19岁，因为长得高但是看起来瘦瘦的穿得破破烂烂的穷穷的所以每次都被海关拦截，最后不让我做了～ 笑）、当过广告公司群演前景1次（18岁）、演唱会保安14天（21岁）、发传单的兼职很多很多次、cocopark酒吧充场2次（20岁）、清吧前台2个月（21岁）、人口普查指导员1.5个月（21岁）、社区义工2个月（22岁）、电话销售2个月（18岁？）、猎头4个月（17岁？）、电话客服8个月（20岁）、青旅管家1年（21-22岁）、直播运营1.5年（21-22岁）、KOL经纪人4个月（22岁），港股操作员1个月（22岁），然后迎来了一次非常幸运的机会，我得到了ZEALER的工作机会。我在炸鸡店后厨工作期间偷吃过鸡翅根和鸡块，我有过长达一年的信用卡、花呗逾期。还有好多好多事情...
+            
+            不过我有幸认识了一个收留我的青旅老板，还有好几个帮过我的同龄人朋友。
+            
+            所以我的最高学历是初中，由于家庭原因我没能去参加中考，其实我连初中毕业证都没有。后来我去参加了深圳大学的成人自考，可中途因为资金问题不得已放弃，当时20岁。这是我一直以来非常巨大的遗憾，我的性格因此发生了很大的转变。
+            
+            这些事情极少有人知道，是我的秘密，但其实一直一直想找个机会一吐为快，非常非常想，博客这种没人看的角落似乎是个不错的地方。撒谎是可耻的，我为了找到工作，生存下去，迫不得已伪造了学历，编造了幸福的身世。也因为长期编造身世，我的精神状态一度不太健康，从十七八岁左右开始我患上了抽动症，现在好得差不多了。我没能找到可以与我共鸣的人，很长一段时间我认为不会有人能与我共鸣，但其实我内心非常渴望有那么一个人能让我一吐为快，能够知道我全部的事情，我的内心一度非常孤独。
+            
+            在十一岁之前我并没接触过父母。跟爷爷奶奶在一起生活的那段童年的记忆是我最幸福的时光，他们赋予了我很好的性格底色。此后的生活如同地狱。14岁-19岁的我，一度认为之所以不幸是我自己的问题。人在绝境中想要寻找出路，能做的只有改变自己，无论发生什么，都只能从自己身上寻找问题，去妥协，这就是我的做法，所以我丢失了我的自我和选择的权利。久而久之，我习惯把一切问题都揽在我自己身上。<a href='https://www.lizhongping.eu.org/article/shouji' target="_blank" style="margin-left: 1px;  color: blue;">《大大方方》</a> -->
+            </div>
+
+            <div class="about-two-col" id="media-coverage-section">
+                <div class="col-photo">
+                    <img src="../photos/头像-已锐化.jpg" class="section-image-about">
+                </div>
+                    <div class="col-content">
+                    <h2 style="margin-top:0px; font-size: xx-large; font-weight: bold;" id="media-coverage">社交媒体覆盖</h2>
+                    <ul class="coverage-list">
+                        <li><a href="https://weibo.com/u/7634700709" target="_blank"><i class="fab fa-weibo" style="padding-right:1%; margin-top:1.2rem;"></i>微博:@科学户外</a></li>
+                        <li><a href="https://www.instagram.com/lizhongping_/" target="_blank"><i class="fab fa-instagram" style="padding-right:1%; margin-top:1.2rem;"></i>Instagram：@ScienceOutdoors_FPV</a></li>
+                        <li><a href="null" target="_blank"><i class="fab fa-youtube" style="padding-right:1%; margin-top:1.2rem;"></i>YouTube:@</a></li>
+                        <li><a href="null" target="_blank"><i class="fab fa-bilibili" style="padding-right:1%; margin-top:1.2rem;"></i>bilibili:@</a></li>
+                        <li><a href="mailto:heyysid@icloud.com" target="_blank"><i class="fas fa-envelope" style="padding-right:1%; margin-top:1.2rem;"></i>Email:@heyysid@icloud.com</a></li>
+                        <li><a href="null" target="_blank"><i class="fas fa-camera" style="padding-right:1%; margin-top:1.2rem;"></i>500px:@</a></li>
+                        <li><a href="null" target="_blank"><i class="fas fa-book-open" style="padding-right:1%; margin-top:1.2rem;"></i>wiki(自制):@</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="about-two-col" id="cv-section">
+                <div class="cv-photo">
+                    <h2 style="margin-top:0px; font-size: xx-large; font-weight: bold;" >工作经历</h2>
+                    <div class="cv-item"><h4>Garmin 佳明 - 内容运营</h4><p></p><small>2023 - 2024</small></div>
+                    <div class="cv-item"><h4>ZEALER MCN - MCN 运营管理</h4><p></p><small>2023</small></div>
+                    <div class="cv-item"><h4>ZEALER MCN - 市场部运营专员</h4><p></p><small>2022</small></div>
+                    <div class="cv-item"><h4>深圳市星恋文化传媒有限公司 - KOL 经纪人</h4><p></p><small>2021</small></div>
+                    <div class="cv-item"><h4>QQ 音乐外包 - 达人运营</h4><p></p><small>2019 - 2021</small></div>
+                </div>
+                <div class="col-photo">
+                    <img src="../photos/生活.jpeg" class="section-image-about">
+                </div>
+            </div>
+            
+            <div style="padding-right:10%; padding-left:10%; margin-bottom:5%;">
+              <h2 style="margin-top:0px; font-size: xx-large; font-weight: bold;" >联系我</h2>
+                <ul class="contact-list">
+                <li><i class="fas fa-envelope"></i><a href="mailto:heyysid@icloud.com">heyysid@icloud.com</a></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+        <script src="../script.js"></script>
+    
+</body>
+</html>

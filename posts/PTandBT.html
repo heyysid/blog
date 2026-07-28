@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title"></h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：</span>
+                </div>
+                <img src="../photos/fengmian/sun.jpg" alt="null" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container" style="margin-bottom:0;">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    本页是我收集到的有关于PT/BT站的资源和信息，请尊重材料原作者的转载和传播声明,不要在不受控制的场合提起本页。
+
+                    截止2025年5月14人，我对于PT的了解仍然在云体验的阶段
+
+                    <strong>资料备份（请尊重原作者的转载和传播声明）：</strong>
+                    来源：https://iecho.cc/tags/PT/
+
+                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/c3b6ee87-1faf-4009-aa39-6de3bd33d1b3/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%8E%A9PT_V1.0_2.pdf' class='a'>[从零开始玩PT_V1.0_2.pdf]</a>
+
+                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/70a931a9-7f67-45fa-a409-708551560681/PT_%E4%B8%8B%E8%BD%BD%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%BB%E8%80%81%E7%AF%87%E4%B8%80%EF%BC%9A%E7%AB%99%E7%82%B9%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%94%9F%E5%AD%98%E6%8C%87%E5%8D%97___%E5%9B%9E%E5%A3%B0.pdf' class='a'>[PT 下载从入门到养老篇一：站点介绍及生存指南 _ 回声.pdf]</a>
+
+                        <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/fda7cb1f-1b59-40d5-8401-8555d297ad81/PT_%E4%B8%8B%E8%BD%BD%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%BB%E8%80%81%E7%AF%87%E4%B8%89%EF%BC%9ANAS_%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%8A%E7%A1%AC%E7%9B%98%E9%80%89%E8%B4%AD___%E5%9B%9E%E5%A3%B0.pdf' class='a'>[PT 下载从入门到养老篇三：NAS 存储服务器及硬盘选购 _ 回声.pdf]</a>
+
+                            <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/cdb37692-2f0c-4c52-a80e-7dbc042c67a5/PT_%E4%B8%8B%E8%BD%BD%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%BB%E8%80%81%E7%AF%87%E4%BA%8C%EF%BC%9A%E9%9A%90%E5%8C%BF%E7%9A%84%E5%9C%B0%E4%B8%8B%E9%80%9A%E8%AE%AF___%E5%9B%9E%E5%A3%B0.pdf' class='a'>[PT 下载从入门到养老篇二：隐匿的地下通讯 _ 回声.pdf]</a>
+
+                                <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/b97d3ecc-8c40-4a2b-9a78-d8b9d5f0fcbd/PT_%E4%B8%8B%E8%BD%BD%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%BB%E8%80%81%E7%AF%87%E4%BA%94%EF%BC%9A%E5%9F%BA%E4%BA%8E_Plex_Media_Server_%E6%90%AD%E5%BB%BA%E5%AE%B6%E5%BA%AD%E5%BD%B1%E9%9F%B3%E6%9C%8D%E5%8A%A1%E5%99%A8___%E5%9B%9E%E5%A3%B0.pdf' class='a'>[PT 下载从入门到养老篇五：基于 Plex Media Server 搭建家庭影音服务器 _ 回声.pdf]</a>
+
+                                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/d04c83e7-27c2-4e51-b102-b5e551c611bf/PT_%E4%B8%8B%E8%BD%BD%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%BB%E8%80%81%E7%AF%87%E5%85%AD%EF%BC%9A%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E9%82%A3%E4%BA%9B%E4%BA%8B___%E5%9B%9E%E5%A3%B0.pdf' class='a'>[PT 下载从入门到养老篇六：家庭网络那些事 _ 回声.pdf]</a>
+
+                                        <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/10fd6af2-5a72-49ef-84e3-6a689f1e62db/PT_%E4%B8%8B%E8%BD%BD%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%BB%E8%80%81%E7%AF%87%E5%9B%9B%EF%BC%9A%E5%88%AB%E4%B9%B0_QNAP_-_%E8%81%8A%E8%81%8A%E5%A8%81%E8%81%94%E9%80%9A_NAS_%E7%9A%84%E5%9D%91___%E5%9B%9E%E5%A3%B0.pdf' class='a'>[PT 下载从入门到养老篇四：别买 QNAP - 聊聊威联通 NAS 的坑 _ 回声.pdf]</a>
+
+                                            <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/27db8e63-d166-4a9a-bce9-8806f259f11b/%E5%9B%BD%E5%86%85PT%E4%BB%8B%E7%BB%8D.pdf' class='a'>[国内PT介绍.pdf]</a>
+
+                                                <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/d1f89c5e-1034-48d7-acb8-92d59bc08be8/%E5%9B%BD%E5%86%85%E4%B8%89%E5%A4%A7PT%E7%AB%99%E5%88%86%E6%9E%90.pdf ' class='a'>[国内三大PT站分析.pdf]</a>
+
+                                                    <a href='https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/1c8bdc8f-104e-4d03-9c44-d153ac6a6dd7/%E5%9B%BD%E5%86%85%E5%A4%96PT%E7%AB%99%E6%B1%87%E6%80%BB%E5%88%97%E8%A1%A8%EF%BC%9A%E7%9C%8B%E8%BF%99%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B0%B1%E5%A4%9F%E4%BA%86___by_Tech_Cat___Medium.pdf ' class='a'>[国内外PT站汇总列表：看这一篇文章就够了 _ by Tech Cat _ Medium.pdf]</a>
+
+                                                        <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/603c4c90-1f90-4954-8a47-562ad333cb53/%E5%9B%BD%E5%86%85%E9%AB%98%E6%B8%85PT%E6%A0%BC%E5%B1%80%E5%88%9D%E5%AE%9A%EF%BC%8C%E5%BE%AE%E5%A6%99%E5%B9%B3%E8%A1%A1%E9%9A%8F%E6%97%B6%E5%8F%AF%E8%83%BD%E8%A2%AB%E7%A0%B4.pdf' class='a'>[国内高清PT格局初定，微妙平衡随时可能被破.pdf]</a>
+
+                                                            <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/d8611aa3-40e4-4664-94d8-c5e741b7cd31/%E6%80%9D%E6%83%B3%E6%98%AF%E9%9C%80%E8%A6%81%E4%B8%80%E6%9D%A1%E9%81%93%E8%B7%AF%E7%9A%84.pdf' class='a'>[思想是需要一条道路的.pdf]</a>
+
+                                                                <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/4b8ae250-485b-4a88-8cb7-150a3b532403/%E6%80%9D%E8%B7%AF%E5%A3%B0%E6%98%8E.pdf' class='a'>[思路声明.pdf]</a>
+
+                                                                    <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/f8a11a4e-af74-4b85-a518-d4757f3a76d4/%E6%80%9D%E8%B7%AF%E7%BD%91%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E8%B5%B7%E6%9D%A5%E7%9A%84%EF%BC%9F_-_%E7%9F%A5%E4%B9%8E.pdf' class='a'>[思路网是怎么做起来的？ - 知乎.pdf]</a>
+
+                                                                        <a href=' https://prod-files-secure.s3.us-west-2.amazonaws.com/156c5044-fa64-43ba-bda6-caf68412664e/d3cbb650-39aa-45c5-9b58-01936aa40fc4/%E6%88%91%E4%B9%B0%E3%80%81%E5%8D%96hdchina%E8%B4%A6%E5%8F%B7%E7%9A%84%E7%BB%8F%E5%8E%86.pdf' class='a'>[我买、卖hdchina账号的经历.pdf]</a>
+                <h2>推荐阅读（请尊重原作者的转载和传播声明）：</h2>
+                [硬件篇 | NAS硬件选购DIY指南：不同价位的硬件搭配建议及心得 - scio - 见证学习与成长](https://blog.scio.icu/index.php/archives/7/)
+
+                [NAS之UNRAID系统折腾纪实系列 总目录 - scio - 见证学习与成长](https://blog.scio.icu/index.php/archives/5/)
+
+                [决定踏入PT前你应该知道的事情 - 圣王H的秘密基地](https://wiki.scio.icu/index.php/决定踏入PT前你应该知道的事情)
+
+                [zmt.wiki](https://www.zmt.wiki/24532.html)
+
+                [douban.com](https://www.douban.com/group/topic/27989385/?ref=www.zmt.wiki&_i=9540191KLo4X7v)
+                
+                <h2>TG群：</h2>
+                - Synology/黑群晖用户群https://t.me/nasfan
+                - NAS 爱好者https://t.me/nasfans
+                - 群晖&威联通 NAS 交流群https://t.me/synologyNAS
+                - 馒头 MTeam 官方 Telegram 群https://t.me/M_Team_Chat
+                - 猫站 PT 之友 PTer 官方 Telegram 群https://t.me/PTerClub
+                - HDArea 官方群https://t.me/HDArea10000
+                
+
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+
+
+

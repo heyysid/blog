@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">解决战网卡45%、炉石匹配成功界面停滞、换外服报错代码2400三个问题</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/war3.jpeg" alt="a" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                <h2>炉石匹配成功界面停滞</h2>
+                问题描述：
+
+                自从暴雪国服回归后，我发现炉石传说亚服不用VPN居然能正常登录正常玩，但是开启VPN后却反而玩不了了，这很奇怪，会停滞在匹配成功即将进入游戏的界面，无法取消匹配也无法进入游戏。此时的网络环境是正常的能访问YouTube的，也能访问炉石商城买东西卡牌合成，但就是无法成功进入任何对战。不知道我遇到的这个现象是否普遍。下面是解决方法。
+
+                环境：
+                macbook pro m3 macos15.0.1
+                
+                分析：
+                通过命令行工具lsof看了一下hearthstone和[http://battle.net](https://link.zhihu.com/?target=http%3A//battle.net)跟服务器端口的连接情况，我发现在匹配成功进入游戏的时候hearthstone会多出来一个指向IP地址158.115.207.x的端口，而且这个端口是`CLOSE_WAIT`状态，表示对方服务器关闭了连接，但本地服务还没有关闭它。猜测应该是暴雪服务器监测到了访问通过VPN转发所以中断了连接。所以游戏才会一直停滞在匹配成功即将进入游戏的界面。
+
+                <code>
+                Hearthsto 23024    xx   40u  IPv4  0x603d6899435c117      0t0    TCP 198.xx.0.1:52173->158.115.207.177:battlenet (CLOSE_WAIT)
+                </code>
+
+                解决：
+                既然不用VPN能玩，那在类似shadowrocket这样的代理软件中添加几条规则就行。步骤：shadowrocket-配置文件-规则-加号-类型选择ip-cidr，策略选择direct，域名选择158.115.207.0/24     *注意这个域名应该不是固定的，如果变动可以通过监视工具自己修改。
+
+                <code>
+                ip-cidr direct 158.115.207.0/24
+                </code>
+
+                并按照相同的步骤再添加或者修改规则。
+
+                <code>
+                DOMAIN-KEYWORD - porxy -hearthstone
+                DOMAIN-KEYWORD - porxy -battle
+                DOMAIN - direct -battle
+                </code>
+
+                <h2>战网卡45%</h2>
+                <code> >>>解决暴雪国服停止运营后，安装包在国内会因为DNS导致的游戏无法安装，卡在45%进度的问题
+
+                //第一步：
+                rm -rf ~/Library/Preferences/com.blizzard.*
+                #彻底卸载本地的暴雪战网相关文件，注意blizzard文件的路径有可能会在/Users/Shared
+                rm -rf ~/Library/Preferences/net.battle.*
+                #彻底卸载本地的暴雪战网相关文件，注意blizzard文件的路径有可能会在/Users/Shared
+                #当blizzard文件的路径在/Users/Shared时，可以手动打开访达-进入MacintoshHD-用户-共享-删除battle和blizzard相关文件
+
+                //第二步：
+                cd ~/Downloads
+                #打开下载文件夹
+                ###记得将下载好的Battle.net-Setup.app文件放入downloads目录然后再运行下面的代码
+
+                //第三步：打开安装器，然后赋予程序指定的参数，其中的‘Battle.net-Setup.app’字段替换为自己的按照器文件名，有可能是‘Battle.net-Setup-CN.app’或者‘Battle.net.app’。
+                **./Battle.net-Setup.app**/Contents/MacOS/Battle.net-Setup -Setup.app --args --locale=enUS --region=US
+                ./Applications/Battle.net-Setup.app/Contents/MacOS/Battle.net-Setup -Setup.app --args --locale=enUS --region=US
+                //如果是通过国内战网官网下载，用下面Battle.net-Setup-CN.app这个，或者自己修改路径。
+                **./Battle.net-Setup-CN.app**/Contents/MacOS/Battle.net-Setup --args --locale=enUS --region=US
+
+                //第三步简化版（已弃用）：
+                open -a ~/Downloads/Battle.net-Setup.app --args --locale=enUS --region=US --session=
+
+                open Downloads/Battle.net-Setup.app --args --locale=enUS --region=US
+                #同理，其中的‘Battle.net-Setup.app’字段替换为自己的按照器文件名，有可能是‘Battle.net-Setup-CN.app’或者‘Battle.net.app’
+
+                ///疑难杂症处理
+                ping tw.patch.battle.net
+                #测试本地与台服服务器的网络连接情况
+                sudo vim /etc/hosts
+                #打开网络映射配置文件查看目前服务器的IP地址和网络配置
+                ping cn.patch.battlenet.com.cn
+                #测试本地与国服网络连接
+                </code>
+
+                <h2>切换外服登录时报错2400</h2>
+                <code>解决登录过国服战网之后再登外服，会报错网络问题（MacOS、VPN环境下）
+                需要在每次启动战网前运行下面的代码，将登录器从国服修改到外服，然后确保战网走VPN。
+
+                //文件所在路径需要自己修改
+                /Applications/Battle.net.app/Contents/MacOS/Battle.net --args --locale=enUS --region=US
+
+                rm -rf ~/Library/Application\ Support/Battle.net
+
+                //有意思的事情是，从外服换到国服并不会报网络错误，因此从外服换国服会报错很明显是有人在人为为干预（锁国服）
+                //记得在VPN中把炉石传说的端口设置为代理
+                </code>
+                <img src='../public/games.png'>
+
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+
+

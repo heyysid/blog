@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title"></h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：</span>
+                </div>
+                <img src="../photos/fengmian/sun.jpg" alt="null" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container" style="margin-bottom:0;">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+
+<!--
+
+<blockquotee style="font-style: italic; color: #555;">
+
+<a href=' ' class='a'> </a>
+
+<strong>
+
+<div class="article-video">
+<video controls preload="metadata" style="width:100%; max-width:900px;">
+<source src="../video/IMG_4921.mov" type="video/mp4">
+你的浏览器不支持视频播放
+</video>
+</div>
+
+<div class="photo-gallery">
+<img src='../public/HDR.jpg' class="content-image-flex">
+<img src='../public/HDR1.jpg' class="content-image-flex">
+<img src='../public/HDR2.jpg' class="content-image-flex">
+</div>
+
+class="image-posts"
+class="photo-posts"
+
+<div class="image-posts-between">
+<img src="../public/rate.png" >
+<img src="../public/rate1.png" >
+<img src="../public/rate2.png" >
+</div>
+
+<div class="image-galleryy">
+    <div style="display: flex; flex-direction: column; align-items: center; width: max-content;">
+        <img src="../public/garminMIP3.jpg" style="height: 400px; width: auto;">
+        <p style="margin: 10px 40px 0px; font-style: italic; color: #666; text-align: center; "></p>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; width: max-content;">
+        <img src="../public/garminMIP4.jpg" style="height: 400px; width: auto;">
+        <p style="margin: 10px 40px 0px; font-style: italic; color: #666; text-align: center; margin-bottom: 20px;"></p>
+    </div>
+</div>
+
+<p style="margin: 0px; font-weight: bold; font-size: 20px;">上面所有的这些差异都是来自于这块「MIP半反射式屏幕」全称：搭载MIP显示技术的半反射式LCD屏幕（Memory-In-Pixel Semi-Transflective LCD Screen）
+</P>
+
+<p style="color: rgb(81, 148, 110); margin-bottom: 0px;"> </p>
+
+<hr style="border: none; border-top: 1px solid #ccc; margin:0;">
+
+-->

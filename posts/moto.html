@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">摩托车/汽车/单车/皮衣/资料查备清单</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/sun.jpg" alt="a" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    <h2>皮衣</h2>
+                    <a href="https://www.zhihu.com/question/52075394/answer/1099958993" style="margin-left: 0px; text-decoration: underline; color: blue;">taichi:</a>
+                    
+                        RS TAICHI Mink oil这个产品其实就是貂油
+
+                        貂油适用于羊皮、猪皮、牛皮和人造皮革
+
+                        <h2>单车</h2>
+                        前叉、辐条、轮圈、花鼓、上管（上管TopTube是车架前三角当中上方的部位）、五通、把立（自行车把的前三角区域的）、牙盘、后上管、碟片、来令片（刹车片）、飞轮、尾勾、五通组件、五通铣牙、塔基、轴承、轮圈、轮组、棘齿、棘爪
+
+                        1、轮圈形变很可能是因为辐条不正
+
+                        2、在组装后置物架时，应该注意后置物架/驼包不要太靠前，否则驼包可能会跟脚踏的距离太近，导致骑行的时候脚经常打到驼包
+
+                        <h2>摩托车工具清单</h2>
+                        自补液-摩托车轮胎防漏气
+
+                        大部分摩托车没有obd接口（On-Board Diagnostic)意思是指车载诊断系统，目前所有四轮汽车都是具备OBD功能和接口的，OBD的主要用途就是储存车辆故障信息(发动机故障码)
+
+                        长途骑行带装备记得配重，两边的重量要接近
+
+                        油封链条和非油封链条的外观区别是前者比后者粗且重，动力更强的车型（超过150cc的）基本上都是油封链条。油封链条需要定期维护上油，洗链条，非油封链条不需要。
+
+                        DL150的标准轮胎气压是前2.0，后2.25，载重载人情况下前2.0，后2.25，夏转冬-0.2
+
+                        DL150每12000km，保养更换空气滤芯、火花塞（10000km）、机油滤网、发动机机油离心式过滤器
+
+                        <h2>摩托车验车步骤</h2>
+                        1、坐上车压3次以上，测试前减震和“中轴减震”有没有漏油
+                        2、检查发动机中缸有没有漏胶，左右车身都要看
+                        3、检查全车螺丝，如果螺丝内里有黑色残留物、棱角不分明，代表拆过
+                        4、前刹车盘厚度和磨损，还有螺丝，ABS一定要检查是否磨损严重，再根据里程数判断是否匹配。此外还有轮圈的表皮情况
+                        5、车架与车头前叉连接处的焊接情况，如果有裂开或生锈，代表有过车祸
+                        6、检查车架出场年份，挂牌年份，是否为库存车。车架编号与注册是否匹配
+                        7、检查车把和护杠尖尖是否有磨损，有的话很可能是倒车
+                        8、检查车辆怠速，指针跳动是否稳定,一般都在1500转左右不动
+                        9、点火
+                        10、查违规(大本绿本、行驶证、交强险电子保单、原车主身份信息
+                        11、备用钥匙、三包卡、三者险
+                        12、大本和绿本上的信息（发动机和车架号）一致
+
+                </div>
+            </div>
+            
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+

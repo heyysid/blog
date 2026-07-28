@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">FPV各种概念、品牌、型号与其通俗化解释查备清单</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：FPV</span>
+                </div>
+                <img src="../photos/fengmian/篝火.jpeg" alt="a" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    <h2>《各种概念、品牌、型号与其通俗化解释》查备清单表格</h2>
+                    <a href='https://docs.google.com/spreadsheets/d/1qtViKbGXbMzosLIH94vGi5twimkS9Rz68V_NIij9M20/edit?usp=sharing' target="_blank" style="margin-left: 1px;  color: blue;">https://docs.google.com/spreadsheets</a>
+
+                    <h2>rate解释及参考值</h2>
+                    <div class="image-posts-between">
+                        <img src="../public/rate.png" >
+                        <img src="../public/rate1.png" >
+                        <img src="../public/rate2.png" >
+                    </div>
+                    Roll：横滚
+
+                    pitch：俯仰
+
+                    yaw：偏航
+
+                    rc rate:全局
+
+                    super rate（rate）:高位
+
+                    rc expo:低中位
+
+                    from: <a href='https://www.bilibili.com/video/BV18Z4y1y7yX?t=235.7' target="_blank" style="margin-left: 1px;  color: blue;">https://www.bilibili.com/video/BV18Z4y1y7yX</a>
+                    
+                    <h2>圈内黑话</h2>
+                    EVE:指电池品牌亿纬锂能（EVE Energy），中国头部锂电池制造商之一
+
+                    正A（A品）:完全符合订单标准的最高品质电芯，容量、尺寸、电压等参数无偏差。寿命长（循环次数＞2000次）、自放电率低
+
+                    B品：合格但有瑕疵的次等电芯，多因生产不良率产生（一线厂不良率约2%，二三线厂达5–10%）
+
+                    C品：B品库存超8个月未售出，因自放电、老化导致性能严重下降的电芯。容量仅为A品的50–70%
+
+                    bec：**电压转换、稳压模块**，为无人机上除电机外的所有电子设备稳定供电，如果BEC供电不足或不稳定，会导致飞控重启（炸机）、图传雪花屏、摄像头画面抖动
+                    <h2>FPV自组采购清单</h2>
+                    1、遥控器
+
+                    2、飞行眼镜
+
+                    3、机架
+
+                    4、飞塔（电调ESC、飞控FC）；电调控制四个电机的转动。飞控控制整个飞机的电子设备运转
+
+                    5、图传；模拟图传or数字图传
+
+                    6、FPV镜头
+
+                    7、天线
+
+                    8、机身信号接收器
+
+                    9、螺旋桨
+
+                    10、电机
+
+                    11、线材
+
+                    12、电池
+
+                    13、蜡酸胶带
+
+                    14、热缩管
+
+                    15、电焊器、点焊器
+                    <h2>飞行经验</h2>
+
+                    遥控挂了高频头都差不多
+
+                    自组FPV需要提前在各部件互相之间留缝隙作为走线、减震、调整的余量和缓冲，这非常重要
+
+                    <h2>调参设置</h2>
+
+                    <h2>我的配置清单（穷版）：</h2>
+
+                    遥控：
+
+                    飞行眼镜：DJI FPV Goggles V2
+
+                    <h2>我的配置清单（富版）：</h2>
+
+                    遥控：Jumper T15 ELRS EdgeTX 2.4Ghz 霍尔
+
+                    飞行眼镜：DJI goggles 3
+
+                    机架：
+
+                    图传：
+
+                    飞塔：
+
+                    电机
+
+                    桨叶
+
+                    接收端
+
+                    电池
+
+                    BB蜂鸣器
+
+                    GPS模块
+
+                    绑带，魔术贴
+
+                    电容？
+
+                    天线
+
+                    <h2>抄来的配置清单</h2>
+
+                    机架：正X Axisflying 酷飞MANTA曼塔二代五5寸花飞机架Fpv穿越机
+                    (MANTA曼塔二代5寸正X机架+3D打印件o3/LINK/VISTA/摸拟图传通用)
+
+                    电调 分电扳 飞控:SpeedyBee Stack F7 V3 BL32位电调50A飞塔F722飞控Fpv穿越机128k
+                    (SpeedyBee F7V3飞控+50A电调(飞塔)
+
+                    电机:TMOTOR破风5代F60ProV电机马达5寸Fpv穿越机花飞竞赛高性能
+                    (kv1950(6s)
+
+                    桨叶:TMOTOR正反桨Fbv穿越机5寸5.1寸三叶桨螺旋桨叶破风T5146耐炸平衡
+                    (T5146三叶桨(一包4支-2正2反)
+
+                    天空端:RunCam Link 黄蜂Wasp 天空端 vista 120帧 天空端 夜视
+
+                    眼镜:大疆 DJI FPV 飞行眼镜 V2眼镜
+
+                    接收机:BETAFPV ELRS Nano远航接收机器FPV穿越机无人机长距离2.4G/915M
+                    (ELRS Nαno接收机(2.4GHz)
+
+                    电池:全国总代DOGCOM1350/1550 6S航模锂电池150CFPV穿越机大黄狗锂电
+                    (6s 150C 1350Ah)
+
+                    充电器:ToolkitRC M6DAC 700W/15A双路航模锂电池平衡充电器PD65W快充FPV
+
+                    遥控:RadioMaster BOXER遥控器航模ELRS多协议穿越机FPV无人机黑羊TBS
+                    (ELRS版)
+
+                    延长线:DJI大疆原厂同轴线O3数字图传天空端使用穿越机FPV航模10/15/20cm
+                    (15cm原厂)
+
+                    DJI天空端3D打印件
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+
+

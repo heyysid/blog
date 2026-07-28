@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="../style.css">
+    <style>
+        /* 全局设置 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', Verdana, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: #808080 url('../public/texture.jpg') repeat;
+            color: black;
+            font-size: 12px;
+            line-height: 1.4;
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* 内容图片样式 */
+        .content-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 1rem auto 2rem;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* 顶部导航栏 & Logo */
+        .header {
+            width: 100%; /* 宽度占满父容器 */
+            padding: 45px 0 20px; /* 上内边距 45px，左右内边距 0 , 下边距20 */
+            background: transparent; /* 将背景色设置为透明 */
+            backdrop-filter: none; /* 移除背景模糊滤镜效果 */
+            text-align: center; /* 内部行内元素（如文本、图片、logo）水平居中对齐 */
+            position: relative; /* 定位方式：相对定位 (作为内部绝对定位元素的参照) */
+            top: 0; /* 距离顶部 0 */
+            z-index: 1000; /* 设置堆叠顺序，确保导航栏位于页面内容的上方 */
+        }
+
+        .site-title {
+            margin-bottom: 30px;
+        }
+
+        .logo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #4A4A4A;
+            gap: 12px;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .main-nav {
+            width: 100%;
+        }
+
+        .menu-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .menu-list a {
+            line-height: 1;
+            text-decoration: none;
+            color: #555;
+            padding: 6px 4px;
+            transition: color 0.2s ease, border-bottom 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .menu-list a:hover,
+        .menu-list a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        /* 主要区域样式 */
+        main {
+            padding: 20px 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* 文章内容区域样式 - 关键修改：缩小与视窗的左右边距 */
+        .article-content {
+            max-width: 95%; /* 增加内容区域宽度，减少左右边距 */
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 0px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .article-cover {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0px;
+            margin-bottom: 2rem;
+        }
+        
+        .article-body {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .article-body h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #333;
+        }
+        
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .back-to-blog:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            .article-content {
+                padding: 1.5rem 1rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                max-width: 98%; /* 移动端进一步减少边距 */
+            }
+            .article-cover {
+                height: 250px;
+            }
+            .menu-list {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .article-content {
+                max-width: 92%; /* 大屏幕上进一步减少边距 */
+            }
+        }
+        
+        /* 代码块样式 */
+        pre {
+            background-color: #f5f5f5;
+            border-radius: 0px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* 引用样式 */
+        blockquote {
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* 正文段落开头 */
+        strong {
+            font-weight: bold;  /* "加粗" */
+            font-size: 1.15em;  /* "加大" (比周围文字大15%) */
+        }
+        
+        /* 列表样式 */
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem ;
+        }
+        
+        .toc-container {
+          /* 半透明白色背景 */
+          background: rgba(255, 255, 255, 0.97);
+          /* 边框样式 */
+          border: 1px solid #ddd;
+          /* 圆角边框 */
+          border-radius: 0px;
+          /* 内边距 */
+          padding: 1.5rem;
+          /* 外边距，上下2rem，左右自动居中 */
+          margin: 2rem auto;
+          /* 最大宽度限制 */
+          max-width: 100%;
+          /* 阴影效果 */
+          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* 目录标题样式 */
+        .toc-container h2 {
+          /* 底部外边距 */
+          margin-bottom: 1rem;
+          /* 字体大小 */
+          font-size: 2rem;
+          /* 左侧蓝色边框 */
+          border-left: 4px solid #007bff;
+          /* 左侧内边距，为边框留出空间 */
+          padding-left: 10px;
+        }
+
+        /* 目录列表样式 */
+        .toc-container ul {
+          /* 移除默认列表样式 */
+          list-style: none;
+          /* 移除默认左内边距 */
+          padding-left: 0;
+          /* 移除默认外边距 */
+          margin: 0;
+        }
+
+        /* 目录列表项样式 */
+        .toc-container li {
+          /* 底部外边距，创建列表项间距 */
+          margin-bottom: 0.5rem;
+        }
+        .toc-container li a {
+          font-size: 1rem; /* 字体大小 */
+        }
+        
+        .multiline-text {
+          white-space: pre-line;  /* 识别换行符为 <br> */
+          line-height: 1.8;
+          font-size: 1.05rem;
+        }
+
+        /* 为目录中的标题添加样式 */
+        .toc-item {
+            cursor: pointer;
+        }
+
+        /* 新增：目录层级样式 */
+        .toc-level-1 {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .toc-level-2 {
+            margin-left: 1.5rem;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* 新增：为不同级别的标题添加不同的样式 */
+        .article-body h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #333;
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
+        }
+
+        .article-body strong {
+            font-size: 1.3rem;
+            color: #444;
+            display: block;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">云与大气现象</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/云与大气现象.jpeg" alt="a" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    <h2>高云族</h2>
+                    >>>海拔6000m以上的云称为高云族，这个高度也是一般的喷气式飞机巡航飞行高度
+
+                    高云族的特征是通常不会遮蔽/完全遮蔽阳光，因为它们由冰晶组成，因此判断是不是高云族的一种方法是观察是否能透过云层看见阳光
+
+                    云移动的快慢可以间接表达天气的变化速度
+
+                    夜光云（由冰晶聚集在一起形成，在夜晚利用月光能被我们看见
+
+                    <strong>卷云</strong>(卷云如果没有大面积铺满天空，表示天空中不会产生剧烈变化，如果一朵卷云长时间保持不变，通常情况下预示着天气晴朗、大气稳定，天空中没有剧烈变化。卷云迅速消失，代表着风大，根据季节的不同，有可能是冷空气到来的预兆，是刮大风的前兆（这也跟气压和对流层的温度有关）。有民谚称：南钩风来，北钩雨来。钩卷的方向示意着风的方向
+                     <div class="image-gallery">
+                         <img src="../photos/卷云.jpeg" class="content-image-flex">
+                     </div>
+                    下图这样的卷层云可以表达他所在的高空中有肉眼可见的大风，未来天气变化会很快，云量较多代表未来会比较潮湿，如果是秋冬换季时，这样的大风很可能是某个云系的前锋，冷空气和积雨云可能会随着大风到来。果不其然当晚有阵雨
+                        <div class="image-gallery">
+                            <img src="../photos/卷云2.jpg" class="content-image-flex">
+                        </div>
+                    <strong>钩卷云</strong>
+                        （卷云的某一段呈现勾子状。通常代表着上流刚刮起风没多久，根据季节的不同，代表性也不同，比如预示着冷空气到来、未来晴朗或者天气多变
+                    <strong>卷积云</strong>
+                        （卷云聚积成一定的量，就是卷积云
+                       <div class="image-gallery">
+                           <img src="../photos/卷积云.jpg" class="content-image-flex">
+                       </div>
+                    <h2>中云族</h2>
+                    >>>海拔2500-6000m
+                    <strong>幞状云</strong>
+                        （积云从中云层继续上升时可能会出现的一种形状，像戴帽子）
+                    <div class="image-gallery">
+                        <img src="../photos/幞状云.jpg" class="content-image-flex">
+                    </div>
+                    <strong>积云</strong>
+                        （一个大类，*层积云和柱状高积云不属于中云族
+                    <strong>积云</strong>
+                        （棉花一样一朵朵出现在天空，需要密切关注，如果出现垂直增长，有变成积雨云的可能
+                        <div class="image-gallery">
+                                                   <img src="../photos/积云.png" class="content-image-flex">
+                                               </div>
+
+                    <strong>高积云</strong>
+                    （灰色，呈块装的云，灰白色，完全不透光，所以底部灰黑色。通常能够代表未来6-24小时有雨或天气不好
+                    <strong>高层云</strong>
+                    （灰色带点蓝色，覆盖整个天空。往往代表有很大的云系已经接近，比如风暴
+                        <strong>淡积云</strong>
+                        
+                            <strong>浓积云</strong>
+                            
+                                <strong>堡状高积云</strong>
+                                （是根据积云的高度和形状进行分类
+                                <div class="image-gallery">
+                                                           <img src="../photos/堡状高积云.jpg" class="content-image-flex">
+                                                       </div>
+                                <strong>絮状高积云</strong>
+                                    <strong>荚状高积云</strong>
+
+                    <h2>低云族</h2>
+                    >>>海拔1000-2500m
+                    <strong>雨层云</strong>
+                    （该下雨了。雨层云很好辨认，它不透光，云底黑色
+                    <strong>层云</strong>
+                    （层云几乎不透光，总是会像一块帷幕把天空完全遮蔽。然而，透过其中的缝隙，我们还是侥幸窥见高处的高积云和紫色。没错，此刻这正是蓝调时间。如果在白天把层云中间撕开一个口子，让阳光倾泻而下，就会得到慕曙光条，或者丁达尔效应。
+                    <div class="image-gallery">
+                                               <img src="../photos/层云.jpg" class="content-image-flex">
+                                           </div>
+                    <div class="image-gallery">
+                                               <img src="../photos/层云1.jpg" class="content-image-flex">
+                                           </div>
+                    <strong>层积云</strong>
+                    （层云通常厚度相对较薄，呈灰色。但偶尔也会出现像下图这样较厚，几乎不透光的情况。层积云的寿命通常很短，我拍的这朵5分左右消散
+                    <div class="image-gallery">
+                                               <img src="../photos/层积云.jpg" class="content-image-flex">
+                                           </div>
+                    <strong>平流雾</strong>
+                    （严格意义上来说不算云种，它通常出现在海拔1000m左右，由水汽形成，湿度非常高
+                    
+                    <h2>特殊云种</h2>
+                    <strong>积雨云</strong>
+                    <strong>柱状高积云</strong>
+                    <strong>马蹄窝</strong>
+                    （一种出现频率比较高的特殊云种，它由特定气候和风向形成，像传统描述中的“马蹄窝”。这种云对气候没有什么影响，并且几乎不需要去找高手鉴定。只要你觉得像马蹄窝，那它就是你心中的马蹄窝云。欣赏大自然和云朵，更多的是个人情感和联想。
+                    <div class="image-gallery">
+                                               <img src="../photos/马蹄窝.jpg" class="content-image-flex">
+                                           </div>
+
+                    <strong>柱状高积云</strong>
+                    （通常高达数千米，从低云族穿透至高云族，代表着
+
+                    <strong>迭浪云</strong>
+                    （风切变会引起
+
+                        <strong>浓积云</strong>
+                        （可能会演变成积雨云
+
+                            <strong>堡状云</strong>
+                            （云的塔状凸起表明大气层是不稳定的，当中云族气流上升时，可能会演变成积雨云，形成暴风雨
+
+                                <strong>滚卷状云</strong>
+                                （可能是高层和中层空气对流造成，不久就要挂起大风了
+
+                    <h2>大气现象</h2>
+                    随着气流增加，越往上，云块变得越来越精致
+
+                    冬季反常的高温有可能预示着是冷空气来临前的征兆，原理是冷空气伴随着风到来，冷暖两者互不相融，会挤压本来的热空气，导致段时间内的热空气“压缩”
+
+                    云由高变低，由薄变厚时，就预兆很快会有阴雨天气到来。相反，低变高、厚变薄、由成层而崩裂为零散状时，就不会有阴雨天气
+                    <aside>
+                    💡 古代谚语：
+                    清早宝塔云，下午雨倾盆
+                    久晴大雾阴，久阴大雾晴
+                    早霞不出门，晚霞行千里
+                    日落射脚，三天内雨落（说明对流作用强烈，预示有雨。）
+                    太阳现一现，三天不见面
+                    西北开天锁，明朝大太阳
+                    乌云接落日，不落今日落明日
+                    天上鲤鱼斑，明日晒谷不用翻
+                    鱼鳞天，不雨也风颠
+                    云往东，车马通；云往南，水涨潭；云往西，披蓑衣；云往北，好晒麦
+                    天上灰布悬，雨丝定连绵
+                    棉花云，雨快临
+                    炮台云，雨淋淋
+                    天上钩钩云，地上雨淋淋
+                    </aside>
+                    <h2>国家地理和动植物百科</h2>
+                    雨蛙在晴天时一般会待在离地面较高的位置，雨天时待在地面上，因为天气好的时候昆虫的飞行的高度也会变高
+
+                    蟾蜍的卵是呈一连串妆的，青蛙是一团一团，蟾蜍和青蛙都是益“虫”
+
+                    蜥蜴会冬眠和夏眠，并且，变色龙是一种蜥蜴
+
+                    蟒蛇是怕刺猬的
+
+                    喜鹊早晨乱叫，说明有雨，如果储存粮食，则是最近较长时间都有雨
+
+                    植物分为：草本植物和木本植物，木本植物分为乔木和灌木；还有一种植物是藤本植物，藤本植物中也分为草质藤本和木质藤本。
+
+                    南风多湿热
+
+                    松树的叶子是针状的，柏树的叶子是鳞状或短三角刺状的。杉树的叶子是扁条型的
+
+                    红杉、赤松、云杉、黄山松、雪松、柏树
+
+                    百合是草本植物，花朵和杜鹃很像，杜鹃是木本植物
+
+                    菊科的花一般很茂盛，向日葵是菊科
+
+                    兰花是兰科，是草本植物
+
+                    杜鹃是蔷薇科，蔷薇有草本也有乔木。蔷薇科蔷薇是一种落叶灌木，多刺。月季是灌木和藤本。杜鹃有毒
+
+                    牡丹是芍药科芍药属，其中芍药白色，牡丹红色
+
+                    番茄和茄子是同一个科
+
+                    夹竹桃茎部像竹，花朵像桃
+
+                    夹竹桃、茄科的植物茎部容易有毒，不能用做筷子
+
+                    <h2>来源</h2>
+                    《每天一朵云》出版社@博物杂志。较新，风趣，但并不够严谨和专业
+
+                    《云与大气现象》出版社@重庆大学出版社。这本书是2014年出版的，书中对于云的分类和命名放在2023年有一些不够通用了
+
+                    《中国国家地理地图》2011@中国大百科全书出版社
+
+                    《动植物百科》2013@华夏出版社
+
+                </div>
+            </div>
+            
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+

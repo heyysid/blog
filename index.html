@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 设置文档字符编码为UTF-8，支持中文 -->
+    <meta charset="UTF-8">
+    <!-- 设置视口，确保在移动设备上正确显示 -->
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <!-- 引入Tailwind CSS框架 -->
+    <link rel="icon" href="public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+        
+    <!-- 自定义Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    // 扩展字体设置
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    // 扩展颜色设置
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- 引入Masonry瀑布流布局库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <!-- 引入imagesLoaded库，用于检测图片加载状态 -->
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 引入自定义样式文件 -->
+    <link rel="stylesheet" href="style.css">
+        
+ </head>
+    
+ <body>
+    <!-- 页面顶部导航栏 -->
+    <header class="header">
+        <!-- 网站标题和Logo区域 -->
+        <div class="site-title">
+            <a href="index.html" class="logo-link">
+                <!-- 网站Logo图片 -->
+                <img src="public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <!-- 网站标题文本 -->
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <!-- 主导航菜单 -->
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="#outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="#HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="#Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="#deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="#astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 页面主要内容区域 -->
+    <main>
+      <!-- 图片画廊区域 -->
+        <div id="gallery-section">
+            <div class="photo-gallery">
+                <!-- Masonry瀑布流布局容器 -->
+                <div id="masonry-gallery" class="masonry-grid mx-auto">
+                    <!-- 图片将通过JavaScript动态插入到这里 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 博客文章区域，初始状态为隐藏 -->
+        <div id="blog-section" class="hidden">
+            <!-- 博客分类导航 -->
+            <div class="blog-categories">
+                <div class="blog-categories-list">
+                    <!-- 所有文章分类链接，默认激活状态 -->
+                    <a href="#blog" class="active" data-category="All">所有文章</a>
+                    <!-- HDR分类链接 -->
+                    <a href="#blog/HDR" data-category="HDR">HDR</a>
+                    <!-- 背包徒步分类链接 -->
+                    <a href="#blog/背包徒步" data-category="背包徒步">背包徒步</a>
+                    <!-- 业余无线电分类链接 -->
+                    <a href="#blog/业余无线电" data-category="业余无线电">业余无线电</a>
+                    <!-- FPV分类链接 -->
+                    <a href="#blog/FPV" data-category="FPV">FPV</a>
+                    <!-- 各种资料分类链接 -->
+                    <a href="#blog/各种资料" data-category="各种资料">各种资料</a>
+                    <!-- 日志分类链接 -->
+                    <a href="#blog/日志" data-category="日志">日志</a>
+                </div>
+            </div>
+
+            <!-- 博客文章网格容器 -->
+            <div class="p-4 md:p-8 max-w-7xl mx-auto">
+                <!-- 博客文章网格，使用Tailwind CSS类定义响应式布局 -->
+                <div class="blog-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- 博客文章卡片将通过JavaScript动态插入到这里 -->
+                </div>
+            </div>
+        </div>
+        
+    </main>
+    
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+
+    
+    <!-- 图片灯箱/模态框 -->
+    <div id="lightbox-modal" aria-hidden="true">
+        <!-- 关闭按钮 -->
+        <span id="close-btn" role="button" aria-label="关闭">&times;</span>
+        
+        <!-- 查看原图链接 -->
+        <a id="view-original" href="" target="_blank" rel="noopener noreferrer" style='font-weight: bold; font-size: 17px; text-decoration: underline;'>[查看原图]</a>
+        
+        <!-- 加载指示器 -->
+        <div class="spinner"></div>
+
+        <!-- 上一张图片按钮 -->
+        <button id="prev-button" aria-label="Previous image">&#8249;</button>
+        <!-- 下一张图片按钮 -->
+        <button id="next-button" aria-label="Next image">&#8250;</button>
+
+        <!-- 灯箱内容包装器 -->
+        <div class="lightbox-content-wrapper">
+            <!-- 灯箱中显示的大图 -->
+            <img id="lightbox-image" src="" alt="">
+            
+            <!-- 图片标题区域 -->
+            <div class="lightbox-caption-area">
+                <div id="lightbox-title"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 引入可手动编辑的画廊照片清单 -->
+    <script src="gallery-source.js"></script>
+    <!-- 引入自动生成的画廊尺寸和占位色缓存 -->
+    <script src="public/generated/gallery-manifest.js"></script>
+    <!-- 引入自定义JavaScript文件 -->
+    <script src="script.js"></script>
+    
+</body>
+</html>

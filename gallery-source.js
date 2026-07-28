@@ -1,0 +1,112 @@
+window.__GALLERY_SOURCE__ = [
+  {
+    "src": "photos/photo/20140606_102418_IMGP0297_hdr_rec2020_pq_yuv444_full_cq10.avif",
+    "title": "HDR示例，来自：https://people.csail.mit.edu/ericchan/hdr/avif_images/20140606_102418_IMGP0297.jpg",
+    "category": "HDR"
+  },
+  {
+    "src": "photos/photo/梦幻-树.jpg",
+    "title": "乌鲁木齐",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/梦幻-草地.jpg",
+    "title": "乌鲁木齐",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/雪乡禾木SDRsRGB8k.jpg",
+    "title": "禾木 2025",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/DSC0883已锐化.jpeg",
+    "title": "G318 2024",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/禾木桥已经锐化.jpg",
+    "title": "禾木 2025",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/冈仁波齐星野srgbsdr10-1.jpg",
+    "title": "冈仁波齐 2024",
+    "category": "astronomy"
+  },
+  {
+    "src": "photos/photo/在禾木失败的长曝光.jpg",
+    "title": "禾木 2025",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/冈仁波齐蓝调1.jpg",
+    "title": "冈仁波齐 2024",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/在赛里木湖遇见的女孩.jpg",
+    "title": "赛里木湖 2021",
+    "category": "Human"
+  },
+  {
+    "src": "photos/photo/树枝剪影SDRP3101.jpg",
+    "title": "深圳 2021",
+    "category": "All"
+  },
+  {
+    "src": "photos/photo/雪山徒步.jpg",
+    "title": "赛里木湖 2021",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/60岁哈族牧民究极锐化.jpg",
+    "title": "赛里木湖 2021",
+    "category": "Human"
+  },
+  {
+    "src": "photos/photo/牧民房究极锐化最终版-已锐化.jpg",
+    "title": "赛里木湖 2021",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/阳光与树木锐化了的.jpg",
+    "title": "赛里木湖2021 SDR",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/禾木SDRsRGB10.jpg",
+    "title": "禾木 2025",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/马儿究极锐化.jpg",
+    "title": "赛里木湖2021",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/lyysRGBJPG10.JPG",
+    "title": "lyy 2025",
+    "category": "Human"
+  },
+  {
+    "src": "photos/photo/东坪洲SDRp32.jpg",
+    "title": "东坪洲 2025",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/冈仁波齐星空大广角2-已锐化1.jpg",
+    "title": "冈仁波齐 2024",
+    "category": "astronomy"
+  },
+  {
+    "src": "photos/photo/冈仁波齐星野大广角第三张-已锐化.jpg",
+    "title": "冈仁波齐 2024",
+    "category": "astronomy"
+  },
+  {
+    "src": "photos/photo/罗浮山.jpg",
+    "title": "罗浮山 2022",
+    "category": "outdoor"
+  }
+];

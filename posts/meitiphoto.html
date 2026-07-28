@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">    <!-- 页面标题 -->
+    <title>ScienceOutdoors_FPV</title>
+    <link rel="icon" href="../public/GUI/quill.gif" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Verdana', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#007bff',
+                        'dark-gray': '#333333',
+                        'light-bg': '#f5f5f5',
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="site-title">
+            <a href="../index.html" class="logo-link">
+                <img src="../public/IMG_6959.jpeg" alt="网站Logo" class="logo-image">
+                <span class="logo-text">ScienceOutdoors_FPV</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu-list">
+                <li><a href="../index.html" class="nav-item active" data-target="gallery-section" data-category="All">首页</a></li>
+                <li><a href="../index.html#gallery/outdoor" class="nav-item" data-target="gallery-section" data-category="outdoor">户外</a></li>
+                <li><a href="../index.html#gallery/HDR" class="nav-item" data-target="gallery-section" data-category="HDR">HDR</a></li>
+                <li><a href="../index.html#gallery/Human" class="nav-item" data-target="gallery-section" data-category="Human">Human</a></li>
+                <li><a href="../index.html#gallery/deepspace" class="nav-item" data-target="gallery-section" data-category="deepspace">深空</a></li>
+                <li><a href="../index.html#gallery/astronomy" class="nav-item" data-target="gallery-section" data-category="astronomy">星野</a></li>
+                <li><a href="../posts/aboutandcontact.html" class="nav-item">关于本站和联系我</a></li>
+                <li><a href="../index.html#blog" class="nav-item" data-target="blog-section">blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="article-content">
+            <header class="article-header">
+                <h1 class="article-title">制作适用于web传播的多媒体（图片篇）</h1>
+                <div class="article-meta">
+                    <span>作者：@ScienceOutdoors_FPV</span> ·
+                    <span>发布日期：2024-02-20</span> ·
+                    <span>分类：各种资料</span>
+                </div>
+                <img src="../photos/fengmian/篝火.jpeg" alt="null" class="article-cover">
+            </header>
+            
+            <div id="toc-container" class="toc-container">
+              <h2>📑 目录</h2>
+              <ul id="toc-list"></ul>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const tocList = document.getElementById("toc-list");
+                    
+                    const headers = document.querySelectorAll(
+                        ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
+                    );
+                    
+                    headers.forEach((header, index) => {
+                        if (header.tagName === 'STRONG' && header.closest('h2')) {
+                            return;
+                        }
+                        
+                        const anchorId = "section-" + index;
+                        header.setAttribute("id", anchorId);
+                        
+                        header.classList.add("toc-item");
+
+                        const li = document.createElement("li");
+                        
+                        if (header.tagName === 'H2') {
+                            li.classList.add("toc-level-1");
+                        } else {
+                            li.classList.add("toc-level-2");
+                        }
+                        
+                        const a = document.createElement("a");
+                        a.href = "#" + anchorId;
+                        a.textContent = header.textContent;
+                        a.style.color = "#007bff";
+                        a.style.textDecoration = "none";
+                        a.onmouseover = () => (a.style.textDecoration = "underline");
+                        a.onmouseout = () => (a.style.textDecoration = "none");
+
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
+                });
+            </script>
+            
+            <div class="article-body">
+                <div class="multiline-text">
+                    我发现我拍摄的很多照片在本地浏览时非常清晰，但上传到各大社交媒体平台后就变得模糊了，画质锐减。于是我查阅了很多资料，从@摄影师姚明来 那里找到一种方法，可以有效缓解这种现象。简单来说就是后期时针对性地进行锐化，导出时使用平台推荐的内容技术标准。
+
+                    之所以上传社交媒体平台后就会变得模糊，是因为（几乎所有）平台会对用户上载的多媒体内容进行二次处理，一是因为平台节省服务器的储存容量，二是可以节省带宽和成本。对此，作为用户我们只能尽量压缩文件大小，并查阅社媒平台的技术标准文档中推荐的规格，尽量让照片与推荐规格保持一致，以减少平台二次处理、重新封装带来的影响。
+
+                    主流社媒平台的技术标准文档与推荐规格可以查阅下方文章链接中的最后部份：https://www.lizhongping.eu.org/article/workofgarmin
+
+                    具体来讲，就是将文件体积做小，质量再尽量做低一些，尺寸和分辨率压缩到平台推荐的程度。导出时再将文件格式和技术标准（色彩空间、格式等）设置为平台技术标准文档推荐的规格，以减小平台重新封装时的影响。
+                    
+                    <h2>工具：</h2>
+                    1、Photoshop
+
+                    2、TK9 combo插件(tony  kuyper photo):<a href='https://goodlight.us/' class='a'>https://goodlight.us/</a>
+                    <img src='../public/webphotos.png'>
+                    流程：
+                    <img src='../public/webphotos1.jpg'>
+                        <img src='../public/webphotos2.jpg'>
+                        以这组图片为例，分辨率8256 × 5504px、文件体积9MB，远远高于各个平台的标准。
+                        <strong>第一步：</strong>
+                        进行常规的后期步骤。
+                        <img src='../public/webphotos3.jpg'>
+                            <img src='../photos/photo/牧民房究极锐化最终版-已锐化.jpg'>
+                                <strong>第二步：</strong>
+                                    复制一个图层，滤镜-其他-高反差保留-数值1-3根据情况而定；然后在图层面板中根据想要的效果选择柔光、强光、亮光或者线性光。柔光几乎适合所有情况，不过一些需要深度锐化的照片其他选项效果会更好。在折叠列表中做了对比，差距其实挺明显的。
+                        <img src='../public/webphotos5.jpg'>
+                            <img src='../public/webphotos6.jpg'>
+                                <img src='../public/webphotos7.jpg'>
+                                    <strong>第三步：</strong>
+                                    tk9 combo中点击三角形图标，然后设置分辨率为推荐的1080x1920px，或者1920x1080px，不透明度50%，分辨率72ppi
+                        <img src='../public/webphotos8.png'>
+                            <strong>第四步：</strong>
+                            导出，文件封装为jpg格式，勾选转换为sRGB
+                        
+                        <h2>两组图片的原图、后期后无锐化、后期后锐化对比：</h2>
+                        <strong>第一组：</strong>
+                        <img src='../public/webphotos9.jpg'>
+                            <img src='../public/webphotos10.jpg'>
+                                <img src='../public/webphotos11.jpg'>
+                        <strong>第二组：</strong>
+                        <img src='../public/webphotos12.jpg'>
+                            <img src='../public/webphotos12.jpg'>
+                </div>
+            </div>
+            <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
+                返回博客列表
+            </a>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-left">©2024-2025 李忠平版权所有。</p>
+        <p class="footer-center">请不要在您不能控制的场合提及本站。</p>
+    </footer>
+</body>
+</html>
+
+
