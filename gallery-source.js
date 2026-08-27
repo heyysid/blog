@@ -1,8 +1,9 @@
+// 只需维护 src、title、category；尺寸、颜色、ID 和占位色由构建脚本自动生成。
 window.__GALLERY_SOURCE__ = [
   {
-    "src": "photos/photo/20140606_102418_IMGP0297_hdr_rec2020_pq_yuv444_full_cq10.avif",
-    "title": "HDR示例，来自：https://people.csail.mit.edu/ericchan/hdr/avif_images/20140606_102418_IMGP0297.jpg",
-    "category": "HDR"
+    "src": "photos/photo/香港2SDRsRGB10.jpg",
+    "title": "香港 2021",
+    "category": "人像"
   },
   {
     "src": "photos/photo/梦幻-树.jpg",
@@ -15,7 +16,7 @@ window.__GALLERY_SOURCE__ = [
     "category": "outdoor"
   },
   {
-    "src": "photos/photo/雪乡禾木SDRsRGB8k.jpg",
+    "src": "photos/photo/禾木清晨.jpg",
     "title": "禾木 2025",
     "category": "outdoor"
   },
@@ -47,7 +48,7 @@ window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/在赛里木湖遇见的女孩.jpg",
     "title": "赛里木湖 2021",
-    "category": "Human"
+    "category": "人像"
   },
   {
     "src": "photos/photo/树枝剪影SDRP3101.jpg",
@@ -62,7 +63,7 @@ window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/60岁哈族牧民究极锐化.jpg",
     "title": "赛里木湖 2021",
-    "category": "Human"
+    "category": "人像"
   },
   {
     "src": "photos/photo/牧民房究极锐化最终版-已锐化.jpg",
@@ -87,7 +88,7 @@ window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/lyysRGBJPG10.JPG",
     "title": "lyy 2025",
-    "category": "Human"
+    "category": "人像"
   },
   {
     "src": "photos/photo/东坪洲SDRp32.jpg",
@@ -107,6 +108,16 @@ window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/罗浮山.jpg",
     "title": "罗浮山 2022",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/姊妹湖235比1画幅.jpg",
+    "title": "姊妹湖 2022",
+    "category": "outdoor"
+  },
+  {
+    "src": "photos/photo/20140606_102418_IMGP0297_hdr_rec2020_pq_yuv444_full_cq10.avif",
+    "title": "20140606_102418_IMGP0297_hdr_rec2020_pq_yuv444_full_cq10",
     "category": "outdoor"
   }
 ];

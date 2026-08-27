@@ -13,6 +13,8 @@ const sourcePath = path.join(projectRoot, 'gallery-source.js');
 const outputDir = path.join(projectRoot, 'public', 'generated');
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'gallery-build-'));
 const PREVIEW_SIZE = 900;
+const THUMBNAIL_MAX_EDGE = 1600;
+const THUMBNAIL_DIR = path.join('public', 'generated', 'gallery-thumbnails');
 const FALLBACK_ACCENT = {
   base: '#7b7b7b',
   top: '#b4b4b4',
@@ -46,19 +48,85 @@ function buildManifestEntry(item, index) {
   const height = Number(item.height) || 0;
   const dimensions = width && height ? { width, height } : readDimensions(absoluteSourcePath);
   const accent = extractAccentPaletteForImage(absoluteSourcePath, index);
+  const previewSrc = createGalleryThumbnail(absoluteSourcePath, index);
 
   return {
     id: `gallery-${String(index + 1).padStart(3, '0')}`,
     title: item.title ?? '',
     category: item.category ?? 'All',
     fullSrc,
-    gallerySrc: fullSrc,
+    previewSrc: previewSrc || fullSrc,
+    gallerySrc: previewSrc || fullSrc,
     width: dimensions.width,
     height: dimensions.height,
     color: accent.base,
     placeholderTop: accent.top,
     placeholderBottom: accent.bottom
   };
+}
+
+function createGalleryThumbnail(sourcePath, index) {
+  const thumbnailPath = path.join(
+    projectRoot,
+    THUMBNAIL_DIR,
+    `gallery-${String(index + 1).padStart(3, '0')}.avif`
+  );
+
+  try {
+    fs.mkdirSync(path.dirname(thumbnailPath), { recursive: true });
+    const colorMetadata = readColorMetadata(sourcePath);
+    const args = [
+      '-hide_banner', '-loglevel', 'error', '-y', '-i', sourcePath,
+      '-map', '0:v:0', '-vf',
+      `scale=w=${THUMBNAIL_MAX_EDGE}:h=${THUMBNAIL_MAX_EDGE}:force_original_aspect_ratio=decrease:force_divisible_by=2:flags=lanczos`,
+      '-frames:v', '1', '-c:v', 'libsvtav1', '-preset', '12', '-crf', '38',
+      // Ten-bit AVIF keeps the precision needed by HDR sources. The original
+      // file remains untouched and is always used by the lightbox.
+      '-pix_fmt', 'yuv420p10le', '-map_metadata', '0', '-movflags', '+write_colr'
+    ];
+
+    appendColorMetadataArgs(args, colorMetadata);
+    args.push(thumbnailPath);
+    execFileSync('ffmpeg', args, { stdio: 'ignore' });
+
+    if (!fs.statSync(thumbnailPath).size) {
+      throw new Error('Generated thumbnail is empty');
+    }
+
+    return normalizeSlashes(path.relative(projectRoot, thumbnailPath));
+  } catch (error) {
+    // Unsupported files or a missing encoder must not block the manifest.
+    fs.rmSync(thumbnailPath, { force: true });
+    process.stderr.write(`Thumbnail skipped for ${sourcePath}: ${error.message}\n`);
+    return null;
+  }
+}
+
+function readColorMetadata(sourcePath) {
+  try {
+    const probe = execFileSync(
+      'ffprobe',
+      ['-v', 'error', '-select_streams', 'v:0', '-show_entries',
+        'stream=color_primaries,color_transfer,colorspace,color_range', '-of', 'json', sourcePath],
+      { encoding: 'utf8' }
+    );
+    return JSON.parse(probe).streams?.[0] || {};
+  } catch (error) {
+    return {};
+  }
+}
+
+function appendColorMetadataArgs(args, metadata) {
+  [
+    ['-color_primaries:v', metadata.color_primaries],
+    ['-color_trc:v', metadata.color_transfer],
+    ['-colorspace:v', metadata.colorspace],
+    ['-color_range:v', metadata.color_range]
+  ].forEach(([option, value]) => {
+    if (value && value !== 'unknown' && value !== 'unspecified') {
+      args.push(option, value);
+    }
+  });
 }
 
 function readGallerySource() {
@@ -69,7 +137,46 @@ function readGallerySource() {
     throw new Error('gallery-source.js must assign an array to window.__GALLERY_SOURCE__');
   }
 
-  return JSON.parse(match[1]);
+  const sourceItems = JSON.parse(match[1]);
+
+  if (!Array.isArray(sourceItems)) {
+    throw new Error('gallery-source.js must contain an array');
+  }
+
+  const seenSources = new Set();
+
+  return sourceItems.map((item, index) => {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) {
+      throw new Error(`Gallery item ${index + 1} must be an object`);
+    }
+
+    const src = typeof item.src === 'string' ? normalizeSlashes(item.src.trim()) : '';
+    if (!src) {
+      throw new Error(`Gallery item ${index + 1} is missing a non-empty src`);
+    }
+
+    const absolutePath = path.resolve(projectRoot, src);
+    const relativePath = path.relative(projectRoot, absolutePath);
+    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+      throw new Error(`Gallery item ${index + 1} points outside the project: ${src}`);
+    }
+
+    if (seenSources.has(src)) {
+      throw new Error(`Duplicate gallery src: ${src}`);
+    }
+    seenSources.add(src);
+
+    if (!fs.existsSync(absolutePath)) {
+      throw new Error(`Gallery image does not exist: ${src}`);
+    }
+
+    return {
+      ...item,
+      src,
+      title: item.title == null ? '' : String(item.title),
+      category: item.category == null ? 'All' : String(item.category)
+    };
+  });
 }
 
 function extractAccentPaletteForImage(sourcePath, index) {

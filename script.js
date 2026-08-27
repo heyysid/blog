@@ -3,7 +3,17 @@
 // ----------------------------------------------------------------
 const blogPosts = [
     {
-        title: '再次返回东坪洲',
+        title: '茂名旅居，广东年例及游神习俗',
+        excerpt: '记录2025年2月份在茂名年例期间的旅居生活，包含茂名年例的照片、游神习俗、活动和个人体验。',
+        author: '@ScienceOutdoors_FPV',
+        imageUrl: 'photos/photo/maomingnianli.jpeg',
+        publishDate: '2024-02-20',
+        category: '背包徒步',
+        url:'posts/maomingnianli.html',
+        authorAvatarUrl: 'public/IMG_6959.jpeg'
+    },
+    {
+        title: '再次返回东坪洲，海岛露营',
         excerpt: '在新疆受了情伤后厌恶生活和人类，于是逃到岛上模仿荒野求生般地待了三四天',
         author: '@ScienceOutdoors_FPV',
         imageUrl: 'photos/fengmian/东坪洲1.jpeg',
@@ -211,16 +221,6 @@ const blogPosts = [
         category: '各种资料',
         url: 'posts/games.html',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },*/
-    /*{
-        title: '面试资料查备清单',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url: 'posts/null',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
     {
         title: 'AI工具快查清单｜prompt提示词词库和文生图词库',
@@ -243,36 +243,6 @@ const blogPosts = [
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
     /*{
-        title: '受作者信任的信息源（信息农场、博客、媒体）',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url: 'posts/trusted-information-sources',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },*/
-    /*{
-        title: 'xxxxx',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '日志',
-        url: 'https://www.lizhongping.eu.org/article/shouji',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: 'yaenkuklnuma（大大方方）',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '日志',
-        url: 'https://www.lizhongping.eu.org/article/news',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
         title: '像植物学家一样认识植物',
         excerpt: '简介',
         author: '@ScienceOutdoors_FPV',
@@ -382,16 +352,6 @@ const blogPosts = [
         url: 'posts/shenzhen-shantou-bike',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
-    /*{
-        title: '记录与抽动症对抗的过程',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '日志',
-        url: 'posts/tourette-diary',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    }*/
 ];
 
 // ----------------------------------------------------------------
@@ -404,10 +364,13 @@ let galleryData = [];
 // ----------------------------------------------------------------
 let masonry;
 let currentImageIndex = -1;
+let currentLightboxSequence = [];
+let currentLightboxPosition = -1;
 let lazyImageObserver;
 let loadQueue = []; // 新增：用于存储进入视口等待顺序加载的图片元素
 let isProcessingQueue = false; // 新增：队列处理状态锁
 let masonryLayoutRaf = null;
+const preloadedLightboxImages = new Set();
 
 // 模态框元素
 const modal = document.getElementById('lightbox-modal');
@@ -458,7 +421,8 @@ function loadGalleryData() {
             ...sourceItem,
             id: sourceItem.id || cachedItem.id || `gallery-${String(index + 1).padStart(3, '0')}`,
             fullSrc,
-            gallerySrc: fullSrc,
+            previewSrc: sourceItem.previewSrc || cachedItem.previewSrc || fullSrc,
+            gallerySrc: sourceItem.previewSrc || cachedItem.previewSrc || fullSrc,
             width: Number(sourceItem.width || cachedItem.width) || 1,
             height: Number(sourceItem.height || cachedItem.height) || 1,
             color: sourceItem.color || cachedItem.color,
@@ -476,6 +440,73 @@ function getGalleryNavItem(category = 'All') {
         item.getAttribute('data-target') === 'gallery-section' &&
         item.getAttribute('data-category') === 'All'
     ) || null;
+}
+
+function lightenHexColor(hexColor, amount = 0.5) {
+    if (typeof hexColor !== 'string') {
+        return '#e4e4e4';
+    }
+
+    const normalized = hexColor.trim().replace('#', '');
+    if (!/^[0-9a-fA-F]{6}$/.test(normalized)) {
+        return '#e4e4e4';
+    }
+
+    const red = parseInt(normalized.slice(0, 2), 16);
+    const green = parseInt(normalized.slice(2, 4), 16);
+    const blue = parseInt(normalized.slice(4, 6), 16);
+    const mix = (value) => Math.round(value + (255 - value) * amount);
+
+    return `#${[mix(red), mix(green), mix(blue)]
+        .map((value) => value.toString(16).padStart(2, '0'))
+        .join('')}`;
+}
+
+function getPlaceholderColor(item) {
+    return lightenHexColor(item.color || item.placeholderTop || item.placeholderBottom || '#c9c9c9', 0.5);
+}
+
+const GALLERY_ORDER_SEED = 'gallery-order-v1';
+
+function getGalleryOrderKey(item) {
+    const value = `${GALLERY_ORDER_SEED}:${item.fullSrc || item.src || ''}`;
+    let hash = 2166136261;
+
+    for (let index = 0; index < value.length; index += 1) {
+        hash ^= value.charCodeAt(index);
+        hash = Math.imul(hash, 16777619);
+    }
+
+    return hash >>> 0;
+}
+
+function orderGalleryItems(items) {
+    if (!Array.isArray(items) || items.length <= 1) {
+        return items;
+    }
+
+    // This is intentionally deterministic: the order is shuffled once by a
+    // stable key, so reopening the page does not reshuffle the gallery.
+    return [...items].sort((a, b) => {
+        const keyDifference = getGalleryOrderKey(a) - getGalleryOrderKey(b);
+        if (keyDifference !== 0) return keyDifference;
+        return String(a.fullSrc || a.src || '').localeCompare(String(b.fullSrc || b.src || ''));
+    });
+}
+
+function updateGalleryMediaDimensions(imgElement, loadedImage) {
+    const galleryItem = imgElement.closest('.gallery-item');
+    const media = galleryItem?.querySelector('.gallery-media');
+    const width = loadedImage.naturalWidth;
+    const height = loadedImage.naturalHeight;
+
+    if (!media || !width || !height) return;
+
+    // This is a safety net for a newly added photo before the build command
+    // has regenerated its manifest entry.
+    media.style.aspectRatio = `${width} / ${height}`;
+    imgElement.width = width;
+    imgElement.height = height;
 }
 
 // ----------------------------------------------------------------
@@ -514,7 +545,6 @@ function switchView(targetId, activeElement) {
     
 
     // 3. 保存状态到 URL
-    saveViewState(targetId);
 }
 
 // ----------------------------------------------------------------
@@ -554,6 +584,8 @@ function loadImage(imgElement, src, isModal = false, loadSequentially = false) {
         } catch (error) {
             // decode 失败时直接继续显示，不阻塞图片渲染
         }
+
+        updateGalleryMediaDimensions(imgElement, tempImg);
 
         // 加载成功：设置真实图片源
         imgElement.src = src;
@@ -600,6 +632,9 @@ function loadImage(imgElement, src, isModal = false, loadSequentially = false) {
              if (galleryItem) {
                 imagesLoaded(galleryItem, function() {
                     scheduleMasonryLayout();
+                    requestAnimationFrame(() => {
+                        galleryItem.classList.add('is-revealed');
+                    });
                     // 继续队列
                     setTimeout(() => {
                         isProcessingQueue = false;
@@ -665,7 +700,10 @@ function processQueue() {
             // 延迟触发动画，给予浏览器重排时间
             requestAnimationFrame(() => {
                 imgElement.classList.add('loaded');
-                if (galleryItem) galleryItem.classList.add('is-loaded');
+                if (galleryItem) {
+                    galleryItem.classList.add('is-loaded');
+                    galleryItem.classList.add('is-revealed');
+                }
             });
 
 
@@ -771,19 +809,20 @@ function renderGallery(category = 'All') {
         // 筛选出 category 字段匹配的图片
         return item.category === category;
     });
+    const orderedGallery = orderGalleryItems(filteredGallery);
+    const visibleGalleryIndexes = orderedGallery.map((item) => galleryData.indexOf(item));
     
     container.innerHTML = '';
 
     // 2. 渲染筛选后的图片
-    filteredGallery.forEach((item) => {
-        const originalIndex = galleryData.indexOf(item);
+    orderedGallery.forEach((item, visibleIndex) => {
+        const originalIndex = visibleGalleryIndexes[visibleIndex];
 
         const galleryItem = document.createElement('article');
         galleryItem.className = 'gallery-item';
         galleryItem.dataset.index = originalIndex; // 存入原始索引用于 Lightbox
         galleryItem.setAttribute('data-title', item.title || '');
-        galleryItem.style.setProperty('--placeholder-top', item.placeholderTop || '#c9c9c9');
-        galleryItem.style.setProperty('--placeholder-bottom', item.placeholderBottom || '#8f8f8f');
+        galleryItem.style.setProperty('--placeholder-color', getPlaceholderColor(item));
 
         const media = document.createElement('div');
         media.className = 'gallery-media';
@@ -815,7 +854,7 @@ function renderGallery(category = 'All') {
         galleryItem.appendChild(media);
         container.appendChild(galleryItem);
 
-        galleryItem.addEventListener('click', () => openLightbox(originalIndex));
+        galleryItem.addEventListener('click', () => openLightbox(originalIndex, visibleGalleryIndexes));
     });
 
     // 3. 重置 Masonry 和懒加载
@@ -827,7 +866,10 @@ function renderGallery(category = 'All') {
             percentPosition: false,
             transitionDuration: 0,
             fitWidth: true,
-            horizontalOrder: true
+            // Let Masonry place each item in the currently shortest column.
+            // horizontalOrder would force row-based placement and create the
+            // large empty gaps visible in the previous layout.
+            horizontalOrder: false
         });
         
         // 第一次布局，基于占位图尺寸
@@ -853,8 +895,14 @@ function renderGallery(category = 'All') {
 // ----------------------------------------------------------------
 // Lightbox 功能 (保持不变)
 // ----------------------------------------------------------------
-function openLightbox(index) {
-    currentImageIndex = index;
+function openLightbox(index, sequence = galleryData.map((_, itemIndex) => itemIndex)) {
+    currentLightboxSequence = Array.isArray(sequence) && sequence.length > 0 ? [...sequence] : [index];
+    currentLightboxPosition = currentLightboxSequence.indexOf(index);
+    if (currentLightboxPosition === -1) {
+        currentLightboxSequence = [index];
+        currentLightboxPosition = 0;
+    }
+
     updateLightboxContent(index);
     modal.classList.add('visible-modal');
     modal.setAttribute('aria-hidden', 'false');
@@ -867,6 +915,9 @@ function closeLightbox() {
     modal.classList.remove('visible-modal');
     modal.setAttribute('aria-hidden', 'true');
     modalImage.src = '';
+    currentLightboxSequence = [];
+    currentLightboxPosition = -1;
+    preloadedLightboxImages.clear();
     document.body.style.overflow = '';
     
     document.removeEventListener('keydown', handleKeyDown);
@@ -894,28 +945,47 @@ function updateLightboxContent(index) {
     }
     
     currentImageIndex = index;
+    currentLightboxPosition = currentLightboxSequence.indexOf(index);
     const item = galleryData[index];
     
     // 确保 loadImage 使用新数据
     loadImage(modalImage, item.fullSrc, true); // <--- isModal=true
+    preloadAdjacentLightboxImages();
     
     modalImage.alt = item.title || '';
     modalTitle.textContent = item.title || '';
     viewOriginalLink.href = item.fullSrc;
 
-    prevButton.disabled = index === 0;
-    nextButton.disabled = index === galleryData.length - 1;
+    prevButton.disabled = currentLightboxPosition <= 0;
+    nextButton.disabled = currentLightboxPosition === -1 || currentLightboxPosition >= currentLightboxSequence.length - 1;
+}
+
+function preloadAdjacentLightboxImages() {
+    const neighborPositions = [currentLightboxPosition - 1, currentLightboxPosition + 1];
+
+    neighborPositions.forEach((position) => {
+        const neighborIndex = currentLightboxSequence[position];
+        const neighbor = galleryData[neighborIndex];
+        const src = neighbor?.fullSrc;
+
+        if (!src || preloadedLightboxImages.has(src)) return;
+
+        preloadedLightboxImages.add(src);
+        const image = new Image();
+        image.decoding = 'async';
+        image.src = src;
+    });
 }
 
 function showPrevImage() {
-    if (currentImageIndex > 0) {
-        updateLightboxContent(currentImageIndex - 1);
+    if (currentLightboxPosition > 0) {
+        updateLightboxContent(currentLightboxSequence[currentLightboxPosition - 1]);
     }
 }
 
 function showNextImage() {
-    if (currentImageIndex < galleryData.length - 1) {
-        updateLightboxContent(currentImageIndex + 1);
+    if (currentLightboxPosition >= 0 && currentLightboxPosition < currentLightboxSequence.length - 1) {
+        updateLightboxContent(currentLightboxSequence[currentLightboxPosition + 1]);
     }
 }
 
@@ -934,8 +1004,6 @@ function renderBlogPosts(category = 'All') {
         // 兼容旧数据：如果是字符串，转成数组再判断
         const categories = Array.isArray(post.category) ? post.category : [post.category];
         return categories.includes(category);
-        // 否则匹配文章的 category 字段
-        return post.category === category;
     });
 
     // 2. 渲染筛选后的文章
@@ -1090,18 +1158,6 @@ function initApp() {
 }
 
 window.addEventListener('hashchange', restoreViewState);
-
-// ----------------------------------------------------------------
-// 状态管理函数 (保持不变)
-// ----------------------------------------------------------------
-// ----------------------------------------------------------------
-// 状态管理函数 - 【已修改】增加对画廊分类 hash 的处理
-// ----------------------------------------------------------------
-function saveViewState(targetId) {
-    // 状态已在 navItems 的 click 事件中处理
-    // 此函数可简化或移除，但为兼容旧代码暂时保留
-    // (在 initApp 中已修改为更精细的 hash 处理)
-}
 
 function restoreViewState() {
     const hash = window.location.hash;
