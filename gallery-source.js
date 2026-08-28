@@ -3,17 +3,12 @@ window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/20140606_102418_IMGP0297_hdr_rec2020_pq_yuv444_full_cq10.avif",
     "title": "HDR 示例",
-    "category": "astronomy"
+    "category": "HDR"
   },
   {
     "src": "photos/photo/60岁哈族牧民锐化.jpg",
     "title": "赛里木湖 2021",
     "category": "人像"
-  },
-  {
-    "src": "photos/photo/G219新藏线往新疆方向（暖）.JPG",
-    "title": "G219 2024",
-    "category": "outdoor"
   },
   {
     "src": "photos/photo/G318秋季油画风格.jpg",
@@ -26,19 +21,9 @@ window.__GALLERY_SOURCE__ = [
     "category": "人像"
   },
   {
-    "src": "photos/photo/乌鲁木齐SAMA酒吧.JPG",
-    "title": "乌鲁木齐",
-    "category": "outdoor"
-  },
-  {
     "src": "photos/photo/乌鲁木齐婚礼新娘.jpg",
     "title": "乌鲁木齐",
     "category": "人像"
-  },
-  {
-    "src": "photos/photo/乌鲁木齐秋-已锐化.jpg",
-    "title": "乌鲁木齐",
-    "category": "outdoor"
   },
   {
     "src": "photos/photo/乌鲁木齐维族婚礼.jpg",
@@ -63,7 +48,7 @@ window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/冈仁波齐蓝调.jpg",
     "title": "冈仁波齐 2024",
-    "category": "astronomy"
+    "category": "outdoor"
   },
   {
     "src": "photos/photo/在禾木失败的长曝光.jpg",
@@ -73,7 +58,7 @@ window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/在赛里木湖遇见的女孩.jpg",
     "title": "赛里木湖 2021",
-    "category": "outdoor"
+    "category": "人像"
   },
   {
     "src": "photos/photo/姊妹湖235比1画幅.jpg",
@@ -124,12 +109,7 @@ window.__GALLERY_SOURCE__ = [
     "src": "photos/photo/禾木桥已经锐化.jpg",
     "title": "禾木 2025",
     "category": "outdoor"
-  },
-  {
-    "src": "photos/photo/禾木清晨8k.jpg",
-    "title": "禾木 2025",
-    "category": "outdoor"
-  },
+  },  
   {
     "src": "photos/photo/禾木清晨full柔光.jpg",
     "title": "禾木 2025",
@@ -152,11 +132,6 @@ window.__GALLERY_SOURCE__ = [
   },
   {
     "src": "photos/photo/谭.jpg",
-    "title": "人像",
-    "category": "人像"
-  },
-  {
-    "src": "photos/photo/谭1.jpg",
     "title": "人像",
     "category": "人像"
   },
