@@ -24,8 +24,10 @@ const FALLBACK_ACCENT = {
 try {
   const sourceItems = readGallerySource();
 
-  fs.rmSync(outputDir, { recursive: true, force: true });
   fs.mkdirSync(outputDir, { recursive: true });
+  // public/generated also stores user-managed article assets. Only remove the
+  // thumbnail directory owned by this build, never the whole output folder.
+  fs.rmSync(path.join(projectRoot, THUMBNAIL_DIR), { recursive: true, force: true });
 
   const manifest = sourceItems.map((item, index) => buildManifestEntry(item, index));
   const manifestJson = JSON.stringify(manifest, null, 2);

@@ -3,10 +3,10 @@
 // ----------------------------------------------------------------
 const blogPosts = [
     {
-        title: '茂名旅居，广东年例及游神习俗',
+        title: '旅居茂名，体验广东年例及游神习俗',
         excerpt: '记录2025年2月份在茂名年例期间的旅居生活，包含茂名年例的照片、游神习俗、活动和个人体验。',
         author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/photo/maomingnianli.jpeg',
+        imageUrl: 'photos/photo/茂名年例.jpeg',
         publishDate: '2024-02-20',
         category: '背包徒步',
         url:'posts/maomingnianli.html',
