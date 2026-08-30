@@ -121,11 +121,6 @@ window.__GALLERY_SOURCE__ = [
     "category": "outdoor"
   },
   {
-    "src": "photos/photo/腿.jpg",
-    "title": "人像",
-    "category": "人像"
-  },
-  {
     "src": "photos/photo/茂名年例.jpeg",
     "title": "茂名年例",
     "category": "人像"

@@ -142,36 +142,6 @@ const blogPosts = [
         url: 'posts/dongpingzhou1.html',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
-    /*{
-        title: '硬件资料查备清单',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url:'posts/ssdlist.html',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: '救援资料查备清单',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url:'posts/BSR.html',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: '摩托车/汽车/单车/皮衣/资料查备清单',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url:'posts/moto.html',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },*/
     {
         title: '云与大气现象',
         excerpt: '包含我从《云与大气现象》《每天一朵云》等书中整理的，各个高度的云的照片、特征和所代表的气候现象',
@@ -212,7 +182,7 @@ const blogPosts = [
         url: 'https://www.lizhongping.eu.org/article/pt',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
-    /*{
+    {
         title: '解决战网卡45%、炉石匹配成功界面停滞、换外服报错代码2400三个问题',
         excerpt: '简介',
         author: '@ScienceOutdoors_FPV',
@@ -223,16 +193,6 @@ const blogPosts = [
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
     {
-        title: 'AI工具快查清单｜prompt提示词词库和文生图词库',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url: 'https://www.lizhongping.eu.org/article/AIlist',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },*/
-    {
         title: '多日背包徒步，准备流程、备忘录与打包建议',
         excerpt: '简介',
         author: '@ScienceOutdoors_FPV',
@@ -242,26 +202,6 @@ const blogPosts = [
         url: 'https://www.lizhongping.eu.org/article/outdoor31',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
-    /*{
-        title: '像植物学家一样认识植物',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url: 'https://www.lizhongping.eu.org/article/renshizhiwu',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: '定期体检资料和记录',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/sun.jpg',
-        publishDate: '2024-02-20',
-        category: '日志',
-        url: 'https://www.lizhongping.eu.org/article/healthy',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },*/
     {
         title: '摩旅G318四川前往西藏',
         excerpt: '简介',

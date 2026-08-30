@@ -40,7 +40,7 @@
                 </div>
                 <img src="../photos/fengmian/东坪洲1.jpeg" alt="a" class="article-cover">
             </header>
-            
+
             <div id="toc-container" class="toc-container">
               <h2>📑 目录</h2>
               <ul id="toc-list"></ul>
@@ -49,29 +49,29 @@
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
                     const tocList = document.getElementById("toc-list");
-                    
+
                     const headers = document.querySelectorAll(
                         ".article-body h2, .article-body h2 strong, .article-body strong:not(h2 strong)"
                     );
-                    
+
                     headers.forEach((header, index) => {
                         if (header.tagName === 'STRONG' && header.closest('h2')) {
                             return;
                         }
-                        
+
                         const anchorId = "section-" + index;
                         header.setAttribute("id", anchorId);
-                        
+
                         header.classList.add("toc-item");
 
                         const li = document.createElement("li");
-                        
+
                         if (header.tagName === 'H2') {
                             li.classList.add("toc-level-1");
                         } else {
                             li.classList.add("toc-level-2");
                         }
-                        
+
                         const a = document.createElement("a");
                         a.href = "#" + anchorId;
                         a.textContent = header.textContent;
@@ -85,17 +85,19 @@
                     });
                 });
             </script>
-            
+
             <div class="article-body">
                 <div class="multiline-text">
-                    “在沙滩上露营度假”本身并不是一件稀奇难得的事情，大部分沿海城市都可以做到，比如香港麦理浩径、广东大鹏半岛、茂名第一滩，他们都很出名。但我要的就是不出名，东坪洲是所有可露营的沙滩中游客最少的地方之一，要说最稀少还得是最靠近南海的蒲台群岛和坦杆岛，但往返东坪洲的交通比起南海那儿可方便老多了，每个周末都有从城区出发的轮渡。除此之外岛上还有两只热情好客的德牧，每次去都碰到它两组队巡视沙滩，岛民也很友善平和。这些就稀奇、难得多了。所以东坪洲成了我心目中最喜欢去的逃避城市的地方。这是我第三次来到这里。我已经爱上了这里。
+                    “在沙滩上露营度假”本身并不是一件稀奇难得的事情，大部分沿海城市都可以做到，比如香港麦理浩径、广东大鹏半岛、茂名第一滩，他们都很出名。但有的人要的就是不出名，比如我，东坪洲就是这样一个地方，她是所有可露营的沙滩中游客最少的地方之一，要说最稀少还得是最靠近南海的蒲台群岛和坦杆岛，但往返东坪洲的交通比起南海那儿可方便老多了，每个周末都有从城区出发的往返轮渡。
+
+                    岛上有两只热情好客的德牧，每次去都碰到他俩，傍晚的时候组队巡视沙滩。岛民非常友善平和。东坪洲已经成了我心目中最喜欢的逃避城市的地方。这是我第三次来到这里。我已经爱上她了。
                     <div class="article-video">
                         <video controls preload="metadata" style="width:100%; max-width:400px;">
                             <source src="../video/IMG_4921.mov" type="video/mp4">
                             你的浏览器不支持视频播放
                         </video>
                     </div>
-                    如果你在寻找背包徒步前往东坪洲露营的攻略，请前往：https://www.lizhongping.eu.org/article/outdoor6
+                    如果你在寻找背包徒步前往东坪洲露营的攻略，请前往：https://heyysid.github.io/blog/posts/dongpingzhou1.html
                     <div class="photo-gallery">
                         <img src="../public/东坪洲.jpeg" class="photo-posts">
                             <img src="../public/东坪洲1.jpeg" class="photo-posts">
@@ -105,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <a href="../index.html#blog" class="a-back" style="font-size: 1.05rem;">
                 返回博客列表
             </a>
