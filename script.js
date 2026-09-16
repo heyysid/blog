@@ -142,7 +142,7 @@ const blogPosts = [
         url: 'posts/dongpingzhou1.html',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
-    {
+    /**{
         title: '云与大气现象',
         excerpt: '包含我从《云与大气现象》《每天一朵云》等书中整理的，各个高度的云的照片、特征和所代表的气候现象',
         author: '@ScienceOutdoors_FPV',
@@ -151,7 +151,7 @@ const blogPosts = [
         category: '各种资料',
         url:'posts/clouds.html',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
+    },*/
     {
         title: '歌单迁移｜网易云歌单迁徙到Youtube music',
         excerpt: '文中介绍的工具是一款猴油脚本“Tune My Music”，非常好用，我用它把我的网易云歌单迁徙到了youtube music',
@@ -162,27 +162,7 @@ const blogPosts = [
         url:'posts/musicmove.html',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
-    {
-        title: '自由下载、绘制、导出等高线地图',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/等高线地图.jpeg',
-        publishDate: '2024-02-20',
-        category: '背包徒步',
-        url: 'https://www.lizhongping.eu.org/article/outdoor',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: 'BT/PT资源与资料查备清单',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/PTBT.jpeg',
-        publishDate: '2024-02-20',
-        category: '资源清单',
-        url: 'https://www.lizhongping.eu.org/article/pt',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
+    /**{
         title: '解决战网卡45%、炉石匹配成功界面停滞、换外服报错代码2400三个问题',
         excerpt: '简介',
         author: '@ScienceOutdoors_FPV',
@@ -190,16 +170,6 @@ const blogPosts = [
         publishDate: '2024-02-20',
         category: '各种资料',
         url: 'posts/games.html',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: '多日背包徒步，准备流程、备忘录与打包建议',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/篝火.jpeg',
-        publishDate: '2024-02-20',
-        category: '背包徒步',
-        url: 'https://www.lizhongping.eu.org/article/outdoor31',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
     {
@@ -220,26 +190,6 @@ const blogPosts = [
         publishDate: '2024-02-20',
         category: '摩托车旅行',
         url: 'posts/motogoxinjiang.html',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: 'NAS资料查备清单',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/篝火.jpeg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url: 'https://www.lizhongping.eu.org/article/NAS',
-        authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
-    {
-        title: '🚀去广告模块资料快查表',
-        excerpt: '简介',
-        author: '@ScienceOutdoors_FPV',
-        imageUrl: 'photos/fengmian/篝火.jpeg',
-        publishDate: '2024-02-20',
-        category: '各种资料',
-        url: 'https://www.lizhongping.eu.org/article/adfree',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
     },
     {
@@ -291,7 +241,7 @@ const blogPosts = [
         category: '单车旅行',
         url: 'posts/shenzhen-shantou-bike',
         authorAvatarUrl: 'public/IMG_6959.jpeg'
-    },
+    },*/
 ];
 
 // ----------------------------------------------------------------

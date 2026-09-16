@@ -2,7 +2,7 @@
 window.__GALLERY_SOURCE__ = [
   {
     "src": "photos/photo/20140606_102418_IMGP0297_hdr_rec2020_pq_yuv444_full_cq10.avif",
-    "title": "HDR 示例",
+    "title": "HDR示例",
     "category": "HDR"
   },
   {
@@ -12,47 +12,37 @@ window.__GALLERY_SOURCE__ = [
   },
   {
     "src": "photos/photo/G318秋季油画风格.jpg",
-    "title": "G318 2024",
+    "title": "G318秋季油画风格",
     "category": "outdoor"
   },
   {
-    "src": "photos/photo/lyy.JPG",
-    "title": "lyy 2025",
-    "category": "人像"
-  },
-  {
     "src": "photos/photo/乌鲁木齐婚礼新娘.jpg",
-    "title": "乌鲁木齐",
+    "title": "维族婚礼",
     "category": "人像"
   },
   {
     "src": "photos/photo/乌鲁木齐维族婚礼.jpg",
-    "title": "乌鲁木齐",
+    "title": "维族婚礼",
     "category": "人像"
   },
   {
     "src": "photos/photo/冈仁波齐星野第三张-锐化.jpg",
-    "title": "冈仁波齐 2024",
+    "title": "冈仁波齐星野 2024",
     "category": "astronomy"
   },
   {
     "src": "photos/photo/冈仁波齐星野第二张-锐化.jpg",
-    "title": "冈仁波齐 2024",
+    "title": "冈仁波齐星野 2024",
     "category": "astronomy"
   },
   {
     "src": "photos/photo/冈仁波齐玛尼堆星空.jpg",
-    "title": "冈仁波齐 2024",
+    "title": "冈仁波齐星野 2024",
     "category": "astronomy"
   },
   {
     "src": "photos/photo/冈仁波齐蓝调.jpg",
     "title": "冈仁波齐 2024",
-    "category": "outdoor"
-  },
-  {
-    "src": "photos/photo/在禾木失败的长曝光.jpg",
-    "title": "禾木 2025",
     "category": "outdoor"
   },
   {
@@ -140,9 +130,4 @@ window.__GALLERY_SOURCE__ = [
     "title": "赛里木湖 2021",
     "category": "outdoor"
   },
-  {
-    "src": "photos/photo/香港.jpg",
-    "title": "香港 2021",
-    "category": "人像"
-  }
 ];
